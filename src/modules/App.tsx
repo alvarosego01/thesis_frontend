@@ -1,10 +1,9 @@
 
 import { BrowserRouter } from 'react-router-dom'
-import { App_Router } from './app.routes.'
+import { App_Router } from './app.routes'
 
 
 function App() {
-
 
 
     return (

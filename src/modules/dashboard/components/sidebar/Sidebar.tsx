@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import SidebarLinkGroup from './SidebarLinkGroup';
+import { SidebarMenu } from '../../models';
 
-// import SidebarLinkGroup from './SidebarLinkGroup';
-interface Sidebar_I {
+
+
+export interface Sidebar_I {
     sidebarOpen: boolean;
     setSidebarOpen: (sidebarOpen: boolean) => void;
 }
@@ -121,102 +122,58 @@ export const Sidebar = ({
                             <span className="hidden w-6 text-center lg:block lg:sidebar-expanded:hidden 2xl:hidden" aria-hidden="true">
                                 •••
                             </span>
-                            <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">Pages</span>
+                            <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">
+                                Panel de control
+                            </span>
                         </h3>
                         <ul className="mt-3">
-                            {/* Dashboard */}
-                            <SidebarLinkGroup activecondition={pathname === '/' || pathname.includes('dashboard')}>
-                                {(handleClick, open) => {
-                                    return (
-                                        <>
-                                            <a
-                                                href="#0"
-                                                className={`block text-slate-200 truncate transition duration-150 ${pathname === '/' || pathname.includes('dashboard') ? 'hover:text-slate-200' : 'hover:text-white'
-                                                    }`}
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-                                                    handleClick();
-                                                    setSidebarExpanded(true);
-                                                }}
-                                            >
-                                                <div className="flex items-center justify-between">
-                                                    <div className="flex items-center">
-                                                        <svg className="w-6 h-6 shrink-0" viewBox="0 0 24 24">
-                                                            <path
-                                                                className={`fill-current ${pathname === '/' || pathname.includes('dashboard') ? 'text-indigo-500' : 'text-slate-400'
-                                                                    }`}
-                                                                d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z"
-                                                            />
-                                                            <path
-                                                                className={`fill-current ${pathname === '/' || pathname.includes('dashboard') ? 'text-indigo-600' : 'text-slate-600'
-                                                                    }`}
-                                                                d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z"
-                                                            />
-                                                            <path
-                                                                className={`fill-current ${pathname === '/' || pathname.includes('dashboard') ? 'text-indigo-200' : 'text-slate-400'
-                                                                    }`}
-                                                                d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z"
-                                                            />
-                                                        </svg>
-                                                        <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                                            Dashboard
-                                                        </span>
-                                                    </div>
-                                                    {/* Icon */}
-                                                    <div className="flex ml-2 shrink-0">
-                                                        <svg className={`w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 ${open && 'rotate-180'}`} viewBox="0 0 12 12">
-                                                            <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
-                                                        </svg>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
-                                                <ul className={`pl-9 mt-1 ${!open && 'hidden'}`}>
-                                                    <li className="mb-1 last:mb-0">
-                                                        <NavLink
-                                                            end
-                                                            to="/main"
-                                                            className={({ isActive }) =>
-                                                                'block transition duration-150 truncate ' + (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
-                                                            }
-                                                        >
-                                                            <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                                                Main
-                                                            </span>
-                                                        </NavLink>
-                                                    </li>
-                                                    <li className="mb-1 last:mb-0">
-                                                        <NavLink
-                                                            end
-                                                            to="/users"
-                                                            className={({ isActive }) =>
-                                                                'block transition duration-150 truncate ' + (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
-                                                            }
-                                                        >
-                                                            <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                                                Analytics
-                                                            </span>
-                                                        </NavLink>
-                                                    </li>
-                                                    <li className="mb-1 last:mb-0">
-                                                        <NavLink
-                                                            end
-                                                            to="/dashboard/fintech"
-                                                            className={({ isActive }) =>
-                                                                'block transition duration-150 truncate ' + (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
-                                                            }
-                                                        >
-                                                            <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                                                Fintech
-                                                            </span>
-                                                        </NavLink>
-                                                    </li>
-                                                </ul>
+
+                              {
+                                SidebarMenu.map((item, index) => (
+                                    <li key={index} className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes(item.link) && 'bg-slate-900'}`}>
+                                        <NavLink
+                                            end
+                                            to={item.link}
+                                            className={`block text-slate-200 truncate transition duration-150 ${pathname.includes(item.link) ? 'hover:text-slate-200' : 'hover:text-white'
+                                                }`}
+                                        >
+                                            <div className="flex items-center">
+
+                                                {
+                                                    item.icon.type === 'icon' ? (
+                                                        <i className={item.icon.content} ></i>
+                                                    ) : (
+                                                        <img src={item.icon.content} alt="icon" className="w-6 h-6" />
+                                                    )
+                                                }
+
+                                                <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
+                                                    {item.title}
+                                                </span>
                                             </div>
-                                        </>
-                                    );
-                                }}
-                            </SidebarLinkGroup>
+                                        </NavLink>
+                                    </li>
+                                ))
+                              }
+
+
+                            {/* <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('calendar') && 'bg-slate-900'}`}>
+                                <NavLink
+                                    end
+                                    to="/dashboard/account"
+                                    className={`block text-slate-200 truncate transition duration-150 ${pathname.includes('dashboard/account') ? 'hover:text-slate-200' : 'hover:text-white'
+                                        }`}
+                                >
+                                    <div className="flex items-center">
+
+                                        <i className='bx bxs-cog' ></i>
+
+                                        <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
+                                            Profile Settings
+                                        </span>
+                                    </div>
+                                </NavLink>
+                            </li> */}
 
                         </ul>
                     </div>
