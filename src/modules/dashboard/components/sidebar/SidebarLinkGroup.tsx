@@ -1,24 +1,40 @@
-import React, { useState } from 'react';
+import { SidebarMenuLink_I } from '../../interfaces';
+import { Sidebar_Group_Link, Sidebar_Single_Link } from './SidebarLink';
 
-function SidebarLinkGroup({
-  children,
-  activecondition,
-}: {
-    children: (handleClick: () => void, open: boolean) => React.ReactNode;
-    activecondition: boolean;
-}) {
-
-  const [open, setOpen] = useState(activecondition);
-
-  const handleClick = () => {
-    setOpen(!open);
-  }
-
-  return (
-    <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${activecondition && 'bg-slate-900'}`}>
-      {children(handleClick, open)}
-    </li>
-  );
+interface SidebarLinkGroup_I {
+    // children: (handleClick: () => void, open: boolean) => React.ReactNode;
+    // activecondition: boolean;
+    ItemMenu: SidebarMenuLink_I;
+    pathname: string;
 }
 
-export default SidebarLinkGroup;
+export const SidebarLinkGroup = ({
+    // children,
+    // activecondition,
+    ItemMenu,
+    pathname
+}: SidebarLinkGroup_I) => {
+
+    const ShowLists = () => {
+
+        if (ItemMenu?.subMenu?.length! > 0) {
+            return (
+                <Sidebar_Group_Link ItemMenu={ItemMenu} pathname={''} />
+            )
+        } else {
+            return (
+                <Sidebar_Single_Link ItemMenu={ItemMenu} pathname={pathname} />
+            )
+        }
+
+    }
+
+    return (
+        <>
+            { ShowLists() }
+        </>
+    );
+}
+
+
+

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { SidebarMenu } from '../../models';
+import { SidebarMenu_Data } from '../../models';
+import { MenuLinksList } from './MenuLinksList';
 
 
 
@@ -16,6 +17,7 @@ export const Sidebar = ({
 
     const location = useLocation();
     const { pathname } = location;
+
 
     const trigger = useRef(null);
     const sidebar = useRef(null);
@@ -126,56 +128,9 @@ export const Sidebar = ({
                                 Panel de control
                             </span>
                         </h3>
-                        <ul className="mt-3">
 
-                              {
-                                SidebarMenu.map((item, index) => (
-                                    <li key={index} className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes(item.link) && 'bg-slate-900'}`}>
-                                        <NavLink
-                                            end
-                                            to={item.link}
-                                            className={`block text-slate-200 truncate transition duration-150 ${pathname.includes(item.link) ? 'hover:text-slate-200' : 'hover:text-white'
-                                                }`}
-                                        >
-                                            <div className="flex items-center">
+                        <MenuLinksList menu_list={SidebarMenu_Data} pathname={pathname} />
 
-                                                {
-                                                    item.icon.type === 'icon' ? (
-                                                        <i className={item.icon.content} ></i>
-                                                    ) : (
-                                                        <img src={item.icon.content} alt="icon" className="w-6 h-6" />
-                                                    )
-                                                }
-
-                                                <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                                    {item.title}
-                                                </span>
-                                            </div>
-                                        </NavLink>
-                                    </li>
-                                ))
-                              }
-
-
-                            {/* <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('calendar') && 'bg-slate-900'}`}>
-                                <NavLink
-                                    end
-                                    to="/dashboard/account"
-                                    className={`block text-slate-200 truncate transition duration-150 ${pathname.includes('dashboard/account') ? 'hover:text-slate-200' : 'hover:text-white'
-                                        }`}
-                                >
-                                    <div className="flex items-center">
-
-                                        <i className='bx bxs-cog' ></i>
-
-                                        <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                            Profile Settings
-                                        </span>
-                                    </div>
-                                </NavLink>
-                            </li> */}
-
-                        </ul>
                     </div>
 
                 </div>

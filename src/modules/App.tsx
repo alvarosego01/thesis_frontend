@@ -1,22 +1,15 @@
 
 import { BrowserRouter } from 'react-router-dom'
-import { App_Router } from './app.routes'
+import { AppRoutes } from './AppRoutes'
 
-
-function App() {
-
+const App = () => {
 
     return (
-        <>
-            <BrowserRouter>
-                <div className="flex h-[100dvh] overflow-hidden">
-
-                    <App_Router />
-
-                </div>
-            </BrowserRouter>
-        </>
+        <BrowserRouter>
+            <AppRoutes />
+        </BrowserRouter>
     )
+
 }
 
 export default App
