@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom"
-import { PersonalPage, ProfessionalPage } from "./pages"
+import { ArtiscSkillsPage, CredentialsPage, PersonalPage, ProfessionalPage, SecuritySettingsPage } from "./pages"
 
 
 
@@ -8,9 +8,9 @@ export const Dsh_Account_routes = () => {
         <Routes>
             <Route path='personal' element={<PersonalPage />} />
             <Route path='professional' element={<ProfessionalPage />} />
-            <Route path='credentials' element={<PersonalPage />} />
-            <Route path='security' element={<PersonalPage />} />
-            <Route path='skills' element={<PersonalPage />} />
+            <Route path='credentials' element={<CredentialsPage />} />
+            <Route path='security' element={<SecuritySettingsPage />} />
+            <Route path='skills' element={<ArtiscSkillsPage />} />
 
             <Route path="/*" element={<Navigate to="personal" replace />} />
         </Routes>

@@ -27,6 +27,46 @@ export const SidebarMenu_Data: SidebarMenuLink_I[] = [
             content: '/dashboard/notifications'
         }
     },
+    {
+        title: 'Datos de contratación',
+        icon: {
+            type: 'icon',
+            content: "bx bx-briefcase-alt-2"
+
+        },
+        link: '/dashboard/xxx',
+        activeCondition: {
+            type: 'route',
+            content: '/dashboard/xxx'
+        }
+    },
+    {
+        title: 'Contratos',
+        icon: {
+            type: 'icon',
+            content: "bx bx-briefcase-alt-2"
+
+        },
+        link: '/dashboard/xxx',
+        activeCondition: {
+            type: 'route',
+            content: '/dashboard/xxx'
+        }
+    },
+    {
+        title: 'Control de vacantes',
+        icon: {
+            type: 'icon',
+            content: "bx bx-briefcase-alt-2"
+
+        },
+        link: '/dashboard/xxx',
+        activeCondition: {
+            type: 'route',
+            content: '/dashboard/xxx'
+        }
+    },
+
 /*     {
         title: 'Dashboard',
         icon: {

@@ -1,6 +1,9 @@
 
 import { BrowserRouter } from 'react-router-dom'
-import { AppRoutes } from './AppRoutes'
+import { AppRoutes } from './AppRoutes';
+
+
+import "../core/components/GeneralComponents.styles.sass"
 
 const App = () => {
 

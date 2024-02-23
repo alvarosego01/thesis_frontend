@@ -1,82 +1,245 @@
+import { getAssetPath } from "../../../../../core/utils";
+import { LayoutBuilder, PrimaryButton } from "../../../../../core/components"
+import { LayoutRow_I } from "../../../../../core/components/forms/interfaces"
+import { useFormInitData } from "../../../../../core/hooks";
+
+import { useRef } from "react";
+import { Form, Formik } from "formik"
+
+
+const avatar_default = getAssetPath('/images/user-avatar-80.png');
+
+const estadosVenezuela: string[] = [
+    "Amazonas",
+    "Anzoátegui",
+    "Apure",
+    "Aragua",
+    "Barinas",
+    "Bolívar",
+    "Carabobo",
+    "Cojedes",
+    "Delta Amacuro",
+    "Dependencias Federales",
+    "Distrito Capital",
+    "Falcón",
+    "Guárico",
+    "Lara",
+    "Mérida",
+    "Miranda",
+    "Monagas",
+    "Nueva Esparta",
+    "Portuguesa",
+    "Sucre",
+    "Táchira",
+    "Trujillo",
+    "Vargas",
+    "Yaracuy",
+    "Zulia",
+];
+
+const userData: LayoutRow_I[] = [
+    {
+        fields: [
+            {
+                type: 'text',
+                props: {
+                    label: 'Nombre',
+                    name: 'name',
+                    type: 'text',
+                    validation_rules: [
+                        {
+                            type: "required",
+                            message: "El nombre es requerido"
+                        },
+                        {
+                            type: "minLength",
+                            value: 3,
+                            message: "El nombre debe tener al menos 3 caracteres"
+                        }
+                    ]
+                }
+            },
+            {
+                type: 'text',
+                props: {
+                    label: 'Apellido',
+                    name: 'lastname',
+                    type: 'text',
+                    validation_rules: [
+                        {
+                            type: "required",
+                            message: "El apellido es requerido"
+                        },
+                        {
+                            type: "minLength",
+                            value: 3,
+                            message: "El apellido debe tener al menos 3 caracteres"
+                        }
+                    ]
+                }
+            },
+            {
+                type: 'text',
+                props: {
+                    label: 'Teléfono',
+                    name: 'phone',
+                    required: false,
+                    type: 'tel',
+                    validation_rules: [
+                        {
+                            type: "tel",
+                            message: "El teléfono no es válido"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        fields: [
+            {
+                type: 'text',
+                props: {
+                    label: 'Dirección',
+                    name: 'direction',
+                    type: 'text',
+                    validation_rules: [
+                        {
+                            type: "minLength",
+                            value: 5,
+                            message: "La dirección debe tener al menos 3 caracteres"
+                        }
+                    ]
+
+                }
+            },
+            {
+                type: 'text',
+                props: {
+                    label: 'Ciudad',
+                    name: 'city',
+                    type: 'text',
+                    validation_rules: [
+                        {
+                            type: "minLength",
+                            value: 5,
+                            message: "La ciudad debe tener al menos 3 caracteres"
+                        }
+                    ]
+                }
+            },
+            {
+                type: 'select',
+                props: {
+                    label: 'Estado',
+                    name: 'state',
+                    items: estadosVenezuela.map((estado) => ({ value: estado, label: estado }))
+                }
+            }
+        ]
+    }
+
+];
+
+// const initialValues: { [key: string]: any } = {};
+// const requiredFields: { [key: string]: any } = {};
 
 
 
 export const PersonalPage = () => {
 
+    const { initialValues, validation_rules } = useFormInitData(userData);
+
+    const fileInputRef = useRef();
+
+    let isLoading: boolean = false;
+
+    const onFileInputChange = (target: any) => {
+        if (target.files === 0) return;
+
+        // dispatch()
+        // dispatch(startUploadFiles(target.files));
+
+    }
+
     return (
-        <div className="mb-8 bg-white rounded-sm shadow-lg dark:bg-slate-800">
 
-            <div className="flex flex-col md:flex-row md:-mr-px">
+        <div className="grow">
+            {/* Panel body */}
+            <Formik
+                initialValues={initialValues}
+                onSubmit={(values) => {
+                    console.log('values', values)
+                }}
+                validationSchema={validation_rules}
+                >
+                {
+                    ({
+                        submitForm
+                    }) => (
 
-                <div className="grow">
-                    {/* Panel body */}
+                        <Form noValidate
+                        >
 
-                    <div className="p-6 space-y-6">
-                        <h2 className="mb-5 text-2xl font-bold text-slate-800 dark:text-slate-100">My Account</h2>
-                        {/* Picture */}
-                        <section>
-                            <div className="flex items-center">
-                                <div className="mr-4">
-                                    <img className="w-20 h-20 rounded-full" src={'aaa'} width="80" height="80" alt="User upload" />
-                                </div>
-                                <button className="text-white bg-indigo-500 btn-sm hover:bg-indigo-600">Change</button>
+                            <div className="p-6 space-y-6">
+
+                                <h2 className="mb-5 text-2xl font-bold text-slate-800 dark:text-slate-100">
+                                    Perfil personal
+                                </h2>
+                                {/* Picture */}
+                                <section>
+                                    <div className="flex items-center">
+                                        <div className="mr-4">
+                                            <img className="w-20 h-20 rounded-full" src={avatar_default} width="80" height="80" alt="User upload" />
+                                        </div>
+
+                                        <input
+                                            onChange={onFileInputChange}
+                                            ref={fileInputRef}
+                                            type="file"
+                                            // multiple
+                                            style={{
+                                                display: 'none'
+                                            }}
+                                        />
+                                        <PrimaryButton
+                                            disabled={isLoading}
+                                            onClick={() => { fileInputRef.current.click() }} label="Cambiar" />
+
+                                    </div>
+                                </section>
+                                {/* Business Profile */}
+                                <section>
+                                    <h2 className="mb-1 text-xl font-bold leading-snug text-slate-800 dark:text-slate-100">
+                                        Datos de usuario
+                                    </h2>
+                                    <div className="text-sm mb-s_25">
+                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed neque aut et cumque, labo
+                                    </div>
+
+                                    <LayoutBuilder rows={userData} />
+
+                                </section>
+
                             </div>
-                        </section>
-                        {/* Business Profile */}
-                        <section>
-                            <h2 className="mb-1 text-xl font-bold leading-snug text-slate-800 dark:text-slate-100">Business Profile</h2>
-                            <div className="text-sm">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit.</div>
-                            <div className="mt-5 space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-4">
-                                <div className="sm:w-1/3">
-                                    <label className="block mb-1 text-sm font-medium" htmlFor="name">Business Name</label>
-                                    <input id="name" className="w-full form-input" type="text" />
-                                </div>
-                                <div className="sm:w-1/3">
-                                    <label className="block mb-1 text-sm font-medium" htmlFor="business-id">Business ID</label>
-                                    <input id="business-id" className="w-full form-input" type="text" />
-                                </div>
-                                <div className="sm:w-1/3">
-                                    <label className="block mb-1 text-sm font-medium" htmlFor="location">Location</label>
-                                    <input id="location" className="w-full form-input" type="text" />
-                                </div>
-                            </div>
-                        </section>
-                        {/* Email */}
-                        <section>
-                            <h2 className="mb-1 text-xl font-bold leading-snug text-slate-800 dark:text-slate-100">Email</h2>
-                            <div className="text-sm">Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia.</div>
-                            <div className="flex flex-wrap mt-5">
-                                <div className="mr-2">
-                                    <label className="sr-only" htmlFor="email">Business email</label>
-                                    <input id="email" className="form-input" type="email" />
-                                </div>
-                                <button className="text-indigo-500 shadow-sm btn border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600">Change</button>
-                            </div>
-                        </section>
-                        {/* Password */}
-                        <section>
-                            <h2 className="mb-1 text-xl font-bold leading-snug text-slate-800 dark:text-slate-100">Password</h2>
-                            <div className="text-sm">You can set a permanent password if you don't want to use temporary login codes.</div>
-                            <div className="mt-5">
-                                <button className="text-indigo-500 shadow-sm btn border-slate-200 dark:border-slate-700">Set New Password</button>
-                            </div>
-                        </section>
 
-                    </div>
+                            <footer>
+                                <div className="flex flex-col px-6 py-5 border-t border-slate-200 dark:border-slate-700">
+                                    <div className="flex self-end">
+                                        <PrimaryButton onClick={ submitForm } label="Guardar" className="ml-3" />
+                                    </div>
+                                </div>
+                            </footer>
 
-                    {/* Panel footer */}
-                    <footer>
-                        <div className="flex flex-col px-6 py-5 border-t border-slate-200 dark:border-slate-700">
-                            <div className="flex self-end">
-                                <button className="btn dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-300">Cancel</button>
-                                <button className="ml-3 text-white bg-indigo-500 btn hover:bg-indigo-600">Save Changes</button>
-                            </div>
-                        </div>
-                    </footer>
-                </div>
+                        </Form>
 
-            </div>
+                    )}
+
+            </Formik>
         </div>
+
+
 
     )
 }
+
