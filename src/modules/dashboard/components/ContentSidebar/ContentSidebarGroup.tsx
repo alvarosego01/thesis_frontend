@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom"
-import { ContentSidebarMenuLink_I } from "../../interfaces"
+import { ContentSidebarMenuLink_I } from "../../Interfaces"
 
 interface ContentSidebarGroup_Props_I {
     item: ContentSidebarMenuLink_I;

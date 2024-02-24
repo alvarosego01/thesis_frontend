@@ -23,6 +23,7 @@ export default {
             },
             fontFamily: {
                 inter: ['Inter', 'sans-serif'],
+                tuesdaynight: ['TuesdayNight_regular', 'Inter', 'sans-serif']
             },
             fontSize: {
                 xs: ['0.75rem', { lineHeight: '1.5' }],

@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom"
-import { SidebarMenuLink_I } from "../../interfaces";
+import { SidebarMenuLink_I } from "../../Interfaces";
 import { useState } from "react";
 
 interface Sidebar_Single_Link_I {

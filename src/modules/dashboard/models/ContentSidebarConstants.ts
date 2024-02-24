@@ -1,4 +1,4 @@
-import { ContentSidebarMenuLink_I } from "../interfaces";
+import { ContentSidebarMenuLink_I } from "../Interfaces";
 
 
 export const ContentSidebarConstants: ContentSidebarMenuLink_I[] = [

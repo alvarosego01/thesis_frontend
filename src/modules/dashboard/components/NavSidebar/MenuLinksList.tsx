@@ -1,5 +1,5 @@
 
-import { SidebarMenuLink_I } from "../../interfaces"
+import { SidebarMenuLink_I } from "../../Interfaces"
 import { SidebarLinkGroup } from "./SidebarLinkGroup";
 
 interface MenuLinksList_I {

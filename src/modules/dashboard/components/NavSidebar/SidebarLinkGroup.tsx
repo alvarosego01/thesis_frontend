@@ -1,4 +1,4 @@
-import { SidebarMenuLink_I } from '../../interfaces';
+import { SidebarMenuLink_I } from '../../Interfaces';
 import { Sidebar_Group_Link, Sidebar_Single_Link } from './SidebarLink';
 
 interface SidebarLinkGroup_I {

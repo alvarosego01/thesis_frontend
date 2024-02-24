@@ -1,12 +1,13 @@
-import { CheckBoxField } from "./CheckBoxField"
-import { SelectField } from "./SelectField"
-import { TextInputField } from "./TextInputField"
-import { LayoutRow_I, MySelect_Props_I } from "./interfaces"
+
+import { CheckBoxField, SelectField, TextAreaField, TextInputField } from "..";
+import { LayoutRow_I, SelectField_Props_I } from "./interfaces"
 
 
-export const LayoutBuilder = ({ rows }: {
+export const FormLayoutBuilder = ({ rows }: {
     rows: LayoutRow_I[]
 }) => {
+
+
 
     return (
         <>
@@ -14,18 +15,15 @@ export const LayoutBuilder = ({ rows }: {
                 {
                 rows.map((row, i) => {
                     return (
-                        <div key={`row-${i}`} className="grid w-full grid-cols-1 m-0 gap-x-5 mb-s_25 lg:grid-cols-3">
+                        <div key={`row-${i}`} className={`grid w-full grid-cols-1 m-0 gap-x-5 lg:mb-s_15 last:mb-0 ${row.grid_columns} `} >
                             {row.fields.map((field, j) => {
 
-                                switch (field.type) {
+                                switch (field.typeField) {
                                     case 'text':
-                                        return <div key={j} >
-                                            <TextInputField {...field.props} />
-                                        </div>
+                                        return <TextInputField key={j} {...field.props} />
                                     case 'select':
-                                        const f: MySelect_Props_I = field.props as MySelect_Props_I;
-                                        return <div key={j} >
-                                            <SelectField {...f} >
+                                        const f: SelectField_Props_I = field.props as SelectField_Props_I;
+                                        return <SelectField key={j} {...f} >
                                                 {
                                                     f.placeholder && <option value="">
                                                         {f.placeholder}
@@ -39,11 +37,10 @@ export const LayoutBuilder = ({ rows }: {
                                                     ))
                                                 }
                                             </SelectField>
-                                        </div>
                                     case 'checkbox':
-                                        return <div key={j} >
-                                            <CheckBoxField {...field.props} />
-                                        </div>
+                                        return  <CheckBoxField key={j} {...field.props} />
+                                    case 'textarea':
+                                        return  <TextAreaField key={j} {...field.props} />
                                     default:
                                         return <div key={j}>No field</div>
                                 }

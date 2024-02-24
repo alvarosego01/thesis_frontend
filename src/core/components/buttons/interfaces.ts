@@ -7,4 +7,6 @@ export interface Button_I {
     className?: string;
     disabled?: boolean;
     isLoading?: boolean;
+    icon?: string;
+    size?: 'sm' | 'md' | 'lg' | 'default';
 }

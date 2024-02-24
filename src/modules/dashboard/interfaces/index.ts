@@ -28,3 +28,8 @@ export interface ContentSidebarMenuLink_I {
     items: SingleItem_I[]
 }
 
+
+export interface SignatureModel_I {
+    signature: string;
+    updated_at: string;
+}

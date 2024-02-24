@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { SidebarMenu_Data } from '../../models';
+import { SidebarMenu_Data } from '../../Models';
 import { MenuLinksList } from './MenuLinksList';
 
 
@@ -19,8 +19,8 @@ export const Sidebar = ({
     const { pathname } = location;
 
 
-    const trigger = useRef(null);
-    const sidebar = useRef(null);
+    const trigger = useRef<any>(null);
+    const sidebar = useRef<any>(null);
 
     const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
 
@@ -50,9 +50,9 @@ export const Sidebar = ({
     useEffect(() => {
         localStorage.setItem('sidebar-expanded', String(sidebarExpanded));
         if (sidebarExpanded) {
-            document.querySelector('body').classList.add('sidebar-expanded');
+            document.querySelector('body')?.classList.add('sidebar-expanded');
         } else {
-            document.querySelector('body').classList.remove('sidebar-expanded');
+            document.querySelector('body')?.classList.remove('sidebar-expanded');
         }
     }, [sidebarExpanded]);
 

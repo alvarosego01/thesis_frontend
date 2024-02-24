@@ -1,13 +1,20 @@
+export { GallerySelector } from './Selectors/GallerySelector';
+export { VideoGallerySelector } from './Selectors/VideoGallerySelector';
+
+export { DocumentSelector } from './Selectors/DocumentSelector';
+
 export { SettingsSidebar } from './SettingsSidebar';
 
-export { Header } from './shared/Header';
+export { Header } from './Shared/Header';
 
 
-export * from "./forms/CheckBoxField";
-export * from "./forms/LayoutBuilder";
-export * from "./forms/SelectField";
-export * from "./forms/TextInputField";
+export * from "./Forms/CheckBoxField";
+export * from "./Forms/FormLayoutBuilder";
+export * from "./Forms/SelectField";
+export * from "./Forms/TextInputField";
+export * from "./Forms/TextAreaField";
 
 
-export * from "./buttons/PrimaryButton";
-export * from "./buttons/SecondaryButton";
+export * from "./Buttons/PrimaryButton";
+export * from "./Buttons/SecondaryButton";
+export * from "./Buttons/TertiaryButton";

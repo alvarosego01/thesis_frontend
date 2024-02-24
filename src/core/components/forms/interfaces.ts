@@ -1,18 +1,19 @@
 
 export interface ValidationRule_I {
-    type: "required" | "minLength" | "maxLength" | "email" | "tel" | "pattern" | "min" | "max" | "custom";
+    type: "required" | "minLength" | "maxLength" | "email" | "tel" | "pattern" | "min" | "max" | "custom" | "url" | "same_field";
     message: string;
     value?: number | string;
 }
 
-export interface MyCheckBox_Props_I {
+export interface CheckBoxField_Props_I {
     label: string;
     name: string;
+    validation_rules?: ValidationRule_I[];
+    parent_className?: string;
     [x: string]: any,
-    validation_rules?: ValidationRule_I[]
 }
 
-export interface MySelect_Props_I {
+export interface SelectField_Props_I {
     label: string;
     name: string;
     placeholder?: string;
@@ -20,24 +21,39 @@ export interface MySelect_Props_I {
         value: string;
         label: string;
     }[];
-    [x: string]: any,
     validation_rules?: ValidationRule_I[]
+    icon?: string;
+    parent_className?: string;
+    [x: string]: any,
 }
 
-export interface MyTextInput_Props_I {
+export interface TextInputField_Props_I {
     label: string;
     name: string;
     type?: 'text' | 'email' | 'password' | 'tel';
     placeholder?: string;
+    icon?: string;
+    validation_rules?: ValidationRule_I[];
+    parent_className?: string;
     [x: string]: any,
-    validation_rules?: ValidationRule_I[]
+}
+
+export interface TextAreaField_Props_I {
+    label: string;
+    name: string;
+    placeholder?: string;
+    icon?: string;
+    validation_rules?: ValidationRule_I[];
+    parent_className?: string;
+    [x: string]: any,
 }
 
 export interface LayoutRow_I {
     fields: {
-        type: 'checkbox' | 'text' | 'select';
-        props: MyCheckBox_Props_I | MySelect_Props_I | MyTextInput_Props_I;
-    }[]
+        typeField: 'checkbox' | 'text' | 'select' | 'textarea';
+        props: CheckBoxField_Props_I | SelectField_Props_I | TextInputField_Props_I;
+    }[];
+    grid_columns: string
 }
 
 

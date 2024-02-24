@@ -1,13 +1,11 @@
-import { getAssetPath } from "../../../../../core/utils";
-import { LayoutBuilder, PrimaryButton } from "../../../../../core/components"
-import { LayoutRow_I } from "../../../../../core/components/forms/interfaces"
+import { FormLayoutBuilder, PrimaryButton } from "../../../../../core/components"
+import { LayoutRow_I } from "../../../../../core/components/Forms/interfaces"
 import { useFormInitData } from "../../../../../core/hooks";
 
-import { useRef } from "react";
 import { Form, Formik } from "formik"
 
 
-const avatar_default = getAssetPath('/images/user-avatar-80.png');
+// const avatar_default = getAssetPath('/images/user-avatar-80.png');
 
 const estadosVenezuela: string[] = [
     "Amazonas",
@@ -41,7 +39,7 @@ const userData: LayoutRow_I[] = [
     {
         fields: [
             {
-                type: 'text',
+                typeField: 'text',
                 props: {
                     label: 'Nombre',
                     name: 'name',
@@ -60,7 +58,7 @@ const userData: LayoutRow_I[] = [
                 }
             },
             {
-                type: 'text',
+                typeField: 'text',
                 props: {
                     label: 'Apellido',
                     name: 'lastname',
@@ -79,7 +77,7 @@ const userData: LayoutRow_I[] = [
                 }
             },
             {
-                type: 'text',
+                typeField: 'text',
                 props: {
                     label: 'Teléfono',
                     name: 'phone',
@@ -93,12 +91,13 @@ const userData: LayoutRow_I[] = [
                     ]
                 }
             }
-        ]
+        ],
+        grid_columns: 'grid-cols-1 pcTab:grid-cols-2 lg:grid-cols-3'
     },
     {
         fields: [
             {
-                type: 'text',
+                typeField: 'text',
                 props: {
                     label: 'Dirección',
                     name: 'direction',
@@ -114,7 +113,7 @@ const userData: LayoutRow_I[] = [
                 }
             },
             {
-                type: 'text',
+                typeField: 'text',
                 props: {
                     label: 'Ciudad',
                     name: 'city',
@@ -129,38 +128,34 @@ const userData: LayoutRow_I[] = [
                 }
             },
             {
-                type: 'select',
+                typeField: 'select',
                 props: {
                     label: 'Estado',
                     name: 'state',
                     items: estadosVenezuela.map((estado) => ({ value: estado, label: estado }))
                 }
             }
-        ]
+        ],
+        grid_columns: 'grid-cols-1 pcTab:grid-cols-2 lg:grid-cols-3'
     }
 
 ];
-
-// const initialValues: { [key: string]: any } = {};
-// const requiredFields: { [key: string]: any } = {};
-
-
 
 export const PersonalPage = () => {
 
     const { initialValues, validation_rules } = useFormInitData(userData);
 
-    const fileInputRef = useRef();
+    // const fileInputRef = useRef<HTMLInputElement>(null);
 
-    let isLoading: boolean = false;
+    // let isLoading: boolean = false;
 
-    const onFileInputChange = (target: any) => {
-        if (target.files === 0) return;
+    // const onFileInputChange = (target: any) => {
+    //     if (target.files === 0) return;
 
-        // dispatch()
-        // dispatch(startUploadFiles(target.files));
+    //     // dispatch()
+    //     // dispatch(startUploadFiles(target.files));
 
-    }
+    // }
 
     return (
 
@@ -172,7 +167,7 @@ export const PersonalPage = () => {
                     console.log('values', values)
                 }}
                 validationSchema={validation_rules}
-                >
+            >
                 {
                     ({
                         submitForm
@@ -183,11 +178,11 @@ export const PersonalPage = () => {
 
                             <div className="p-6 space-y-6">
 
-                                <h2 className="mb-5 text-2xl font-bold text-slate-800 dark:text-slate-100">
+                                <h2 className="mb-5 text-2xl font-bold text-slate-800 dark:text-slate-100 ">
                                     Perfil personal
                                 </h2>
                                 {/* Picture */}
-                                <section>
+                               {/*  <section>
                                     <div className="flex items-center">
                                         <div className="mr-4">
                                             <img className="w-20 h-20 rounded-full" src={avatar_default} width="80" height="80" alt="User upload" />
@@ -204,10 +199,10 @@ export const PersonalPage = () => {
                                         />
                                         <PrimaryButton
                                             disabled={isLoading}
-                                            onClick={() => { fileInputRef.current.click() }} label="Cambiar" />
+                                            onClick={() => { fileInputRef.current?.click() }} label="Cambiar" />
 
                                     </div>
-                                </section>
+                                </section> */}
                                 {/* Business Profile */}
                                 <section>
                                     <h2 className="mb-1 text-xl font-bold leading-snug text-slate-800 dark:text-slate-100">
@@ -217,7 +212,7 @@ export const PersonalPage = () => {
                                         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed neque aut et cumque, labo
                                     </div>
 
-                                    <LayoutBuilder rows={userData} />
+                                    <FormLayoutBuilder rows={userData} />
 
                                 </section>
 
@@ -226,7 +221,7 @@ export const PersonalPage = () => {
                             <footer>
                                 <div className="flex flex-col px-6 py-5 border-t border-slate-200 dark:border-slate-700">
                                     <div className="flex self-end">
-                                        <PrimaryButton onClick={ submitForm } label="Guardar" className="ml-3" />
+                                        <PrimaryButton onClick={submitForm} label="Guardar" />
                                     </div>
                                 </div>
                             </footer>
@@ -237,8 +232,6 @@ export const PersonalPage = () => {
 
             </Formik>
         </div>
-
-
 
     )
 }

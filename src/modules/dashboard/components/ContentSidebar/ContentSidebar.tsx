@@ -1,7 +1,7 @@
 
 
 import { useLocation } from 'react-router-dom';
-import { ContentSidebarConstants } from '../../models/ContentSidebarConstants';
+import { ContentSidebarConstants } from '../../Models/ContentSidebarConstants';
 import { ContentSidebarGroup } from './ContentSidebarGroup';
 
 export const ContentSidebar = () => {
