@@ -36,6 +36,7 @@ export interface TextInputField_Props_I {
     validation_rules?: ValidationRule_I[];
     parent_className?: string;
     [x: string]: any,
+    formik?: any
 }
 
 export interface TextAreaField_Props_I {

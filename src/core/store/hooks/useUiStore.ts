@@ -1,5 +1,5 @@
 
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Core_Reducers_I } from "../store";
 import { on_Handler_SignatureSelectorModal, uiState_I } from "../reducers/ui/uiSlice";
 import { Handle_Signature_Modal_I } from "../reducers/ui/uiActions";
@@ -13,7 +13,7 @@ export const useUiStore = (): useUiStore_I => {
 
     const dispatch = useDispatch();
 
-    const state = useSelector<Core_Reducers_I, uiState_I>(({ ui }) => ui);
+    const state = useSelector<Core_Reducers_I, uiState_I>(({ ui }) => ui, shallowEqual);
 
     const handle_signatureModal = ({ status, text }: Handle_Signature_Modal_I) => {
         dispatch(on_Handler_SignatureSelectorModal({

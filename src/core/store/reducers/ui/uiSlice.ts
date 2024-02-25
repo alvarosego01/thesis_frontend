@@ -9,7 +9,7 @@ export interface uiState_I {
         dashboard: {
             signature_selector_modal: {
                 status: boolean;
-                text_signatur: string;
+                text: string;
             }
         }
     }
@@ -19,8 +19,8 @@ const initialState: uiState_I = {
     modals: {
         dashboard: {
             signature_selector_modal: {
-                status: false,
-                text_signatur: ""
+                status: true,
+                text: ""
             }
         }
     }
@@ -31,21 +31,16 @@ export const uiSlice = createSlice({
     initialState,
     reducers: {
         on_Handler_SignatureSelectorModal: (state, {payload}: PayloadAction<Handle_Signature_Modal_I>) => {
-
             state.modals.dashboard.signature_selector_modal = {
                 status: payload.status,
-                text_signatur: payload.text
+                text: payload.text
             }
-            // state.modals.dashboard.signature_selector_modal.status = payload.status;
-            // state.modals.dashboard.signature_selector_modal.text_signatur = payload.text
-
         },
         on_restoreDefault: (state) => {
             state = initialState;
         },
     }
 });
-
 
 export const {
     on_Handler_SignatureSelectorModal,

@@ -22,3 +22,4 @@ export * from "./buttons/TertiaryButton";
 
 // Modals
 export { InfoModal } from './modals/InfoModal';
+export { BlankModal } from './modals/BlankModal';

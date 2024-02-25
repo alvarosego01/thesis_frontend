@@ -5,9 +5,9 @@ export const TertiaryButton = ({ label, className = '', size = 'default', disabl
 
     const sizeButton = (): string => {
 
-         if(size === 'default') return 'btn';
+         if(size === 'default') return 'bttn';
 
-         return `btn-${size}`;
+         return `bttn-${size}`;
 
     }
 

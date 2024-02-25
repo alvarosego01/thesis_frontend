@@ -2,12 +2,10 @@ import { Form, Formik } from "formik"
 import { FormLayoutBuilder, InfoModal, SecondaryButton } from "../../../../../core/components"
 import { LayoutRow_I } from "../../../../../core/components/forms/interfaces"
 import { useFormInitData } from "../../../../../core/hooks"
-import { SignatureSelector } from "../components"
+import { SignatureModal, SignatureSelector } from "../components"
 import { useState } from "react"
 import { SignatureModel_I } from "../../../Interfaces"
 import { useUiStore } from "../../../../../core/store"
-
-
 
 const data_email: LayoutRow_I[] = [
     {
@@ -74,19 +72,29 @@ export const SecuritySettingsPage = () => {
     })
 
     const {
-        // handle_signatureModal
+        state: {
+            modals:{
+                dashboard: {
+                    signature_selector_modal
+                }
+            }
+        },
         handle_signatureModal
     } = useUiStore();
 
     const signature_modal = () => {
         // return
-        console.log('signature_modal')
         handle_signatureModal({
             status: true,
             text: ''
         })
 
     }
+
+
+
+
+
 
     return (
         <>
@@ -180,7 +188,7 @@ export const SecuritySettingsPage = () => {
 
         </div>
 
-            <InfoModal />
+        <SignatureModal {...signature_selector_modal } />
 
         </>
     )

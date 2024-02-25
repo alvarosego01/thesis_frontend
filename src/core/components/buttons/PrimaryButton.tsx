@@ -5,9 +5,9 @@ export const PrimaryButton = ({ label, className = '', disabled, size = 'default
 
     const sizeButton = (): string => {
 
-        if (size === 'default') return 'btn';
+        if (size === 'default') return 'bttn';
 
-        return `!btn-${size}`;
+        return `!bttn-${size}`;
 
     }
 
