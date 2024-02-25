@@ -293,6 +293,7 @@ export default {
     plugins: [
         // eslint-disable-next-line global-require
         require('@tailwindcss/forms'),
+        require("daisyui"),
         require('tailwind-scrollbar'),
         require('tailwindcss-percentage-width'),
         require('tailwind-bootstrap-grid')({

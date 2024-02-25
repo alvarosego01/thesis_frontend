@@ -5,7 +5,7 @@ import { Form, Formik } from "formik"
 import { FormLayoutBuilder, GallerySelector, PrimaryButton, VideoGallerySelector } from "../../../../../core/components";
 import { useFormInitData } from "../../../../../core/hooks";
 
-import { LayoutRow_I } from "../../../../../core/components/Forms/interfaces";
+import { LayoutRow_I } from "../../../../../core/components/forms/interfaces";
 
 const data_artistName: LayoutRow_I[] = [
     {

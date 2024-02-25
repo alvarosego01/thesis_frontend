@@ -1,5 +1,5 @@
 import { FormLayoutBuilder, PrimaryButton } from "../../../../../core/components"
-import { LayoutRow_I } from "../../../../../core/components/Forms/interfaces"
+import { LayoutRow_I } from "../../../../../core/components/forms/interfaces"
 import { useFormInitData } from "../../../../../core/hooks";
 
 import { Form, Formik } from "formik"

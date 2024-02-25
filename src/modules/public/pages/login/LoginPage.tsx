@@ -4,7 +4,7 @@ import { Form, Formik } from 'formik';
 
 import { getAssetPath } from '../../../../core/utils';
 import { useFormInitData } from '../../../../core/hooks';
-import { LayoutRow_I } from '../../../../core/components/Forms/interfaces';
+import { LayoutRow_I } from '../../../../core/components/forms/interfaces';
 import { FormLayoutBuilder, PrimaryButton } from '../../../../core/components';
 
 const AuthImage = getAssetPath('/images/auth-image.jpg');

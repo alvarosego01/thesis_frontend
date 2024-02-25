@@ -1,5 +1,5 @@
-import { PrimaryButton } from "../Buttons/PrimaryButton";
-import { SecondaryButton } from "../Buttons/SecondaryButton";
+import { PrimaryButton } from "../buttons/PrimaryButton";
+import { SecondaryButton } from "../buttons/SecondaryButton";
 import { useRef } from "react";
 
 

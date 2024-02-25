@@ -7,7 +7,7 @@ import { getAssetPath } from '../../../../core/utils';
 import { FormLayoutBuilder, PrimaryButton } from '../../../../core/components';
 import { useFormInitData } from '../../../../core/hooks';
 
-import { LayoutRow_I } from '../../../../core/components/Forms/interfaces';
+import { LayoutRow_I } from '../../../../core/components/forms/interfaces';
 
 const AuthImage = getAssetPath('/images/auth-image.jpg');
 const AuthDecoration = getAssetPath('/images/auth-decoration.png');

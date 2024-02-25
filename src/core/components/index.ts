@@ -1,20 +1,24 @@
-export { GallerySelector } from './Selectors/GallerySelector';
-export { VideoGallerySelector } from './Selectors/VideoGallerySelector';
 
-export { DocumentSelector } from './Selectors/DocumentSelector';
+export { GallerySelector } from './selectors/GallerySelector';
+export { VideoGallerySelector } from './selectors/VideoGallerySelector';
+
+export { DocumentSelector } from './selectors/DocumentSelector';
 
 export { SettingsSidebar } from './SettingsSidebar';
 
-export { Header } from './Shared/Header';
+export { Header } from './shared/Header';
 
 
-export * from "./Forms/CheckBoxField";
-export * from "./Forms/FormLayoutBuilder";
-export * from "./Forms/SelectField";
-export * from "./Forms/TextInputField";
-export * from "./Forms/TextAreaField";
+export * from "./forms/CheckBoxField";
+export * from "./forms/FormLayoutBuilder";
+export * from "./forms/SelectField";
+export * from "./forms/TextInputField";
+export * from "./forms/TextAreaField";
 
 
-export * from "./Buttons/PrimaryButton";
-export * from "./Buttons/SecondaryButton";
-export * from "./Buttons/TertiaryButton";
+export * from "./buttons/PrimaryButton";
+export * from "./buttons/SecondaryButton";
+export * from "./buttons/TertiaryButton";
+
+// Modals
+export { InfoModal } from './modals/InfoModal';

@@ -1,7 +1,7 @@
 import { useRef } from "react";
 
 import { NotFoundContent } from "../../../modules/dashboard/components";
-import { TertiaryButton } from "../Buttons/TertiaryButton";
+import { TertiaryButton } from "../buttons/TertiaryButton";
 
 
 interface VideoGallerySelector_Props_I {

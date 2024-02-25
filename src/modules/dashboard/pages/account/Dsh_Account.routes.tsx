@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom"
-import { ArtiscSkillsPage, CredentialsPage, PersonalPage, ProfessionalPage, SecuritySettingsPage } from "./Pages"
+import { ArtiscSkillsPage, CredentialsPage, PersonalPage, ProfessionalPage, SecuritySettingsPage } from "./pages"
 
 
 

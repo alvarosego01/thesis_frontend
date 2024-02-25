@@ -1,4 +1,4 @@
-import { LayoutRow_I } from "../components/Forms/interfaces";
+import { LayoutRow_I } from "../components/forms/interfaces";
 
 import * as Yup from 'yup';
 

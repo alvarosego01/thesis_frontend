@@ -1,7 +1,7 @@
 
 import { Button_I } from "./interfaces"
 
-export const TertiaryButton = ({ label, className, size = 'default', disabled, icon, onClick, isLoading }: Button_I) => {
+export const TertiaryButton = ({ label, className = '', size = 'default', disabled, icon, onClick, isLoading }: Button_I) => {
 
     const sizeButton = (): string => {
 

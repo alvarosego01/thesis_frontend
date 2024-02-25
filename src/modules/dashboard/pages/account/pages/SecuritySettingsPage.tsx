@@ -1,10 +1,12 @@
 import { Form, Formik } from "formik"
-import { FormLayoutBuilder, SecondaryButton } from "../../../../../core/components"
-import { LayoutRow_I } from "../../../../../core/components/Forms/interfaces"
+import { FormLayoutBuilder, InfoModal, SecondaryButton } from "../../../../../core/components"
+import { LayoutRow_I } from "../../../../../core/components/forms/interfaces"
 import { useFormInitData } from "../../../../../core/hooks"
-import { SignatureSelector } from "../Components"
+import { SignatureSelector } from "../components"
 import { useState } from "react"
 import { SignatureModel_I } from "../../../Interfaces"
+import { useUiStore } from "../../../../../core/store"
+
 
 
 const data_email: LayoutRow_I[] = [
@@ -71,7 +73,23 @@ export const SecuritySettingsPage = () => {
         updated_at: ''
     })
 
+    const {
+        // handle_signatureModal
+        handle_signatureModal
+    } = useUiStore();
+
+    const signature_modal = () => {
+        // return
+        console.log('signature_modal')
+        handle_signatureModal({
+            status: true,
+            text: ''
+        })
+
+    }
+
     return (
+        <>
         <div className="grow">
             {/* Panel body */}
 
@@ -151,7 +169,7 @@ export const SecuritySettingsPage = () => {
 
                     <div className={`w-full mx-auto ${!signature.signature && 'lg:w-1/2'}`}>
 
-                        <SignatureSelector signature={signature.signature} updated_at={signature.updated_at} setSignature={() => { }} />
+                        <SignatureSelector signature={signature.signature} updated_at={signature.updated_at} setSignature={() => signature_modal() } />
 
                     </div>
 
@@ -161,5 +179,9 @@ export const SecuritySettingsPage = () => {
             </div>
 
         </div>
+
+            <InfoModal />
+
+        </>
     )
 }
