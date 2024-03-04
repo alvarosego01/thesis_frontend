@@ -1,11 +1,15 @@
 
-import { CheckBoxField, SelectField, TextAreaField, TextInputField } from "..";
+import { FC } from "react";
+import { CheckBoxField, FileHideInput, SelectField, TextAreaField, TextInputField } from "..";
 import { LayoutRow_I, SelectField_Props_I } from "./interfaces"
 
 
-export const FormLayoutBuilder = ({ rows }: {
+interface FormLayoutBuilder_Props_I {
     rows: LayoutRow_I[]
-}) => {
+    // ref?: React.RefObject<HTMLInputElement>;
+}
+
+export const FormLayoutBuilder: FC<FormLayoutBuilder_Props_I> = ({ rows }) => {
 
     return (
         <>
@@ -17,6 +21,8 @@ export const FormLayoutBuilder = ({ rows }: {
                                 {row.fields.map((field, j) => {
 
                                     switch (field.typeField) {
+                                        // case 'file':
+                                        //     return <FileHideInput key={j} {...field.props} />
                                         case 'text':
                                             return <TextInputField key={j} {...field.props} />
                                         case 'select':

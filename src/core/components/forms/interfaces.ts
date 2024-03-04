@@ -1,15 +1,21 @@
 
 export interface ValidationRule_I {
-    type: "required" | "minLength" | "maxLength" | "email" | "tel" | "pattern" | "min" | "max" | "custom" | "url" | "same_field";
-    message: string;
+    type: "required" | "minLength" | "maxLength" | "email" | "tel" | "pattern" | "min" | "max" | "custom" | "url" | "same_field" | "fileFormat_document" | "fileFormat_image" | "fileSize_5m";
+    message?: string;
     value?: number | string;
+}
+
+export interface FieldValue_I {
+    // field: string;
+    // value: string
+     [x: string]: any,
 }
 
 export interface CheckBoxField_Props_I {
     label: string;
     name: string;
     validation_rules?: ValidationRule_I[];
-    parent_className?: string;
+    parent_class?: string;
     [x: string]: any,
 }
 
@@ -23,7 +29,7 @@ export interface SelectField_Props_I {
     }[];
     validation_rules?: ValidationRule_I[]
     icon?: string;
-    parent_className?: string;
+    parent_class?: string;
     [x: string]: any,
 }
 
@@ -33,11 +39,26 @@ export interface TextInputField_Props_I {
     type?: 'text' | 'email' | 'password' | 'tel';
     placeholder?: string;
     icon?: string;
+    value?: string;
     validation_rules?: ValidationRule_I[];
-    parent_className?: string;
+    parent_class?: string;
     [x: string]: any,
-    formik?: any
 }
+
+
+export interface FileHideInput_Props_I {
+    // ref: React.RefObject<HTMLInputElement>;
+    multiple: boolean;
+    name: string;
+    value: any;
+    label: string;
+    type: 'file';
+    accept: string;
+    validation_rules?: ValidationRule_I[];
+    // parent_class?: string;
+    [x: string]: any,
+}
+
 
 export interface TextAreaField_Props_I {
     label: string;
@@ -45,16 +66,16 @@ export interface TextAreaField_Props_I {
     placeholder?: string;
     icon?: string;
     validation_rules?: ValidationRule_I[];
-    parent_className?: string;
+    parent_class?: string;
     [x: string]: any,
 }
 
 export interface LayoutRow_I {
     fields: {
-        typeField: 'checkbox' | 'text' | 'select' | 'textarea';
-        props: CheckBoxField_Props_I | SelectField_Props_I | TextInputField_Props_I;
+        typeField: 'checkbox' | 'text' | 'select' | 'textarea' | 'file';
+        props: any;
     }[];
-    grid_columns: string
+    grid_columns?: string
 }
 
 

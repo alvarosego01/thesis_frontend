@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { FC, useRef } from 'react';
 
 import { TertiaryButton } from '..';
 import { NotFoundContent } from '../../../modules/dashboard/components';
@@ -7,7 +7,7 @@ interface GallerySelector_Props_I {
     gallery: string[]
 }
 
-export const GallerySelector = ({ gallery }: GallerySelector_Props_I) => {
+export const GallerySelector: FC<GallerySelector_Props_I> = ({ gallery }) => {
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 

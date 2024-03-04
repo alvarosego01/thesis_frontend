@@ -1,11 +1,13 @@
-import { FormLayoutBuilder, PrimaryButton } from "../../../../../core/components"
+import { FC, useEffect } from "react";
+import { FileHideInput, FormLayoutBuilder, PrimaryButton } from "../../../../../core/components"
 import { LayoutRow_I } from "../../../../../core/components/forms/interfaces"
 import { useFormInitData } from "../../../../../core/hooks";
 
-import { Form, Formik } from "formik"
+import { Form, FormikProvider, useFormik } from "formik"
+import { getAssetPath } from "../../../../../core/utils";
 
 
-// const avatar_default = getAssetPath('/images/user-avatar-80.png');
+const avatar_default = getAssetPath('/images/user-avatar-80.png');
 
 const estadosVenezuela: string[] = [
     "Amazonas",
@@ -90,9 +92,30 @@ const userData: LayoutRow_I[] = [
                         }
                     ]
                 }
-            }
+            },
+            {
+                typeField: 'select',
+                props: {
+                    label: 'Género',
+                    name: 'gender',
+                    items: [
+                        {
+                            label: 'Mascullino',
+                            value: 'masculine'
+                        },
+                        {
+                            label: 'Femenino',
+                            value: 'contratist_role'
+                        }
+                    ],
+                    placeholder: 'Selecciona tu género',
+                    // validation_rules: [
+
+                    // ]
+                }
+            },
         ],
-        grid_columns: 'grid-cols-1 pcTab:grid-cols-2 lg:grid-cols-3'
+        grid_columns: 'grid-cols-1 pcTab:grid-cols-2 lg:grid-cols-4'
     },
     {
         fields: [
@@ -136,101 +159,157 @@ const userData: LayoutRow_I[] = [
                 }
             }
         ],
-        grid_columns: 'grid-cols-1 pcTab:grid-cols-2 lg:grid-cols-3'
+        grid_columns: 'grid-cols-1 pcTab:grid-cols-3 lg:grid-cols-3'
     }
 
 ];
 
-export const PersonalPage = () => {
+const userImage: LayoutRow_I[] = [
+    {
+        fields: [
+            {
+                typeField: 'file',
+                props: {
+                    label: 'Cambiar foto de perfil',
+                    name: 'profile_pic',
+                    type: 'file',
+                    accept: 'image/png, image/jpeg, image/jpg',
+                    validation_rules: [
+                        // {
+                        //     type: 'required',
+                        //     message: 'La foto de perfil es necesaria'
+                        // },
+                        {
+                            type: "fileSize_5m",
+                            message: "El archivo debe ser menor a 5MB"
+                        },
+                        {
+                            type: "fileFormat_image",
+                            message: "El archivo debe ser una imagen"
+                        }
+                    ]
+                }
+            }
+        ],
+    }
+]
 
-    const { initialValues, validation_rules } = useFormInitData(userData);
+interface Init_valuesData_I {
+    name: string;
+    lastname: string;
+    phone: string;
+    direction: string;
+    city: string;
+    state: string;
+}
 
-    // const fileInputRef = useRef<HTMLInputElement>(null);
+export const PersonalPage: FC = () => {
 
-    // let isLoading: boolean = false;
+    const Init_Values: Init_valuesData_I = {
+        name: '',
+        lastname: '',
+        phone: '',
+        direction: '',
+        city: '',
+        state: '',
+    }
 
-    // const onFileInputChange = (target: any) => {
-    //     if (target.files === 0) return;
-
-    //     // dispatch()
-    //     // dispatch(startUploadFiles(target.files));
-
+    // const Init_image: { profile_pic: string } = {
+    //     profile_pic: ''
     // }
+
+    const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(userData, Init_Values);
+    const { initialValues: initial_image, validation_rules: validation_image } = useFormInitData<{ file: string }>(userImage);
+
+    const formik = useFormik({
+        initialValues: initialValues,
+        onSubmit: (values) => {
+            console.log('values', values);
+        },
+        validationSchema: validation_rules
+    });
+
+    const formik_image = useFormik({
+        initialValues: initial_image,
+        onSubmit: (values) => {
+            console.log('values', values);
+        },
+        validationSchema: validation_image
+    });
+
+    const {
+        values,
+        errors,
+        submitForm
+    } = formik;
+
+    const {
+        values: values_image,
+        submitForm: submitForm_image,
+        isValid: isValid_image,
+        // errors: errors_image
+    } = formik_image;
+
+    useEffect(() => {
+
+        if(isValid_image){
+            // Se emite la acción de subir la imagen
+        }
+
+    }, [values_image, isValid_image])
 
     return (
 
         <div className="grow">
-            {/* Panel body */}
-            <Formik
-                initialValues={initialValues}
-                onSubmit={(values) => {
-                    console.log('values', values)
-                }}
-                validationSchema={validation_rules}
-            >
-                {
-                    ({
-                        submitForm
-                    }) => (
 
-                        <Form noValidate
-                        >
+            <div className="p-5 space-y-5">
 
-                            <div className="p-6 space-y-6">
+                <h2 className="mb-5 text-2xl font-bold text-slate-800 dark:text-slate-100 ">
+                    Perfil personal
+                </h2>
+                {/* Picture */}
+                <section>
+                    <div className="flex items-center">
+                        <div className="mr-4">
+                            <img className="w-20 h-20 rounded-full" src={avatar_default} width="80" height="80" alt="User upload" />
+                        </div>
 
-                                <h2 className="mb-5 text-2xl font-bold text-slate-800 dark:text-slate-100 ">
-                                    Perfil personal
-                                </h2>
-                                {/* Picture */}
-                               {/*  <section>
-                                    <div className="flex items-center">
-                                        <div className="mr-4">
-                                            <img className="w-20 h-20 rounded-full" src={avatar_default} width="80" height="80" alt="User upload" />
-                                        </div>
+                        <FormikProvider value={formik_image}>
+                            <Form noValidate>
+                                <FileHideInput {...userImage[0].fields[0].props } />
+                            </Form>
+                        </FormikProvider>
 
-                                        <input
-                                            onChange={onFileInputChange}
-                                            ref={fileInputRef}
-                                            type="file"
-                                            // multiple
-                                            style={{
-                                                display: 'none'
-                                            }}
-                                        />
-                                        <PrimaryButton
-                                            disabled={isLoading}
-                                            onClick={() => { fileInputRef.current?.click() }} label="Cambiar" />
+                    </div>
+                </section>
+                <section>
+                    <h2 className="mb-1 text-xl font-bold leading-snug text-slate-800 dark:text-slate-100">
+                        Datos de usuario
+                    </h2>
+                    <div className="text-sm mb-s_25">
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed neque aut et cumque, labo
+                    </div>
 
-                                    </div>
-                                </section> */}
-                                {/* Business Profile */}
-                                <section>
-                                    <h2 className="mb-1 text-xl font-bold leading-snug text-slate-800 dark:text-slate-100">
-                                        Datos de usuario
-                                    </h2>
-                                    <div className="text-sm mb-s_25">
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed neque aut et cumque, labo
-                                    </div>
-
-                                    <FormLayoutBuilder rows={userData} />
-
-                                </section>
-
-                            </div>
-
-                            <footer>
-                                <div className="flex flex-col px-6 py-5 border-t border-slate-200 dark:border-slate-700">
-                                    <div className="flex self-end">
-                                        <PrimaryButton onClick={submitForm} label="Guardar" />
-                                    </div>
-                                </div>
-                            </footer>
-
+                    <FormikProvider value={formik}>
+                        <Form noValidate>
+                            <FormLayoutBuilder rows={userData} />
                         </Form>
+                    </FormikProvider>
 
-                    )}
 
-            </Formik>
+                </section>
+
+            </div>
+
+            <footer>
+                <div className="flex flex-col px-6 py-5 border-t border-slate-200 dark:border-slate-700">
+                    <div className="flex self-end">
+                        <PrimaryButton onClick={submitForm} label="Guardar" />
+                    </div>
+                </div>
+            </footer>
+
+
         </div>
 
     )

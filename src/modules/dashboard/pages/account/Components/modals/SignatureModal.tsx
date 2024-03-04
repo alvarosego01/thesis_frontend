@@ -1,9 +1,12 @@
 
-import { Form, Formik, useFormik } from 'formik';
-import { BlankModal, FormLayoutBuilder } from '../../../../../../core/components';
-import { LayoutRow_I } from '../../../../../../core/components/forms/interfaces';
+import { Form, useFormik, FormikProvider } from 'formik';
+import { FC } from 'react';
+
+import { BlankModal, FormLayoutBuilder, PrimaryButton } from '../../../../../../core/components';
+import { FieldValue_I, LayoutRow_I } from '../../../../../../core/components/forms/interfaces';
 import { useFormInitData } from '../../../../../../core/hooks';
 import { Handle_Signature_Modal_I } from '../../../../../../core/store/reducers/ui/uiActions';
+import { useUiStore } from '../../../../../../core/store';
 
 const formData: LayoutRow_I[] = [
     {
@@ -12,14 +15,18 @@ const formData: LayoutRow_I[] = [
                 typeField: 'text',
                 props: {
                     label: '',
-                    name: 'name',
+                    name: 'signature',
                     type: 'text',
+                    parent_class: 'w-2/3 mx-auto',
                     validation_rules: [
-
+                        {
+                            type: "required",
+                            message: "Tu firma es requerida"
+                        },
                         {
                             type: "minLength",
                             value: 3,
-                            message: "El nombre debe tener al menos 3 caracteres"
+                            message: "Tu firma debe tener al menos 3 caracteres"
                         }
                     ]
                 }
@@ -30,23 +37,53 @@ const formData: LayoutRow_I[] = [
     }
 ]
 
-export const SignatureModal = ({
+export const SignatureModal: FC<Handle_Signature_Modal_I> = ({
     status,
     text
-}: Handle_Signature_Modal_I) => {
+}) => {
 
-    const { initialValues, validation_rules } = useFormInitData(formData);
+    const init_fieldValues: FieldValue_I = {
+        signature: text
+    }
+    const { initialValues, validation_rules } = useFormInitData(formData, init_fieldValues);
+
+    const formik = useFormik({
+        initialValues: initialValues,
+        onSubmit: (values) => {
+            console.log('values', values);
+        },
+        validationSchema: validation_rules
+    });
+
+    const {
+        values,
+        submitForm
+    } = formik;
+
+
+    const {
+        // state
+        handle_signatureModal
+    } = useUiStore();
+
+    const closeModal = () => {
+
+            handle_signatureModal({
+                status: false,
+                text: ''
+            })
+    }
 
     return (
         <>
             {
                 status && (
-                    <BlankModal status={status}  >
+                    <BlankModal onClose={closeModal} status={status}  >
                         {/* Modal header */}
                         <div className="mb-2 text-center">
                             {/* Icon */}
                             <div className="mb-3">
-                                <div className="inline-flex items-center justify-center w-10 h-10 rounded-full mb-s_10 bg-gradient-to-t from-slate-200 to-slate-100 dark:from-slate-700 dark:to-slate-800">
+                                <div className="inline-flex items-center justify-center w-10 h-10 mb-0 rounded-full bg-gradient-to-t from-slate-200 to-slate-100 dark:from-slate-700 dark:to-slate-800">
                                     <i className={`bx bx-edit text-25p`}></i>
                                 </div>
                             </div>
@@ -56,31 +93,23 @@ export const SignatureModal = ({
                         </div>
                         {/* Modal content */}
                         <div className="text-center">
+                            {
+                                values.signature && (
+                                    <span className="block text-5xl h-s_50 ml-s_10 my-s_25 font-tuesdaynight">
+                                        {values.signature}
+                                    </span>
+                                )
+                            }
+                            <FormikProvider value={formik}>
+                                <Form noValidate>
 
-                            <div className="mb-6 text-sm">
-                                Semper eget duis at tellus at urna condimentum mattis pellentesque
-                            </div>
+                                    <FormLayoutBuilder rows={formData} />
 
-                             <Formik
-                                initialValues={initialValues}
-                                onSubmit={(values) => {
-                                    console.log('values', values)
-                                }}
-                                validationSchema={validation_rules}>
-                                {
-                                    ({
-                                        submitForm,
-                                        values,
-                                    }) => (
-                                        <Form noValidate>
-                                            <pre>
-                                                {JSON.stringify(values, null, 2)}
-                                            </pre>
-                                            <FormLayoutBuilder rows={formData} />
-                                        </Form>
-                                    )
-                                }
-                            </Formik>
+                                    <div className="flex items-center justify-center mt-s_10">
+                                        <PrimaryButton onClick={submitForm} label="Guardar" />
+                                    </div>
+                                </Form>
+                            </FormikProvider>
 
                             <div className="mt-3 text-xs italic text-slate-500">
                                 ISemper eget duis at tellus at urna condimentum mattis pellentesque

@@ -4,12 +4,12 @@ import { Core_Reducers_I } from "../store";
 import { on_Handler_SignatureSelectorModal, uiState_I } from "../reducers/ui/uiSlice";
 import { Handle_Signature_Modal_I } from "../reducers/ui/uiActions";
 
-interface useUiStore_I {
+interface useHookStore_I {
     state: uiState_I;
     handle_signatureModal: (x: Handle_Signature_Modal_I) => void;
 }
 
-export const useUiStore = (): useUiStore_I => {
+export const useUiStore = (): useHookStore_I => {
 
     const dispatch = useDispatch();
 

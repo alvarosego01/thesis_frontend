@@ -1,15 +1,19 @@
+import { UserProfileDropdown } from "../../../modules/dashboard/components";
+import { useAuthStore } from "../../store";
+import { FC } from "react";
 
 interface Header_I {
     sidebarOpen: boolean;
     setSidebarOpen: (sidebarOpen: boolean) => void;
 }
-
-export const Header = ({
+export const Header: FC<Header_I> = ({
     sidebarOpen,
     setSidebarOpen
-}: Header_I) => {
+}) => {
 
-    // const [searchModalOpen, setSearchModalOpen] = useState(false)
+    const {
+        state
+    } = useAuthStore();
 
     return (
         <header className="sticky top-0 bg-white dark:bg-[#182235] border-b border-slate-200 dark:border-slate-700 z-30">
@@ -36,10 +40,11 @@ export const Header = ({
 
                     </div>
 
-                    {/* Header: Right side */}
-                    {/* <div className="flex items-center space-x-3">
-                        <div>
-                            <button
+                    {
+                        state.status === 'authenticated' && (
+                            <div className="flex items-center space-x-3">
+                                <div>
+                                    {/* <button
                                 className={`w-8 h-8 flex items-center justify-center bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600/80 rounded-full ml-3 ${searchModalOpen && 'bg-slate-200'}`}
                                 onClick={(e) => { e.stopPropagation(); setSearchModalOpen(true); }}
                                 aria-controls="search-modal"
@@ -51,13 +56,17 @@ export const Header = ({
                                 </svg>
                             </button>
                             <SearchModal id="search-modal" searchId="search" modalOpen={searchModalOpen} setModalOpen={setSearchModalOpen} />
-                        </div>
-                        <Notifications align="right" />
+                            */}
+                                </div>
+                                {/* <Notifications align="right" />
                         <Help align="right" />
-                        <ThemeToggle />
-                        <hr className="w-px h-6 border-none bg-slate-200 dark:bg-slate-700" />
-                        <UserMenu align="right" />
-                    </div> */}
+                        <ThemeToggle /> */}
+                                <hr className="w-px h-6 border-none bg-slate-200 dark:bg-slate-700" />
+                                <UserProfileDropdown align="right" />
+                            </div>
+                        )
+                    }
+
 
                 </div>
             </div>

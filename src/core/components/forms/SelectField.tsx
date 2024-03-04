@@ -24,7 +24,7 @@ export const SelectField = ({ label, className, ...props }: SelectField_Props_I)
                 {isRequired && <span className="text-rose-500">*</span>}
             </label>
             <select className={`w-full form-select ${fieldState()}`} {...field} {...props} />
-            <ErrorMessage name={props.name} component='div' className="mt-1 text-xs text-rose-500" />
+            <ErrorMessage name={props.name} component='span' className="mt-1 text-xs text-rose-500" />
 
         </div>
     )

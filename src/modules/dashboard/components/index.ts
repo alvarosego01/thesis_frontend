@@ -1,3 +1,4 @@
+
 export { NotFoundContent } from './NotFound/NotFoundContent';
 
 export { ContentSidebar } from './ContentSidebar/ContentSidebar';
@@ -8,4 +9,7 @@ export { Sidebar_Group_Link, Sidebar_Single_Link } from './NavSidebar/SidebarLin
 export { MenuLinksList } from "./NavSidebar/MenuLinksList";
 export { Sidebar } from "./NavSidebar/Sidebar";
 export { SidebarLinkGroup } from "./NavSidebar/SidebarLinkGroup";
+
+// User general
+export { UserProfileDropdown } from './UserGeneral/UserProfileDropdown';
 

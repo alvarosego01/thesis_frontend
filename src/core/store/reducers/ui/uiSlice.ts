@@ -19,7 +19,7 @@ const initialState: uiState_I = {
     modals: {
         dashboard: {
             signature_selector_modal: {
-                status: true,
+                status: false,
                 text: ""
             }
         }

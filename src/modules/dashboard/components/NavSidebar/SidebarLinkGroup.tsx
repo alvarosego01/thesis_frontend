@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { SidebarMenuLink_I } from '../../Interfaces';
 import { Sidebar_Group_Link, Sidebar_Single_Link } from './SidebarLink';
 
@@ -8,12 +9,12 @@ interface SidebarLinkGroup_I {
     pathname: string;
 }
 
-export const SidebarLinkGroup = ({
+export const SidebarLinkGroup: FC<SidebarLinkGroup_I> = ({
     // children,
     // activecondition,
     ItemMenu,
     pathname
-}: SidebarLinkGroup_I) => {
+}) => {
 
     const ShowLists = () => {
 

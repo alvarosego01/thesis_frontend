@@ -1,15 +1,16 @@
 import { NavLink } from "react-router-dom"
 import { ContentSidebarMenuLink_I } from "../../Interfaces"
+import { FC } from "react";
 
 interface ContentSidebarGroup_Props_I {
     item: ContentSidebarMenuLink_I;
     pathname: string;
 }
 
-export const ContentSidebarGroup = ({
+export const ContentSidebarGroup:  FC<ContentSidebarGroup_Props_I> = ({
     item,
     pathname
-}: ContentSidebarGroup_Props_I) => {
+}) => {
 
     const {
         titleGroup,
@@ -18,7 +19,6 @@ export const ContentSidebarGroup = ({
 
     return (
         <>
-            <div>
                 <div className="mb-3 text-xs font-semibold uppercase text-slate-400 dark:text-slate-500">
                     {titleGroup}
                 </div>
@@ -30,7 +30,7 @@ export const ContentSidebarGroup = ({
 
                                     {
                                         item.icon?.type === 'icon' ? (
-                                            <i className={item.icon?.content} ></i>
+                                            <i className={`${item.icon?.content} text-18p`} ></i>
                                         ) : (
                                             <img src={item.icon?.content} alt="icon" className="w-6 h-6" />
                                         )
@@ -44,8 +44,6 @@ export const ContentSidebarGroup = ({
                         ))
                     }
                 </ul>
-
-            </div>
         </>
     )
 }

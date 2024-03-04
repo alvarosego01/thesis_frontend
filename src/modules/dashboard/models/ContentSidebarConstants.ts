@@ -30,14 +30,7 @@ export const ContentSidebarConstants: ContentSidebarMenuLink_I[] = [
                     content: "bx bx-id-card"
                 },
             },
-            {
-                title: 'Capacidades artisticas',
-                link: '/dashboard/account/skills',
-                icon: {
-                    type: 'icon',
-                    content: "bx bxs-music"
-                },
-            },
+
 
             {
                 title: 'Seguridad de cuenta',

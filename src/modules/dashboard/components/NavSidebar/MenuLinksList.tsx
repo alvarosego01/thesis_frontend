@@ -1,4 +1,5 @@
 
+import { FC } from "react";
 import { SidebarMenuLink_I } from "../../Interfaces"
 import { SidebarLinkGroup } from "./SidebarLinkGroup";
 
@@ -7,7 +8,7 @@ interface MenuLinksList_I {
     pathname: string;
 }
 
-export const MenuLinksList = ({ menu_list, pathname }: MenuLinksList_I) => {
+export const MenuLinksList: FC<MenuLinksList_I> = ({ menu_list, pathname }) => {
 
     return (
 

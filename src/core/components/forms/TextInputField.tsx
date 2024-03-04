@@ -1,8 +1,9 @@
+import { FC } from "react";
 import { TextInputField_Props_I } from "./interfaces";
 import { ErrorMessage, useField } from "formik";
 
 
-export const TextInputField = ({ label, parent_className, ...props }: TextInputField_Props_I) => {
+export const TextInputField: FC<TextInputField_Props_I> = ({ label, parent_class, ...props }) => {
 
     const [field, meta] = useField(props);
 
@@ -18,10 +19,14 @@ export const TextInputField = ({ label, parent_className, ...props }: TextInputF
     }
 
     return (
-        <div className={`${parent_className || ''} mb-s_10 lg:mb-0`} >
-            <label className="block mb-1 text-sm font-medium" htmlFor={props.id || props.name}>     {label}
-                {isRequired && <span className="text-rose-500">*</span>}
-            </label>
+        <div className={`${parent_class || ''} mb-s_10 lg:mb-0`} >
+            {
+                label && (
+                    <label className="block mb-1 text-sm font-medium" htmlFor={props.id || props.name}>     {label}
+                        {isRequired && <span className="text-rose-500">*</span>}
+                    </label>
+                )
+            }
             <div className="relative">
                 <input type="text" className={`w-full form-input ${fieldState()} ${props?.icon && 'pl-s_35'}`} {...field} {...props} />
                 {
@@ -33,7 +38,7 @@ export const TextInputField = ({ label, parent_className, ...props }: TextInputF
                 }
 
             </div>
-            <ErrorMessage name={props.name} component='div' className="mt-1 text-xs text-rose-500" />
+            <ErrorMessage name={props.name} component='span' className="mt-1 text-xs text-rose-500" />
         </div>
     )
 }

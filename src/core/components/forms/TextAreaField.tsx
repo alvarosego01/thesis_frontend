@@ -5,7 +5,7 @@ import { TextAreaField_Props_I } from './interfaces';
 
 import { ErrorMessage, useField } from 'formik';
 
-export const TextAreaField = ({ label, parent_className, ...props }: TextAreaField_Props_I) => {
+export const TextAreaField = ({ label, parent_class: parent_className, ...props }: TextAreaField_Props_I) => {
 
     const [field, meta] = useField(props);
 
@@ -28,7 +28,7 @@ export const TextAreaField = ({ label, parent_className, ...props }: TextAreaFie
                 </label>)
             }
             <textarea className={`w-full form-textarea focus:border-slate-300 ${fieldState()}`} rows={4} placeholder={props.placeholder} {...field} {...props} />
-            <ErrorMessage name={props.name} component='div' className="mt-1 text-xs text-rose-500" />
+            <ErrorMessage name={props.name} component='span' className="mt-1 text-xs text-rose-500" />
 
         </div>
     )

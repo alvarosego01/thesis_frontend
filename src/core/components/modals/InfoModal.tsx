@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { Modal_Base_I } from "./interfaces";
 
 
-export const InfoModal = ({
+export const InfoModal: FC<Modal_Base_I> = ({
     status,
     children
-}: Modal_Base_I) => {
+}) => {
 
     const modalRef = useRef<HTMLDialogElement>(null);
     const closeModal = useRef<HTMLButtonElement>(null);

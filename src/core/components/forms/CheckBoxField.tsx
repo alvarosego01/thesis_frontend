@@ -16,7 +16,7 @@ export const CheckBoxField = ({ label, className, ...props }: CheckBoxField_Prop
                 {label}
                 {isRequired && <span className="text-rose-500">*</span>}
             </label>
-            <ErrorMessage name={props.name} component='div' className="mt-1 text-xs text-rose-500" />
+            <ErrorMessage name={props.name} component='span' className="mt-1 text-xs text-rose-500" />
         </div>
     )
 }

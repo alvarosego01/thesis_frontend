@@ -1,6 +1,7 @@
+import { FC } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 
-export const SettingsSidebar = () => {
+export const SettingsSidebar: FC = () => {
 
     const location = useLocation();
     const { pathname } = location;

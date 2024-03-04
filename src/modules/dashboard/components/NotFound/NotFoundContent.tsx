@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { PrimaryButton } from "../../../../core/components";
 
 interface NotFoundContent_Props_I {
@@ -8,13 +9,13 @@ interface NotFoundContent_Props_I {
     enableButton?: boolean;
 }
 
-export const NotFoundContent = ({
+export const NotFoundContent: FC<NotFoundContent_Props_I> = ({
     label = 'No hay contenido',
     text = '',
     icon = 'bx bx-sad',
     onClick,
     enableButton = true
-}: NotFoundContent_Props_I) => {
+}) => {
     return (
         <div className="px-4 text-center">
             <div className="inline-flex items-center justify-center w-10 h-10 rounded-full mb-s_10 bg-gradient-to-t from-slate-200 to-slate-100 dark:from-slate-700 dark:to-slate-800">

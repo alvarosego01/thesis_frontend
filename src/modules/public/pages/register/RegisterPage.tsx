@@ -33,7 +33,7 @@ const formData: LayoutRow_I[] = [
                     label: 'Email',
                     name: 'email',
                     type: 'email',
-                    parent_className: '!mb-4',
+                    parent_class: '!mb-4',
                     validation_rules: [
                         {
                             type: "required",
@@ -67,7 +67,7 @@ const formData: LayoutRow_I[] = [
                     label: 'Contraseña',
                     name: 'password',
                     type: 'password',
-                    parent_className: '!mb-4',
+                    parent_class: '!mb-4',
                     validation_rules: [
                         {
                             type: "required",
@@ -87,7 +87,7 @@ const formData: LayoutRow_I[] = [
                     label: 'Confirmar contraseña',
                     name: 'password_repeat',
                     type: 'password',
-                    parent_className: '!mb-4',
+                    parent_class: '!mb-4',
                     validation_rules: [
                         {
                             type: "required",

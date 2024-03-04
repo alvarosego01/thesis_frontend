@@ -1,28 +1,10 @@
 import { Suspense, lazy } from "react";
 import { Navigate, RouteObject, useRoutes } from "react-router-dom";
+import { useAuthStore } from "../../core/store";
 
 const Account = lazy(() => import('./pages/account/AccountPage'));
+const Role = lazy(() => import('./pages/byRole/ByRolePage'));
 const Notifications = lazy(() => import('./pages/notifications/NotificationsPage'));
-
-
-// const routes: Route_I[] = [
-//     {
-//         to: '/account/*',
-//         path: '/account',
-//         // Component: Account,
-//         Component: AccountPage,
-//         name: 'Cuenta'
-//     },
-//     {
-//         to: '/notifications/*',
-//         path: '/notifications',
-//         // Component: Notifications,
-//         Component: NotificationsPage,
-//         name: 'Notificaciones'
-//     },
-
-// ]
-
 
 const LazyComponent: React.FC<{ Component: React.ComponentType }> = ({ Component }) => (
     <Suspense fallback={'Loading...'}>
@@ -31,7 +13,7 @@ const LazyComponent: React.FC<{ Component: React.ComponentType }> = ({ Component
 );
 
 
-export const dashboard_routesConfig: RouteObject[] = [
+const dashboard_routesConfig: RouteObject[] = [
     {
         path: '/account/*',
         element: <LazyComponent Component={Account} />
@@ -40,9 +22,13 @@ export const dashboard_routesConfig: RouteObject[] = [
         path: '/notifications/*',
         element: <Notifications />
     },
-     {
+    {
+        path: '/role/*',
+        element: <Role />
+    },
+    {
         path: '*',
-        element: <Navigate to={'/dashboard/account'}  />
+        element: <Navigate to={'/dashboard/account'} />
         // element: <Public_main />
     }
 ];
@@ -50,8 +36,27 @@ export const dashboard_routesConfig: RouteObject[] = [
 
 export const Dashboard_routes = () => {
 
-    const routes = useRoutes(dashboard_routesConfig);
-    return <>{routes}</>;
+    const {
+        state: {
+            status
+        }
+    } = useAuthStore();
 
+    const routes = useRoutes(dashboard_routesConfig);
+
+    return (
+        <>
+            {
+                (status === 'authenticated') && (
+                    routes
+                )
+            }
+            {
+                (status === 'not-authenticated') && (
+                    <Navigate to='/' replace />
+                )
+            }
+        </>
+    )
 
 }

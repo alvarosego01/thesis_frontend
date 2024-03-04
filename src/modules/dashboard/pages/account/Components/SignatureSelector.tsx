@@ -1,4 +1,6 @@
 
+import { FC } from "react";
+
 import { SecondaryButton } from "../../../../../core/components";
 import { NotFoundContent } from "../../../components";
 
@@ -10,11 +12,11 @@ interface SignatureSelectorProps {
 
 }
 
-export const SignatureSelector = ({
+export const SignatureSelector: FC<SignatureSelectorProps> = ({
     signature,
     setSignature,
     updated_at
-}: SignatureSelectorProps) => {
+}) => {
     return (
         <>
             <div className="mt-5 signature">

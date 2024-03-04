@@ -1,23 +1,22 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, FC } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { SidebarMenu_Data } from '../../models';
+
+// import { SidebarMenu_Data } from '../../models';
 import { MenuLinksList } from './MenuLinksList';
-
-
+import { get_sidebarMenu } from '../../models';
 
 export interface Sidebar_I {
     sidebarOpen: boolean;
     setSidebarOpen: (sidebarOpen: boolean) => void;
 }
 
-export const Sidebar = ({
+export const Sidebar: FC<Sidebar_I> = ({
     sidebarOpen,
     setSidebarOpen
-}: Sidebar_I) => {
+}) => {
 
     const location = useLocation();
     const { pathname } = location;
-
 
     const trigger = useRef<any>(null);
     const sidebar = useRef<any>(null);
@@ -129,7 +128,7 @@ export const Sidebar = ({
                             </span>
                         </h3>
 
-                        <MenuLinksList menu_list={SidebarMenu_Data} pathname={pathname} />
+                        <MenuLinksList menu_list={get_sidebarMenu()} pathname={pathname} />
 
                     </div>
 

@@ -1,28 +1,99 @@
-import { PrimaryButton } from "../buttons/PrimaryButton";
-import { SecondaryButton } from "../buttons/SecondaryButton";
-import { useRef } from "react";
+import { FC, useEffect, useRef } from "react";
 
+import { PrimaryButton } from "../buttons/PrimaryButton";
+import { Form, FormikProvider, useFormik } from "formik";
 
 interface DocumentSelector_Props_I {
     name: string;
     text: string;
-    // onChange: () => void;
-    // onView: () => void;
+    file_name: string;
+    initialValues: any;
+    validation_rules: any;
+    [x: string]: any,
+
 }
 
-export const DocumentSelector = ({
+export const DocumentSelector: FC<DocumentSelector_Props_I> = ({
     name = 'Documento',
-    text = 'lorem ipsum dolor sit amet consectetur adipisicing elit. Id similique, minus qui magni adipisci voluptate placeat ullam exercitationem delectus,'
+    text = 'lorem ipsum dolor sit amet consectetur adipisicing elit. Id similique, minus qui magni adipisci voluptate placeat ullam exercitationem delectus,',
+    initialValues,
+    validation_rules,
+    file_name
     // onChange,
     // onView
-}: DocumentSelector_Props_I) => {
+}) => {
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const onChangeDocument = (target: any) => {
-        if (target.files === 0) return;
-        // dispatch()
-        // dispatch(startUploadFiles(target.files));
+    const formik = useFormik({
+        validateOnChange: true,
+        initialValues: initialValues,
+        onSubmit: (values) => {
+            console.log('values', values);
+        },
+        validationSchema: validation_rules
+    });
+
+    const {
+        values,
+        submitForm,
+        errors,
+        setValues,
+        isValid,
+        resetForm,
+        validateForm,
+        validateField,
+    } = formik;
+
+    useEffect(() => {
+
+        if (isValid) {
+            // Se emite la acción de subir la imagen
+            // console.log('valid');
+            // console.log('values', values)
+        } else {
+            // console.log('invalid')
+        }
+
+    }, [values, isValid]);
+
+    const onChangeDocument = ({ target }: any) => {
+
+        if (!target.files[0]) return;
+
+        resetForm();
+        setTimeout(() => {
+
+            setValues(values[file_name] = target.files[0]);
+            validateField(file_name);
+            validateForm();
+        }, 100);
+
+    }
+
+    const openSelector = () => {
+
+        resetForm();
+
+        fileInputRef.current?.click();
+
+        return
+    }
+
+    const show_errors = () => {
+
+        if (errors) {
+            for (const key in errors) {
+
+                return (
+                    <span className="block w-full mx-auto mt-1 text-xs text-center text-rose-500">
+                        {String(errors[key])}
+                    </span>
+                )
+            }
+        } else {
+            return null
+        }
 
     }
 
@@ -58,23 +129,41 @@ export const DocumentSelector = ({
                     {/* Card footer */}
                     <div className="flex flex-col px-6 py-5 border-t border-slate-200 dark:border-slate-700">
 
-                        <div className="flex self-end ">
-                            <SecondaryButton onClick={() => {}} label="Ver documento" />
-                            <PrimaryButton onClick={() => fileInputRef.current?.click()} label="Cargar archivo" className="ml-3" />
-                        </div>
+                        <FormikProvider value={formik}>
+                            <Form noValidate className="w-full">
+
+                                <input
+                                    onChange={onChangeDocument}
+                                    ref={fileInputRef}
+                                    type="file"
+                                    name={file_name}
+                                    // value={values[file_name]}
+                                    accept="application/pdf"
+                                    // multiple
+                                    style={{
+                                        display: 'none'
+                                    }}
+                                />
+
+                                <div className="flex justify-end w-full">
+                                    {/* <SecondaryButton onClick={() => {}} label="Ver documento" /> */}
+                                    <PrimaryButton onClick={openSelector} label="Cargar archivo" className="ml-3" />
+                                </div>
+                                {
+                                    show_errors()
+                                }
+                                {/*
+                                <ErrorMessage name={file_name} component='span' className="mt-1 text-xs text-rose-500" /> */}
+
+
+                            </Form>
+                        </FormikProvider>
+
 
                     </div>
                 </div>
             </div>
-            <input
-                onChange={onChangeDocument}
-                ref={fileInputRef}
-                type="file"
-                // multiple
-                style={{
-                    display: 'none'
-                }}
-            />
+
         </>
     )
 }

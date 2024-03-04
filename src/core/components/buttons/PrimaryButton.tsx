@@ -1,7 +1,8 @@
 
+import { FC } from "react";
 import { Button_I } from "./interfaces"
 
-export const PrimaryButton = ({ label, className = '', disabled, size = 'default', icon, onClick, isLoading }: Button_I) => {
+export const PrimaryButton: FC<Button_I> = ({ label, className = '', disabled, size = 'default', icon, onClick, isLoading }) => {
 
     const sizeButton = (): string => {
 

@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom"
 import { SidebarMenuLink_I } from "../../Interfaces";
-import { useState } from "react";
+import { FC, useState } from "react";
 
 interface Sidebar_Single_Link_I {
     // children: (handleClick: () => void, open: boolean) => React.ReactNode;
@@ -16,12 +16,12 @@ interface Sidebar_Group_Link_I {
 }
 
 
-export const Sidebar_Single_Link = ({
+export const Sidebar_Single_Link: FC<Sidebar_Single_Link_I> = ({
     // children,
     // activecondition,
     ItemMenu,
     pathname
-}: Sidebar_Single_Link_I) => {
+}) => {
 
     const set_icon = () => {
 
@@ -66,11 +66,11 @@ export const Sidebar_Single_Link = ({
     )
 }
 
-export const Sidebar_Group_Link = ({
+export const Sidebar_Group_Link: FC<Sidebar_Group_Link_I> = ({
     // children,
     ItemMenu,
     pathname
-}: Sidebar_Group_Link_I) => {
+}) => {
 
     const activecondition: boolean = false;
 
