@@ -35,7 +35,7 @@ export const SignatureSelector: FC<SignatureSelectorProps> = ({
                 }
                 {
                     !signature && (
-                        <NotFoundContent label="No hay firma definida" onClick={setSignature} icon="bx bx-edit" text="Nobis unde perspiciatis aut quasi magnam quidem perferendis nulla nam, ipsa praesentium assumenda vo ab." />
+                        <NotFoundContent title="No hay firma definida" onClick={setSignature} icon="bx bx-edit" text="Nobis unde perspiciatis aut quasi magnam quidem perferendis nulla nam, ipsa praesentium assumenda vo ab." />
                     )
                 }
             </div>

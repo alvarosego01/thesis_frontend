@@ -2,11 +2,10 @@
 import { Form, useFormik, FormikProvider } from 'formik';
 import { FC } from 'react';
 
-import { BlankModal, FormLayoutBuilder, PrimaryButton } from '../../../../../../core/components';
-import { FieldValue_I, LayoutRow_I } from '../../../../../../core/components/forms/interfaces';
-import { useFormInitData } from '../../../../../../core/hooks';
-import { Handle_Signature_Modal_I } from '../../../../../../core/store/reducers/ui/uiActions';
-import { useUiStore } from '../../../../../../core/store';
+import { BlankModal, FormLayoutBuilder, PrimaryButton } from '@components/index';
+import { FieldValue_I, LayoutRow_I } from '@components/forms/interfaces';
+import { useFormInitData } from '@hooks/index';
+import { useUiStore } from '@store/index';
 
 const formData: LayoutRow_I[] = [
     {
@@ -37,7 +36,12 @@ const formData: LayoutRow_I[] = [
     }
 ]
 
-export const SignatureModal: FC<Handle_Signature_Modal_I> = ({
+export interface SignatureModal_Props_I {
+    status: boolean;
+    text: string;
+}
+
+export const SignatureModal: FC<SignatureModal_Props_I> = ({
     status,
     text
 }) => {

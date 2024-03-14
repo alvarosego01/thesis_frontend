@@ -2,6 +2,7 @@
 import { FC } from "react";
 import { CheckBoxField, FileHideInput, SelectField, TextAreaField, TextInputField } from "..";
 import { LayoutRow_I, SelectField_Props_I } from "./interfaces"
+import { SelectSpecialField } from "./SelectSpecialField";
 
 
 interface FormLayoutBuilder_Props_I {
@@ -25,6 +26,8 @@ export const FormLayoutBuilder: FC<FormLayoutBuilder_Props_I> = ({ rows }) => {
                                         //     return <FileHideInput key={j} {...field.props} />
                                         case 'text':
                                             return <TextInputField key={j} {...field.props} />
+                                        case 'select_special':
+                                            return <SelectSpecialField key={j} {...field.props} />
                                         case 'select':
                                             const f: SelectField_Props_I = field.props as SelectField_Props_I;
                                             return <SelectField key={j} {...f} >

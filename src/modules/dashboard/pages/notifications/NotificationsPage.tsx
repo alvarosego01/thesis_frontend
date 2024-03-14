@@ -1,22 +1,69 @@
+import { ComponentProps, FC } from "react"
+import { TabsCollapse } from "@components/index"
+import { Notification_I } from "@models/Notifications"
+import { ContentPage_LY } from "@modules/dashboard/Layouts"
+import { NotifyContent, NotifyHeader } from "."
+import { SecondaryButton } from '../../../../core/components/buttons/SecondaryButton';
+import { useNotificationsStore } from "../../../../core/store/hooks/useNotificationsStore"
 
 
 
-export const NotificationsPage = () => {
+
+
+const Page = () => {
+
+    const {
+        state: {
+            notifications
+        },
+        deleteNotification
+    } = useNotificationsStore();
+
+    const onDelete_Notify = (_id: string) => {
+        deleteNotification(_id);
+    }
+
+    const notifies_collapse = () => {
+
+        let tabs = [];
+
+        for (const [i, item] of notifications.entries()) {
+
+            const data_collapse: ComponentProps<typeof TabsCollapse> = {
+                tabs: [
+                    {
+                        title: item.title,
+                        icon: {
+                            type: "icon",
+                            content: "bx bxs-megaphone"
+                        },
+                        extra_header: <NotifyHeader date={item.date} onDelete={() => onDelete_Notify(item._id)} />,
+                        children: <NotifyContent notify={item} />
+                    }
+                ]
+            }
+
+            tabs.push(<TabsCollapse key={i} {...data_collapse} />);
+
+        }
+
+        return tabs;
+
+    }
+
     return (
-        <main className="grow">
-            <div className="w-full px-4 py-8 mx-auto sm:px-6 lg:px-8 max-w-9xl">
+        <div className="w-full space-y-4">
+            {notifies_collapse()}
+        </div>
+    )
 
-                <div className="mb-8">
-                    {/* Title */}
-                    <h1 className="text-2xl font-bold md:text-3xl text-slate-800 dark:text-slate-100">
-                        Perfil y configuraciones ✨
-                    </h1>
-                </div>
+}
 
-
-            </div>
-
-        </main>
+export const NotificationsPage: FC = () => {
+    return (
+        <ContentPage_LY
+            title="Notificaciones"
+            children={Page()} />
     )
 }
 

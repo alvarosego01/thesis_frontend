@@ -6,9 +6,10 @@ import { ContentPage_LY } from '../../../../Layouts/ContentPage_LY';
 import { TabsContent_Props_I } from "../../../../../../core/components/tabsContent/TabsContent";
 
 import {
+    InstrumentistSkillSelectors,
     OrquestDirectorSkillSelectors,
     SceneDirectorSkillSelectors,
-    InstrumentistSkillSelectors,
+    // InstrumentistSkillSelectors,
     SingerSkillSelectors
  } from ".";
 

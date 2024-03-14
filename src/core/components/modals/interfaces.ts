@@ -2,6 +2,7 @@
 
 export interface Modal_Base_I {
     status: boolean;
+    title?: string;
     children?: React.ReactNode;
     onClose?: () => void;
 }

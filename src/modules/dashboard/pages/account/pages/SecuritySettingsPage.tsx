@@ -203,10 +203,6 @@ export const SecuritySettingsPage: FC = () => {
                  )
             }
 
-
-
-
-
         </>
     )
 }

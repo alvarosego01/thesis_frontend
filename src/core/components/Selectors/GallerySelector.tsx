@@ -22,7 +22,7 @@ export const GallerySelector: FC<GallerySelector_Props_I> = ({ gallery }) => {
         <>
                {
                 gallery.length === 0 && (
-                    <NotFoundContent onClick={() => fileInputRef.current?.click()} label="No hay imágenes cargadas" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod" />
+                    <NotFoundContent onClick={() => fileInputRef.current?.click()} title="No hay imágenes cargadas" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod" />
                 )
             }
             {

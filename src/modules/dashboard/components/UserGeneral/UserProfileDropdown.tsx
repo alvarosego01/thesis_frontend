@@ -11,7 +11,6 @@ import { transformRoles } from '../../../../core/pipes/TransformRoles';
 
 const UserAvatar = getAssetPath('/images/auth-image.jpg');
 
-// Definiendo la interfaz para las props
 interface DropdownProfileProps {
     align: 'right' | 'left'; // Asumiendo que align solo puede ser 'right' o 'left'
 }
@@ -43,7 +42,7 @@ const ListDoActions_data: List_I[] = [
         type: 'secondary',
         action: {
             type: 'link',
-            action: '/dashboard/xxx'
+            action: '/dashboard/hiring-config/'
         }
     },
     {

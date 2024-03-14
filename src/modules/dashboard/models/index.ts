@@ -1,3 +1,3 @@
 
-export * from "./ContentSidebarConstants";
+export * from "./SidebarContentItems";
 export * from "./SidebarConstants";

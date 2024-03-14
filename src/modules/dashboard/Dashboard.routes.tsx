@@ -1,10 +1,11 @@
-import { Suspense, lazy } from "react";
+import { FC, Suspense, lazy } from "react";
 import { Navigate, RouteObject, useRoutes } from "react-router-dom";
 import { useAuthStore } from "../../core/store";
 
 const Account = lazy(() => import('./pages/account/AccountPage'));
 const Role = lazy(() => import('./pages/byRole/ByRolePage'));
 const Notifications = lazy(() => import('./pages/notifications/NotificationsPage'));
+const HiringConfig = lazy(() => import('./pages/hireConfig/HireConfigPage'));
 
 const LazyComponent: React.FC<{ Component: React.ComponentType }> = ({ Component }) => (
     <Suspense fallback={'Loading...'}>
@@ -27,6 +28,10 @@ const dashboard_routesConfig: RouteObject[] = [
         element: <Role />
     },
     {
+        path: '/hiring-config/*',
+        element: <LazyComponent Component={HiringConfig} />
+    },
+    {
         path: '*',
         element: <Navigate to={'/dashboard/account'} />
         // element: <Public_main />
@@ -34,7 +39,7 @@ const dashboard_routesConfig: RouteObject[] = [
 ];
 
 
-export const Dashboard_routes = () => {
+export const Dashboard_routes: FC = () => {
 
     const {
         state: {

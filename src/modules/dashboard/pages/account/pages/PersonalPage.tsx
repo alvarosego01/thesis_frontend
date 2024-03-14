@@ -5,37 +5,10 @@ import { useFormInitData } from "../../../../../core/hooks";
 
 import { Form, FormikProvider, useFormik } from "formik"
 import { getAssetPath } from "../../../../../core/utils";
+import { estadosVenezuela } from "../../../../../core/constants/Countries";
 
 
 const avatar_default = getAssetPath('/images/user-avatar-80.png');
-
-const estadosVenezuela: string[] = [
-    "Amazonas",
-    "Anzoátegui",
-    "Apure",
-    "Aragua",
-    "Barinas",
-    "Bolívar",
-    "Carabobo",
-    "Cojedes",
-    "Delta Amacuro",
-    "Dependencias Federales",
-    "Distrito Capital",
-    "Falcón",
-    "Guárico",
-    "Lara",
-    "Mérida",
-    "Miranda",
-    "Monagas",
-    "Nueva Esparta",
-    "Portuguesa",
-    "Sucre",
-    "Táchira",
-    "Trujillo",
-    "Vargas",
-    "Yaracuy",
-    "Zulia",
-];
 
 const userData: LayoutRow_I[] = [
     {

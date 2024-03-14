@@ -1,13 +1,18 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { TextInputField_Props_I } from "./interfaces";
 import { ErrorMessage, useField } from "formik";
 
 
-export const TextInputField: FC<TextInputField_Props_I> = ({ label, parent_class, ...props }) => {
+export const TextInputField: FC<TextInputField_Props_I> = ({
+    label,
+    parent_class,
+    disabled = false,
+    visible = true,
+    ...props }) => {
 
-    const [field, meta] = useField(props);
+    const [field, meta, helpers] = useField(props);
 
-    const isRequired = props.validation_rules?.some(rule => rule.type === "required") || false;
+    let isRequired = props.validation_rules?.some(rule => rule.type === "required") || false;
 
     const fieldState = (): string => {
 
@@ -18,27 +23,32 @@ export const TextInputField: FC<TextInputField_Props_I> = ({ label, parent_class
         return '';
     }
 
+
     return (
-        <div className={`${parent_class || ''} mb-s_10 lg:mb-0`} >
-            {
-                label && (
-                    <label className="block mb-1 text-sm font-medium" htmlFor={props.id || props.name}>     {label}
-                        {isRequired && <span className="text-rose-500">*</span>}
-                    </label>
-                )
-            }
-            <div className="relative">
-                <input type="text" className={`w-full form-input ${fieldState()} ${props?.icon && 'pl-s_35'}`} {...field} {...props} />
+        <>
+
+            <div className={`${parent_class || ''} mb-s_10 lg:mb-0`} >
                 {
-                    props?.icon && (
-                        <div className="absolute inset-0 right-auto flex items-center pointer-events-none pl-s_10">
-                            <i className={`${props.icon} text-20p`}></i>
-                        </div>
+                    label && (
+                        <label className="block mb-1 text-sm font-medium" htmlFor={props.id || props.name}>     {label}
+                            {isRequired && <span className="text-rose-500">*</span>}
+                        </label>
                     )
                 }
+                <div className="relative">
+                    <input type="text" className={`w-full form-input ${fieldState()} ${props?.icon && 'pl-s_35'}`} {...field} {...props} required={isRequired} disabled={disabled} />
+                    {
+                        props?.icon && (
+                            <div className="absolute inset-0 right-auto flex items-center pointer-events-none pl-s_10">
+                                <i className={`${props.icon} text-20p`}></i>
+                            </div>
+                        )
+                    }
 
+                </div>
+                <ErrorMessage name={props.name} component='span' className="mt-1 text-xs text-rose-500" />
             </div>
-            <ErrorMessage name={props.name} component='span' className="mt-1 text-xs text-rose-500" />
-        </div>
+
+        </>
     )
 }

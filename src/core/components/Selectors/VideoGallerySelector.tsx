@@ -23,7 +23,7 @@ export const VideoGallerySelector: FC<VideoGallerySelector_Props_I> = ({ gallery
         <>
             {
                 gallery.length === 0 && (
-                    <NotFoundContent onClick={() => fileInputRef.current?.click()} label="No hay videos cargados" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod" />
+                    <NotFoundContent onClick={() => fileInputRef.current?.click()} title="No hay videos cargados" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod" />
                 )
             }
             {

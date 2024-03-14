@@ -12,4 +12,4 @@ export { SidebarLinkGroup } from "./NavSidebar/SidebarLinkGroup";
 
 // User general
 export { UserProfileDropdown } from './UserGeneral/UserProfileDropdown';
-
+export { NotificationsView } from './UserGeneral/NotificationsView';

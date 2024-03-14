@@ -51,13 +51,14 @@ export const TabsCollapse: FC<TabsCollapse_Props_I> = ({
         setOpenStatus([...aux]);
 
     }
+
     const set_active = (index: number) => {
 
-        if (openStatus[index]) {
-            return "bg-indigo-50"
-        }
+        // if (openStatus[index]) {
+        //     return "bg-indigo-50";
+        // }
+        return "";
 
-        return ""
     }
 
     return (
@@ -68,21 +69,23 @@ export const TabsCollapse: FC<TabsCollapse_Props_I> = ({
                         <details
                             key={index}
                             ref={tabsRefs.current[index]}
-                            className={`flex flex-row items-center justify-center w-full border  rounded-rd_10 trans border-slate-200 hover:bg-indigo-50 collapse collapse-arrow ${set_active(index)} `} >
+                            className={`flex flex-row items-center justify-center w-full border  rounded-rd_10 trans border-slate-200  collapse collapse-arrow ${set_active(index)} `} >
+
                             <summary className="w-full hover:cursor-pointer"
                                onClick={() => handle_open(index) } >
                                 <TCL_Tab
                                     title={tab.title}
                                     active={openStatus[index]}
                                     icon={tab.icon}
-                                    onClick={() => { }} />
+                                    onClick={() => handle_open(index)}
+                                    extra_header={tab.extra_header}
+                                     />
                             </summary>
                             <div className="collapse-content trans">
                                 <TCL_Content children={tab.children} />
                             </div>
                         </details>
-                    )
-                    )
+                    ))
                 )
             }
         </div>

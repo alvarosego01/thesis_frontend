@@ -1,18 +1,19 @@
 
 
 
+import { FC } from "react";
 import { ContentPage_LY } from "../../Layouts";
 import { ContentSidebar } from "../../components";
-import { ContentSidebarConstants } from "../../models/ContentSidebarConstants";
+import { Sidebar_ProfilePersonal_Items } from "../../models/SidebarContentItems";
 import { Dsh_Account_routes } from "./Dsh_Account.routes";
 
-export const AccountPage = () => {
+export const AccountPage: FC = () => {
 
     const _children = () => {
 
         return (
             <>
-                <ContentSidebar content={ContentSidebarConstants} />
+                <ContentSidebar content={Sidebar_ProfilePersonal_Items} />
                 <Dsh_Account_routes />
             </>
         )

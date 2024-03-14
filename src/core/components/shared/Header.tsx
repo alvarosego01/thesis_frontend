@@ -1,4 +1,4 @@
-import { UserProfileDropdown } from "../../../modules/dashboard/components";
+import { NotificationsView, UserProfileDropdown } from "../../../modules/dashboard/components";
 import { useAuthStore } from "../../store";
 import { FC } from "react";
 
@@ -61,6 +61,7 @@ export const Header: FC<Header_I> = ({
                                 {/* <Notifications align="right" />
                         <Help align="right" />
                         <ThemeToggle /> */}
+                                <NotificationsView align="right" />
                                 <hr className="w-px h-6 border-none bg-slate-200 dark:bg-slate-700" />
                                 <UserProfileDropdown align="right" />
                             </div>

@@ -3,14 +3,14 @@ import { PrimaryButton } from "../../../../core/components";
 
 interface NotFoundContent_Props_I {
     onClick: () => void;
-    label: string;
+    title: string;
     text?: string;
     icon?: string;
     enableButton?: boolean;
 }
 
 export const NotFoundContent: FC<NotFoundContent_Props_I> = ({
-    label = 'No hay contenido',
+    title: label = 'No hay contenido',
     text = '',
     icon = 'bx bx-sad',
     onClick,

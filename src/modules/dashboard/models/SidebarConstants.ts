@@ -43,10 +43,10 @@ export const get_sidebarMenu = (): SidebarMenuLink_I[] => {
                 content: "bx bx-briefcase-alt-2"
 
             },
-            link: '/dashboard/xxx',
+            link: '/dashboard/hiring-config',
             activeCondition: {
                 type: 'route',
-                content: '/dashboard/xxx'
+                content: '/dashboard/hiring-config'
             }
         },
         {

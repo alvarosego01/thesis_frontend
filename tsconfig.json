@@ -1,5 +1,20 @@
 {
     "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@core/*": ["./src/core/*"],
+            "@components/*": ["./src/core/components/*"],
+            "@hooks/*": ["./src/core/hooks/*"],
+            "@models/*": ["./src/core/models/*"],
+            "@constants/*": ["./src/core/constants/*"],
+            "@store/*": ["./src/core/store/*"],
+            "@utils/*": ["./src/core/utils/*"],
+            "@pipes/*": ["./src/core/pipes/*"],
+            "@envs/*": ["./src/env/*"],
+            "@modules/*": ["./src/modules/*"],
+            "@assets/*": ["./src/assets/*"]
+        },
+
         "target": "ES2020",
         "useDefineForClassFields": true,
         "lib": ["ES2020", "DOM", "DOM.Iterable"],
@@ -18,8 +33,7 @@
         "strict": true,
         "noUnusedLocals": false,
         "noUnusedParameters": false,
-        "noFallthroughCasesInSwitch": true,
-
+        "noFallthroughCasesInSwitch": true
     },
     "include": ["src"],
     "references": [{ "path": "./tsconfig.node.json" }]

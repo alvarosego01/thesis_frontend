@@ -8,11 +8,8 @@ export const TCL_Content: FC<TCL_Content_Props_I> = ({
     children
 }) => {
   return (
-    <>
-        {/* {children} */}
-        <div>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate doloremque consequunt
-        </div>
-    </>
+    <div className="TCL_Content">
+        {children}
+    </div>
   )
 }

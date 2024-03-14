@@ -9,6 +9,8 @@ export { SettingsSidebar } from './SettingsSidebar';
 export { Header } from './shared/Header';
 
 
+
+// FORMS
 export * from "./forms/CheckBoxField";
 export * from "./forms/FormLayoutBuilder";
 export * from "./forms/SelectField";
@@ -16,7 +18,10 @@ export * from "./forms/TextInputField";
 export * from "./forms/TextAreaField";
 export * from "./forms/FileHideInput";
 
+export { SelectSpecialField as SelectMultipleField } from './forms/SelectSpecialField';
 
+
+// Buttons
 export * from "./buttons/PrimaryButton";
 export * from "./buttons/SecondaryButton";
 export * from "./buttons/TertiaryButton";

@@ -1,7 +1,7 @@
 import { ContentSidebarMenuLink_I } from "../Interfaces";
 
 
-export const ContentSidebarConstants: ContentSidebarMenuLink_I[] = [
+export const Sidebar_ProfilePersonal_Items: ContentSidebarMenuLink_I[] = [
     {
         titleGroup: 'Opciones de cuenta',
         items: [
@@ -40,6 +40,37 @@ export const ContentSidebarConstants: ContentSidebarMenuLink_I[] = [
                     content: "bx bxs-check-shield"
                 },
             }
+
+        ]
+    }
+
+
+]
+
+export const Sidebar_HiringConfig_Items: ContentSidebarMenuLink_I[] = [
+    {
+        titleGroup: 'Opciones',
+        items: [
+            {
+                title: 'Condiciones personales',
+                link: '/dashboard/hiring-config/personal-conditions',
+                icon: {
+                    type: 'icon',
+                    content: "bx bxs-user-rectangle"
+                },
+            },
+            {
+                title: 'Información de pago',
+                link: '/dashboard/hiring-config/payment-info',
+                icon: {
+                    type: 'icon',
+                    content: "bx bxs-bank"
+                },
+            },
+
+
+
+
 
         ]
     }
