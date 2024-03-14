@@ -182,7 +182,7 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
 
         // }
 
-        // console.log('errors', errors);
+        console.log('errors', errors);
 
     }, [errors, values])
 

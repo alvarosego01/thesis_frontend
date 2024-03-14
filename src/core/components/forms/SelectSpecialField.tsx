@@ -62,8 +62,10 @@ export const SelectSpecialField: FC<SelectSpecialField_Props_I> = ({
             helpers.setTouched(true);
 
         } else {
+            // const aux: SelectValue_I = value_change;
             setValues(value_change);
-            helpers.setValue(value_change);
+            console.log('que es value_change', value_change);
+            helpers.setValue(values);
             helpers.setTouched(true);
         }
 

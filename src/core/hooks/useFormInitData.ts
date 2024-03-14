@@ -20,12 +20,12 @@ export const useFormInitData = <T = any>(data: LayoutRow_I[], init_fieldValues?:
 
             if (!field.props.validation_rules) {
 
-                field.props.validation_rules = [
-                    {
-                        type: 'notRequired',
-                    }
-                ]
-                // continue;
+                // field.props.validation_rules = [
+                //     {
+                //         type: 'notRequired',
+                //     }
+                // ]
+                continue;
             };
 
             for (const r of field.props.validation_rules) {
