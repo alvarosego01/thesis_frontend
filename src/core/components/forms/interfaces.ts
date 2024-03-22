@@ -1,11 +1,12 @@
 
 export interface ValidationsRule_Separate_I {
     [key: string]: ValidationRule_I[];
-    // [key: string]: string;
 }
 
 const type_array_default = [
     "required",
+    "select_single_required",
+    "select_multi_required",
     "notRequired",
     "conditional_required",
     "minLength",

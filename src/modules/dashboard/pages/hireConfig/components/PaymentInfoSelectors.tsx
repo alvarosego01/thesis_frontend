@@ -1,14 +1,12 @@
 
-import { FC, useEffect } from "react"
+import { FC } from "react"
 import { Form, FormikProvider, useFormik } from "formik";
 
 import { useFormInitData } from '@hooks/index';
 import { FormLayoutBuilder, PrimaryButton, TextInputField } from "@components/index";
 import { Banks_List, Payments_Type_List } from "@constants/Banks"
-
-import { LayoutRow_I, SelectValue_I, ValidationsRule_Separate_I } from "@components/forms/interfaces"
+import { LayoutRow_I, SelectValue_I } from "@components/forms/interfaces"
 import { Payment_Type } from "@models/index";
-import { get_Validations } from "../../../../../core/functions";
 
 const formData: LayoutRow_I[] = [
     {
@@ -18,11 +16,18 @@ const formData: LayoutRow_I[] = [
                 props: {
                     label: 'Tipo de pago',
                     name: 'type',
+                    type: 'select',
                     parent_class: '',
                     isMulti: false,
                     items: Payments_Type_List.map(item => ({ value: item.type, label: item.label })),
                     value: [],
                     placeholder: 'Selecciona tipo de pago',
+                    validation_rules: [
+                        {
+                            type: "select_single_required",
+                            message: "El tipo de pago es requerido"
+                        },
+                    ]
 
                 }
             },
@@ -32,11 +37,17 @@ const formData: LayoutRow_I[] = [
                     label: 'Banco',
                     name: 'bank_name',
                     parent_class: '',
+                    type: 'select',
                     isMulti: false,
                     items: Banks_List.map(item => ({ value: item.code, label: item.bank })),
                     value: [],
                     placeholder: 'Selecciona tu banco',
-
+                    validation_rules: [
+                        {
+                            type: "select_single_required",
+                            message: "El banco es requerido"
+                        },
+                    ]
                 }
             },
         ],
@@ -144,8 +155,8 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
 }) => {
 
     const Init_Values: Init_valuesData_I = {
-        type: {} as any,
-        bank_name: {} as any,
+        type: {} as SelectValue_I<Payment_Type>,
+        bank_name: {} as SelectValue_I,
         titular: '',
         person_id: '',
         number: '',
@@ -171,22 +182,6 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
         isValid,
     } = formik;
 
-    useEffect(() => {
-
-        // if (values.type.value === 'bank_account') {
-
-
-        // }
-
-        // if (values.type.value === 'mobile_payment') {
-
-        // }
-
-        console.log('errors', errors);
-
-    }, [errors, values])
-
-
     return (
         <div className="px-5 py-2">
             <FormikProvider value={formik}>
@@ -194,42 +189,46 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
 
                     <section className="py-5">
 
-                        <h2 className="mb-1 text-xl font-bold leading-snug text-slate-800 dark:text-slate-100">
+                        <h2 className="mb-1 text-lg font-bold leading-snug text-slate-800 dark:text-slate-100">
                             Datos de cuenta
                         </h2>
-                        <div className="mb-5 text-sm">
+                        <div className="mb-5 text-xs">
                             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed neque aut et cumque, labo
                         </div>
 
-                        <FormLayoutBuilder rows={[formData[0], formData[1]]} />
+                        <FormLayoutBuilder rows={[
+                            formData[0],
+                            formData[1]
+                        ]} />
+                        {
+                            values.type.value && (
 
-                        <div className="grid grid-cols-1 pcTab:mt-4">
+                                <div className="grid grid-cols-1 pcTab:mt-4">
+                                    {
+                                        values.type.value === 'bank_account' && (
+                                            <TextInputField
+                                                {...formData[2].fields[0].props}
+                                            />
+                                        )
+                                    }
+                                    {
+                                        values.type.value === 'mobile_payment' && (
+                                            <TextInputField
+                                                {...formData[2].fields[1].props}
 
-                            {
-                                values.type.value === 'bank_account' && (
-                                    <TextInputField
-                                        {...formData[2].fields[0].props}
-                                    />
-                                )
-                            }
-                            {
-                                values.type.value === 'mobile_payment' && (
-                                    <TextInputField
-                                        {...formData[2].fields[1].props}
-
-                                    />
-                                )
-                            }
-
-                        </div>
+                                            />
+                                        )
+                                    }
+                                </div>
+                            )
+                        }
 
                     </section>
 
                     <div className="flex flex-row justify-end py-5 space-x-4 border-t border-slate-200">
 
-                                <PrimaryButton label='Guardar' onClick={() => submitForm()} />
+                        <PrimaryButton disabled={!isValid} label='Guardar' onClick={() => submitForm()} />
 
-                        {/* <PrimaryButton label='Aceptar' onClick={() => submitForm()} /> */}
                     </div>
 
                 </Form>

@@ -1,4 +1,4 @@
-import { SchemaKey_I } from "../interfaces/data.utils.interfaces";
+import { SchemaKey_I } from "../interfaces";
 
 
 export interface Notification_I extends SchemaKey_I {

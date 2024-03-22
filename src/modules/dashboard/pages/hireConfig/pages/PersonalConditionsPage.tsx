@@ -154,7 +154,7 @@ export const PersonalConditionsPage: FC = () => {
             <div className="p-5 space-y-5">
 
                 <h2 className="mb-5 text-2xl font-bold text-slate-800 dark:text-slate-100 ">
-                    Información
+                    Información de condiciones personales
                 </h2>
 
                 <section>

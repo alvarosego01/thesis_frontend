@@ -16,15 +16,11 @@ export const useFormInitData = <T = any>(data: LayoutRow_I[], init_fieldValues?:
             aux_initial[field.props.name] = init_fieldValues?.[field.props.name] || '';
             let schema_fields = Yup.string();
             let schema_files = Yup.mixed();
+            let schema_select = Yup.mixed();
             const isFileField = field.props.type === 'file';
 
             if (!field.props.validation_rules) {
 
-                // field.props.validation_rules = [
-                //     {
-                //         type: 'notRequired',
-                //     }
-                // ]
                 continue;
             };
 
@@ -33,20 +29,29 @@ export const useFormInitData = <T = any>(data: LayoutRow_I[], init_fieldValues?:
                 const rule: ValidationRule_I = r;
 
                 if (!isFileField) {
+                    if(field.props.type === 'select' || field.props.type === 'select_special'){
+                        schema_select = get_Validation(rule, schema_select);
+                    } else {
 
                     schema_fields = get_Validation(rule, schema_fields);
-
-                }
-
-                if (isFileField) {
-
+                    }
+                }else if (isFileField) {
                     schema_files = get_Validation(rule, schema_files);
-
                 }
 
             }
 
-            validation_rules[field.props.name] = (isFileField) ? schema_files : schema_fields;
+                if (!isFileField) {
+                    if(field.props.type === 'select' || field.props.type === 'select_special'){
+                        validation_rules[field.props.name] = schema_select;
+                    } else {
+                        validation_rules[field.props.name] = schema_fields;
+                    }
+                } else if (isFileField) {
+                    validation_rules[field.props.name] = schema_files;
+                }
+
+            // validation_rules[field.props.name] = (isFileField) ? schema_files : schema_fields;
 
         }
 

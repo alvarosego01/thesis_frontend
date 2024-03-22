@@ -1,4 +1,4 @@
-import { ValidationRule_I, ValidationsRule_Separate_I } from "../components/forms/interfaces";
+import { SelectValue_I, ValidationRule_I, ValidationsRule_Separate_I } from "../components/forms/interfaces";
 import * as Yup from 'yup';
 
 
@@ -6,6 +6,24 @@ const venezuelaPhoneRegex = /^(?:\+58)?0?(412|414|424|426)\d{7}$/;
 
 
 export const get_Validation = (rule: ValidationRule_I, schema: any) => {
+
+    // Caso para select individual requerido
+    if (rule.type === 'select_single_required') {
+        schema = schema.test(
+            'selectRequired',
+            rule.message,
+            (obj: SelectValue_I) => obj !== undefined && obj.value !== undefined && obj.value !== ''
+        );
+    }
+
+    // Caso para select multi requerido
+    if (rule.type === 'select_multi_required') {
+        schema = schema.test(
+            'multiSelectRequired',
+            rule.message,
+            (array: SelectValue_I[]) => Array.isArray(array) && array.length > 0 && array.every(obj => obj.value !== undefined && obj.value !== '')
+        );
+    }
 
     if (rule.type === 'required') {
         schema = schema.required(rule.message);
@@ -35,7 +53,7 @@ export const get_Validation = (rule: ValidationRule_I, schema: any) => {
         schema = schema.oneOf([Yup.ref(String(rule.value))], rule.message)
     }
     if (rule.type === 'conditional_required') {
-        if(!rule.conditional) return schema;
+        if (!rule.conditional) return schema;
         const { key, is, then, otherwise } = rule.conditional;
         schema = schema.when(key, {
             is: (value: string) => value === is,

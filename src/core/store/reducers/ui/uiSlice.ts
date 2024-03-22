@@ -23,7 +23,7 @@ const initialState: uiState_I = {
                 text: ""
             },
             paymentInfo_handler_modal: {
-                status: true
+                status: false
             }
         }
     }

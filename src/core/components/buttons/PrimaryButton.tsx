@@ -2,18 +2,27 @@
 import { FC } from "react";
 import { Button_I } from "./interfaces"
 
-export const PrimaryButton: FC<Button_I> = ({ label, className = '', disabled, size = 'default', icon, onClick, isLoading }) => {
+export const PrimaryButton: FC<Button_I> = ({
+     label,
+     className = '',
+     disabled,
+     size = 'default',
+     icon,
+     onClick, isLoading
+     }) => {
 
     const sizeButton = (): string => {
-
         if (size === 'default') return 'bttn';
-
         return `!bttn-${size}`;
+    }
 
+    const state_style = (): string => {
+        if (disabled) return 'cursor-not-allowed opacity-75';
+        return 'cursor-pointer';
     }
 
     return (
-        <button type="button" className={`${className} ${sizeButton()} text-white bg-indigo-500 hover:bg-indigo-600 w-fit h-fit`}
+        <button type="button" className={`${className} ${sizeButton()} text-white bg-indigo-500 hover:bg-indigo-600 w-fit h-fit ${state_style()}`}
             onClick={onClick}
             disabled={disabled}
         >
