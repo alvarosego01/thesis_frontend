@@ -41,15 +41,3 @@ export const core_store = configureStore<Core_Reducers_I>({
     })
 })
 
-// Añade propiedades para manejar los reducers asíncronos
-(core_store as any).asyncReducers = {};
-
-// Método para inyectar reducers
-(core_store as any).injectReducer = (key: string, asyncReducer: any) => {
-    (core_store as any).asyncReducers[key] = asyncReducer;
-    core_store.replaceReducer(combineReducers({
-        ...core_store.reducer, // Reducers estáticos
-        ...(core_store as any).asyncReducers, // Reducers asíncronos
-    }));
-};
-
