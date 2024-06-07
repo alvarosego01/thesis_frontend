@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Dashboard_routes, Sidebar } from "."
-import { Header } from "../../core/components";
+import { Header } from "@components/index";
 
 
 export const Dashboard_main = () => {

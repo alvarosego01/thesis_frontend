@@ -2,7 +2,7 @@
 import { FC } from "react"
 
 import { TabsContent } from "../../../../../../core/components"
-import { ContentPage_LY } from '../../../../Layouts/ContentPage_LY';
+import { ContentPage_Box_LY } from '../../../../Layouts/ContentPage_Box_LY';
 import { TabsContent_Props_I } from "../../../../../../core/components/tabsContent/TabsContent";
 
 import {
@@ -81,7 +81,7 @@ const tabs: TabsContent_Props_I = {
 
 export const ArtiscSkillsPage: FC = () => {
     return (
-        <ContentPage_LY title="Capacidades artisticas" children={
+        <ContentPage_Box_LY title="Capacidades artisticas" children={
             <TabsContent tabs={tabs.tabs} />
         } />
     )

@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
-import { File_Model_I, User_Profile_I } from '../../../../models';
+import { File_Model_I, User_Profile_I } from '../../../../../core/models';
 
 
 export interface Session_profileState_I {

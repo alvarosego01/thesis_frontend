@@ -1,18 +1,31 @@
 
+import { FC } from "react";
 import { Button_I } from "./interfaces"
 
-export const TertiaryButton = ({ label, className = '', size = 'default', disabled, icon, onClick, isLoading }: Button_I) => {
+export const TertiaryButton: FC<Button_I> = ({
+     label,
+     className = '',
+     disabled = false,
+     size = 'default',
+     icon,
+     onClick,
+     isLoading,
+
+     ref,
+
+     }) => {
 
     const sizeButton = (): string => {
 
-         if(size === 'default') return 'bttn';
+        if (size === 'default') return 'bttn';
 
-         return `bttn-${size}`;
+        return `bttn-${size}`;
 
     }
 
     return (
-        <button type="button" className={`${className} ${sizeButton()} dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-300 w-fit h-fit`}
+        <button
+         type="button" className={`${className} ${sizeButton()} dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-300 w-fit h-fit`}
             onClick={onClick}
             disabled={disabled}
         >
@@ -22,9 +35,13 @@ export const TertiaryButton = ({ label, className = '', size = 'default', disabl
                 </svg>
             }
             {
-                icon && !isLoading && <i className={`${icon} mr-s_7.5 text-20p`}></i>
+                icon && !isLoading && <i className={`${icon} text-20p`}></i>
             }
-            {label}
+            {
+                label && (
+                    label
+                )
+            }
         </button>
     )
 }

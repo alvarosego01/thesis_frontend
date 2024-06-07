@@ -1,12 +1,15 @@
 
 import { FC } from "react";
 
-import { BlankModal, InfoModal } from "@components/index";
+import { InfoModal } from "@components/index";
 import { useUiStore } from "@store/index";
 import { PaymentInfoSelectors } from "../PaymentInfoSelectors";
+import { Payment_Account_I } from "@models/index";
 
 export interface PaymentInfoModal_Props_I {
     status: boolean;
+    type: 'none' | 'new' | 'edit';
+    data?: Payment_Account_I;
 }
 
 export const PaymentInfoModal: FC<PaymentInfoModal_Props_I> = ({
@@ -14,7 +17,14 @@ export const PaymentInfoModal: FC<PaymentInfoModal_Props_I> = ({
 }) => {
 
     const {
-        // state
+        state: {
+            modals: {
+                dashboard: {
+                    paymentInfo_handler_modal: modal_data
+                }
+            }
+
+        },
         handle_paymentInfoModal
     } = useUiStore();
 
@@ -22,16 +32,20 @@ export const PaymentInfoModal: FC<PaymentInfoModal_Props_I> = ({
 
         handle_paymentInfoModal({
             status: false,
+            type: 'none',
+            data: {} as Payment_Account_I,
         })
 
     }
+
+
 
     return (
         <>
             {
                 status && (
                     <InfoModal title="Información de pago" onClose={closeModal} status={status}  >
-                        <PaymentInfoSelectors  />
+                        <PaymentInfoSelectors data={modal_data.data || {} as Payment_Account_I}  />
                     </InfoModal>
                 )
             }

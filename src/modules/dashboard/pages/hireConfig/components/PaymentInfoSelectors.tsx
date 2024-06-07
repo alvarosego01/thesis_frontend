@@ -1,12 +1,12 @@
 
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { Form, FormikProvider, useFormik } from "formik";
 
 import { useFormInitData } from '@hooks/index';
 import { FormLayoutBuilder, PrimaryButton, TextInputField } from "@components/index";
 import { Banks_List, Payments_Type_List } from "@constants/Banks"
 import { LayoutRow_I, SelectValue_I } from "@components/forms/interfaces"
-import { Payment_Type } from "@models/index";
+import { Banks_Type, Payment_Account_I, Payment_Type } from "@models/index";
 
 const formData: LayoutRow_I[] = [
     {
@@ -19,7 +19,7 @@ const formData: LayoutRow_I[] = [
                     type: 'select',
                     parent_class: '',
                     isMulti: false,
-                    items: Payments_Type_List.map(item => ({ value: item.type, label: item.label })),
+                    items: Payments_Type_List.map(item => ({ value: item.value, label: item.label })),
                     value: [],
                     placeholder: 'Selecciona tipo de pago',
                     validation_rules: [
@@ -39,7 +39,7 @@ const formData: LayoutRow_I[] = [
                     parent_class: '',
                     type: 'select',
                     isMulti: false,
-                    items: Banks_List.map(item => ({ value: item.code, label: item.bank })),
+                    items: Banks_List.map(item => ({ value: item.value, label: item.label })),
                     value: [],
                     placeholder: 'Selecciona tu banco',
                     validation_rules: [
@@ -136,11 +136,9 @@ const formData: LayoutRow_I[] = [
     },
 ];
 
-
-
 interface Init_valuesData_I {
     type: SelectValue_I<Payment_Type>;
-    bank_name: SelectValue_I;
+    bank_name: SelectValue_I<Banks_Type>;
     titular: string;
     person_id: string;
     phone?: string;
@@ -149,14 +147,18 @@ interface Init_valuesData_I {
 }
 
 interface PaymentInfoSelectors_Props_I {
+    data?: Payment_Account_I
 };
 
 export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
+    data
 }) => {
 
-    const Init_Values: Init_valuesData_I = {
+    console.log('data en modal', data);
+
+    let Init_Values: Init_valuesData_I = {
         type: {} as SelectValue_I<Payment_Type>,
-        bank_name: {} as SelectValue_I,
+        bank_name: {} as SelectValue_I<Banks_Type>,
         titular: '',
         person_id: '',
         number: '',
@@ -164,12 +166,29 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
         // date: '',
     }
 
+    // useEffect(() => {
+
+        if(data){
+            Init_Values = {
+                ...Init_Values,
+                titular: data.titular,
+                person_id: data.person_id,
+                number: data.number,
+                phone: data.phone,
+            }
+            Init_Values.type = Payments_Type_List.find(r => r.value === data.type) as SelectValue_I<Payment_Type> || {};
+            Init_Values.bank_name = Banks_List.find(r => r.value === data.bank_name) as SelectValue_I<Banks_Type> || {};
+        }
+
+    // }, [])
+
+
     const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(formData, Init_Values);
+
 
     const formik = useFormik({
         initialValues: initialValues,
         onSubmit: (values) => {
-            console.log('values emit', values);
         },
         validationSchema: validation_rules
     });
@@ -189,9 +208,9 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
 
                     <section className="py-5">
 
-                        <h2 className="mb-1 text-lg font-bold leading-snug text-slate-800 dark:text-slate-100">
+                        <h3 className="mb-1 font-bold leading-snug text-md text-slate-800 dark:text-slate-100">
                             Datos de cuenta
-                        </h2>
+                        </h3>
                         <div className="mb-5 text-xs">
                             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed neque aut et cumque, labo
                         </div>
@@ -202,21 +221,15 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
                         ]} />
                         {
                             values.type.value && (
-
                                 <div className="grid grid-cols-1 pcTab:mt-4">
                                     {
                                         values.type.value === 'bank_account' && (
-                                            <TextInputField
-                                                {...formData[2].fields[0].props}
-                                            />
+                                            <TextInputField {...formData[2].fields[0].props} />
                                         )
                                     }
                                     {
                                         values.type.value === 'mobile_payment' && (
-                                            <TextInputField
-                                                {...formData[2].fields[1].props}
-
-                                            />
+                                            <TextInputField {...formData[2].fields[1].props} />
                                         )
                                     }
                                 </div>
@@ -226,9 +239,7 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
                     </section>
 
                     <div className="flex flex-row justify-end py-5 space-x-4 border-t border-slate-200">
-
                         <PrimaryButton disabled={!isValid} label='Guardar' onClick={() => submitForm()} />
-
                     </div>
 
                 </Form>

@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef, FC } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 
-// import { SidebarMenu_Data } from '../../models';
 import { MenuLinksList } from './MenuLinksList';
 import { get_sidebarMenu } from '../../models';
 

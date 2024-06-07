@@ -16,26 +16,17 @@ const initialState: Session_authState_I = {
     onLoading: false,
     status: 'authenticated',
     auth: {
-        // _id: '',
-        // role: '',
-        // username: '',
-        // email: '',
-        // password: '',
-        // status: "none",
-        // signature: {
-        //     text: '',
-        //     date: ''
-        // }
         _id: '12345',
         role: 'ARTIST_ROLE',
+        name: 'Alvaro',
+        last_name: 'Segovia',
+        token: '123456',
         username: 'alvarosego01',
         email: 'alvarosego01@gmail.com',
-        password: ':)',
         status: "ACTIVE",
-        signature: {
-            text: 'Alvaro Sego',
-            date: '1709240436'
-        }
+        cover_pic: {} as any,
+        profile_pic: {} as any,
+
     }
 }
 

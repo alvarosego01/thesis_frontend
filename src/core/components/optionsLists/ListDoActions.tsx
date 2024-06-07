@@ -1,8 +1,8 @@
 
 import { FC } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export interface List_I {
+export interface List_I<T = string>{
     title: string;
     icon?: {
         type: 'icon' | 'image';
@@ -10,7 +10,7 @@ export interface List_I {
     },
     action: {
         type: 'link' | 'function';
-        action?: string;
+        action?: T;
         // onClick?: () => void;
     },
     type: 'primary' | 'secondary' | 'danger' | 'warning' | 'success' | 'info'
@@ -56,12 +56,12 @@ export const ListDoActions: FC<ListDoActions_Props_I> = ({
 
         if (!button.line) return '';
 
-        let line: string = 'border-t border-slate-200 dark:border-slate-600';
+        let line: string = '';
         if (button?.line?.top) {
-            line = `border-t border-slate-200 dark:border-slate-600 ${line} pt-1 mt-2`;
+            line = `border-t border-slate-200 dark:border-slate-600 ${line} pt-1 mt-1`;
         }
         if (button?.line?.bottom) {
-            line = `${line} border-b border-slate-200 dark:border-slate-600 pb-1 mb-2`;
+            line = `${line} border-b border-slate-200 dark:border-slate-600 pb-1 mb-1`;
         }
 
         return line;
@@ -70,13 +70,13 @@ export const ListDoActions: FC<ListDoActions_Props_I> = ({
 
     const _onClick = (action: List_I['action']) => {
 
-        // console.log('clickea opcion', action);
         if (action.type === 'link' && action.action) {
-            console.log('action.action', action.action);
+
             navigate(action.action);
         } else {
 
             if (action.type === 'function' && onClick && action.action) {
+
                 onClick(action.action)
             }
 

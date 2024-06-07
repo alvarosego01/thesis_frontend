@@ -1,7 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from "@reduxjs/toolkit";
 
-import { User_I } from "../../../../models";
+import { User_I } from "../../../../../core/models";
 
 export interface Session_userState_I {
     onLoading: boolean;
@@ -22,17 +22,17 @@ const initialState: Session_userState_I = {
         //     city: '',
         //     state: '',
         // }
-        _id: '12345',
-        name: 'Alvaro',
-        last_name: 'Segovia',
-        gender: 'masculine',
-        phone: '1234567890',
-        direction: {
-            adress: 'La dirección',
-            city: 'Ciudad',
-            state: 'Bolivar',
-        }
-    }
+        // _id: '12345',
+        // name: 'Alvaro',
+        // last_name: 'Segovia',
+        // gender: 'masculine',
+        // phone: '1234567890',
+        // direction: {
+        //     adress: 'La dirección',
+        //     city: 'Ciudad',
+        //     state: 'Bolivar',
+        // }
+    } as User_I
 }
 
 export const userSlice = createSlice({

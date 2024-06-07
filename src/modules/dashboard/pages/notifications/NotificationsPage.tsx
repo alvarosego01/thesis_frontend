@@ -1,7 +1,7 @@
 import { ComponentProps, FC } from "react"
 import { TabsCollapse } from "@components/index"
 import { Notification_I } from "@models/Notifications"
-import { ContentPage_LY } from "@modules/dashboard/Layouts"
+import { ContentPage_Box_LY } from "@modules/dashboard/Layouts"
 import { NotifyContent, NotifyHeader } from "."
 import { SecondaryButton } from '../../../../core/components/buttons/SecondaryButton';
 import { useNotificationsStore } from "../../../../core/store/hooks/useNotificationsStore"
@@ -61,7 +61,7 @@ const Page = () => {
 
 export const NotificationsPage: FC = () => {
     return (
-        <ContentPage_LY
+        <ContentPage_Box_LY
             title="Notificaciones"
             children={Page()} />
     )

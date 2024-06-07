@@ -25,6 +25,7 @@ export { SelectSpecialField as SelectMultipleField } from './forms/SelectSpecial
 export * from "./buttons/PrimaryButton";
 export * from "./buttons/SecondaryButton";
 export * from "./buttons/TertiaryButton";
+export * from "./buttons/Button_ListDoActions";
 
 // Modals
 export { InfoModal } from './modals/InfoModal';
@@ -32,10 +33,13 @@ export { BlankModal } from './modals/BlankModal';
 export { FeedbackModal } from './modals/FeedbackModal';
 
 // Lists
-export * from './lists/ListDoActions';
+export * from './optionsLists/ListDoActions';
 
 //TabsContent
-export { TabsContent } from './tabsContent/TabsContent';
+export * from './tabsContent/TabsContent';
 
 //TabsCollapse
-export { TabsCollapse } from './tabsCollapse/TabsCollapse';
+export * from './tabsCollapse/TabsCollapse';
+
+//Handle Info
+export * from './handleInfo/InfoList';

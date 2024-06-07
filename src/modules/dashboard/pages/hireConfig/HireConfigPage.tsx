@@ -1,6 +1,6 @@
 import { FC } from "react"
 import { ContentSidebar } from "../../components";
-import { ContentPage_LY } from "../../Layouts";
+import { ContentPage_Box_LY } from "../../Layouts";
 import { Dsh_HireConfig_routes } from "./Dsh_HireConfig.routes";
 import { Sidebar_HiringConfig_Items } from "../../models";
 
@@ -21,7 +21,7 @@ export const HireConfigPage: FC = () => {
     }
 
     return (
-        <ContentPage_LY
+        <ContentPage_Box_LY
             title="Datos de contratación"
             children={_children()} />
     );

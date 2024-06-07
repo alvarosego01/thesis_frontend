@@ -1,3 +1,4 @@
+
 import { Routes, Route, Navigate } from "react-router-dom"
 import {
     CredentialsPage,
@@ -13,7 +14,6 @@ export const Dsh_Account_routes = () => {
             <Route path='professional' element={<ProfessionalPage />} />
             <Route path='credentials' element={<CredentialsPage />} />
             <Route path='security' element={<SecuritySettingsPage />} />
-            {/* <Route path='skills' element={<ArtiscSkillsPage />} /> */}
 
             <Route path="/*" element={<Navigate to="personal" replace />} />
         </Routes>

@@ -1,6 +1,6 @@
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Session_notificationsState_I, on_DeleteNotification, on_restoreDefault, onSetLoading } from '../reducers/session/notifications/notificationsSlice';
-import { Core_Reducers_I } from "../store";
+import { Reducers_I } from "../store";
 
 
 interface useHookStore_I {
@@ -13,26 +13,19 @@ export const useNotificationsStore = (): useHookStore_I=> {
 
     const dispatch = useDispatch();
 
-    const state = useSelector<Core_Reducers_I, Session_notificationsState_I>(({ session }) => session.notifications, shallowEqual);
+    const state = useSelector<Reducers_I, Session_notificationsState_I>(({ global }) => global.session.notifications, shallowEqual);
 
     const set_loading = (status: boolean) => {
-
         dispatch(onSetLoading(status));
-
     }
 
     const deleteNotification = (_id: string) => {
-
         dispatch(on_DeleteNotification(_id));
-
     }
 
     const restoreState = () => {
-
         dispatch(on_restoreDefault())
-
     }
-
 
     return {
         // State

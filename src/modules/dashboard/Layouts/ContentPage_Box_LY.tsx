@@ -1,12 +1,12 @@
+
 import { FC } from "react"
 
-
-interface ContentPage_LY_Props_I {
+interface ContentPage_Box_LY_Props_I {
     title?: string
     children: React.ReactNode
 }
 
-export const ContentPage_LY: FC<ContentPage_LY_Props_I> = ({
+export const ContentPage_Box_LY: FC<ContentPage_Box_LY_Props_I> = ({
     title,
     children,
 }) => {

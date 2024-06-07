@@ -6,6 +6,7 @@ const Account = lazy(() => import('./pages/account/AccountPage'));
 const Role = lazy(() => import('./pages/byRole/ByRolePage'));
 const Notifications = lazy(() => import('./pages/notifications/NotificationsPage'));
 const HiringConfig = lazy(() => import('./pages/hireConfig/HireConfigPage'));
+const Contracts = lazy(() => import('./pages/contracts/ContractsPage'));
 
 const LazyComponent: React.FC<{ Component: React.ComponentType }> = ({ Component }) => (
     <Suspense fallback={'Loading...'}>
@@ -26,6 +27,10 @@ const dashboard_routesConfig: RouteObject[] = [
     {
         path: '/role/*',
         element: <Role />
+    },
+    {
+        path: '/contracts/*',
+        element: <Contracts />
     },
     {
         path: '/hiring-config/*',

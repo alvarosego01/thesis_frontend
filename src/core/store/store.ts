@@ -1,40 +1,27 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
-import { uiSlice, authSlice, userSlice, profileSlice, notificationsSlice } from ".";
+import { uiSlice, authSlice, notificationsSlice } from ".";
 
-import { uiState_I } from "./reducers/ui/uiSlice";
-import { Session_authState_I } from "./reducers/session/auth/authSlice";
-import { Session_userState_I } from "./reducers/session/user/userSlice";
-import { Session_profileState_I } from "./reducers/session/profile/profileSlice";
-import { Session_notificationsState_I } from "./reducers/session/notifications/notificationsSlice";
+import { Core_Reducers_I } from "./interfaces";
+import { Dashboard_Reducers_I } from "../../modules/dashboard/store/interfaces";
+import { dashboardReducer } from "../../modules/dashboard/store/store_dashboard";
 
-// Define una interfaz para los reducers asíncronos
-interface AsyncReducers {
-    [key: string]: any;
-}
-
-
-export interface Core_Reducers_I {
-    ui: uiState_I,
-    session: {
-        auth: Session_authState_I;
-        user: Session_userState_I;
-        profile: Session_profileState_I;
-        notifications: Session_notificationsState_I;
-    }
-}
+export interface Reducers_I extends Core_Reducers_I, Dashboard_Reducers_I { }
 
 const sessionReducer = combineReducers({
     auth: authSlice.reducer,
-    profile: profileSlice.reducer,
-    user: userSlice.reducer,
     notifications: notificationsSlice.reducer
 });
 
-export const core_store = configureStore<Core_Reducers_I>({
+const globalReducer = combineReducers({
+    ui: uiSlice.reducer,
+    session: sessionReducer,
+});
+
+export const core_store = configureStore<Reducers_I>({
     reducer: {
-        ui: uiSlice.reducer,
-        session: sessionReducer
+        global: globalReducer,
+        dashboard: dashboardReducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false

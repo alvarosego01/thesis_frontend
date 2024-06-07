@@ -39,7 +39,6 @@ export const Header: FC<Header_I> = ({
                         </button>
 
                     </div>
-
                     {
                         state.status === 'authenticated' && (
                             <div className="flex items-center space-x-3">

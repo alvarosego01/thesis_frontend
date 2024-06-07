@@ -2,7 +2,14 @@
 import { FC } from "react";
 import { Button_I } from "./interfaces"
 
-export const SecondaryButton: FC<Button_I> = ({ label, className = '', disabled, size='default', icon, onClick, isLoading }) => {
+export const SecondaryButton: FC<Button_I> = ({
+     label,
+     className = '',
+     disabled,
+     size = 'default',
+     icon,
+     onClick, isLoading
+     }) => {
 
     const sizeButton = (): string => {
 

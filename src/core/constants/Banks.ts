@@ -1,41 +1,41 @@
 import { Banks_Type } from "../models";
 
 export const Banks_List: {
-    bank: Banks_Type;
-    code: string;
+    label: string;
+    value: Banks_Type;
 }[] = [
         {
-            bank: "Banco de Venezuela",
-            code: "0102"
+            label: "Banco de Venezuela",
+            value: "bc_venezuela"
         },
         {
-            bank: "Banco Mercantil",
-            code: "0105"
+            label: "Banco Mercantil",
+            value: "bc_mercantil"
         },
         {
-            bank: "Banco Provincial",
-            code: "0108"
+            label: "Banco Provincial",
+            value: "bc_provincial"
         },
         {
-            bank: "Banco Bicentenario",
-            code: "0163"
+            label: "Banco Bicentenario",
+            value: "bc_bicentenario"
         },
         {
-            bank: "Banco Banesco",
-            code: "0134"
+            label: "Banco Banesco",
+            value: "bc_banesco"
         }
     ]
 
     export const Payments_Type_List: {
-        type: "bank_account" | "mobile_payment";
+        value: "bank_account" | "mobile_payment";
         label: string;
     }[] = [
         {
-            type: "bank_account",
+            value: "bank_account",
             label: "Cuenta Bancaria"
         },
         {
-            type: "mobile_payment",
+            value: "mobile_payment",
             label: "Pago Móvil"
         }
     ];

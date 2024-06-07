@@ -23,7 +23,9 @@ const initialState: uiState_I = {
                 text: ""
             },
             paymentInfo_handler_modal: {
-                status: false
+                status: false,
+                type: 'none',
+                data: {} as any
             }
         }
     }
@@ -34,14 +36,18 @@ export const uiSlice = createSlice({
     initialState,
     reducers: {
         on_Handler_SignatureSelectorModal: (state, {payload}: PayloadAction<SignatureModal_Props_I>) => {
+            const { status, text } = payload;
             state.modals.dashboard.signature_selector_modal = {
-                status: payload.status,
-                text: payload.text
+                status,
+                text
             }
         },
         on_Handler_PaymentInfoModal: (state, {payload}: PayloadAction<PaymentInfoModal_Props_I>) => {
+            const { status, data, type } = payload;
             state.modals.dashboard.paymentInfo_handler_modal = {
-                status: payload.status
+                status,
+                data,
+                type
             }
         },
         on_restoreDefault: (state) => {

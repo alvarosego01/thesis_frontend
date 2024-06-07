@@ -3,12 +3,12 @@
  *               Interfaces & Types
  *---------------------------------------------**/
 const type_array_default = [
-    "Banco de Venezuela",
-    "Banco Mercantil",
-    "Banco Provincial",
-    "Banco Bicentenario",
-    "Banco del Tesoro",
-    "Banco Banesco",
+    "bc_bicentenario",
+    "bc_banesco",
+    "bc_tesoro",
+    "bc_provincial",
+    "bc_mercantil",
+    "bc_venezuela",
 ] as const;
 export type Banks_Type = typeof type_array_default[number];
 

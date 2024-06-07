@@ -1,8 +1,39 @@
 import { FC } from "react"
-import { PrimaryButton } from '@components/buttons/PrimaryButton';
-import { NotFoundContent } from "@modules/dashboard/components";
 import { useUiStore } from "@store/index";
 import { PaymentInfo, PaymentInfoModal } from "../components";
+import { PrimaryButton } from "@components/index";
+import { NotFoundContent } from "../../../components";
+import { Payment_Account_I } from "@models/index";
+
+const aux_data: Payment_Account_I[] = [
+    {
+        bank_name: "bc_venezuela",
+        date: "2021-09-01",
+        number: "123456789",
+        person_id: "123456789",
+        phone: "",
+        titular: "Juan Perez",
+        type: "bank_account"
+    },
+    {
+        bank_name: "bc_banesco",
+        date: "2021-09-01",
+        number: "123456789",
+        person_id: "123456789",
+        phone: "",
+        titular: "Juan Perez",
+        type: "bank_account"
+    },
+    {
+        bank_name: "bc_mercantil",
+        date: "2021-09-01",
+        number: "",
+        person_id: "123456789",
+        phone: "123456789",
+        titular: "Juan Perez",
+        type: "mobile_payment"
+    }
+]
 
 export const PaymentInfoPage: FC = () => {
 
@@ -22,7 +53,9 @@ export const PaymentInfoPage: FC = () => {
     const add_new = () => {
 
         handle_paymentInfoModal({
-            status: true
+            status: true,
+            type: 'new',
+
         })
 
     }
@@ -33,33 +66,31 @@ export const PaymentInfoPage: FC = () => {
 
                 <div className="p-5 space-y-5">
 
-                    <h2 className="mb-5 text-2xl font-bold text-slate-800 dark:text-slate-100 ">
+                    <h2 className="flex flex-row justify-between mb-5 text-2xl font-bold text-slate-800 dark:text-slate-100">
                         Información de pago y cuentas
-                    </h2>
-
-                    {/* <div className="p-5 space-y-5">
-                    <div className="flex flex-row justify-between">
-
-                        <h2 className="mb-5 text-2xl font-bold text-slate-800 dark:text-slate-100 ">
-                            Cuentas y formas de pago
-                        </h2>
 
                         <PrimaryButton onClick={add_new} label="Añadir" icon="bx bx-plus" />
+                    </h2>
 
-                    </div>
-                    <section>
-                        <NotFoundContent onClick={add_new} enableButton={true} title="Sin información de pago añadida" />
-                    </section>
-
-                </div> */}
-
-                    <div className="grid grid-cols-12 gap-5 paymentInfo">
-
-                        <div className="col-span-full sm:col-span-6 xl:col-span-4">
-                            {/* <PaymentInfo /> */}
-                        </div>
-
-                    </div>
+                    {
+                        (aux_data.length === 0) ? (
+                            <section>
+                                <NotFoundContent onClick={add_new} enableButton={true} title="Sin información de pago añadida" />
+                            </section>
+                        ) : (
+                            <div className="grid grid-cols-12 gap-5 paymentInfo">
+                                {
+                                    aux_data.map((data, index) => {
+                                        return (
+                                            <div key={index} className="col-span-full sm:col-span-6 xl:col-span-4">
+                                                <PaymentInfo {...data} />
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                        )
+                    }
 
                 </div>
 

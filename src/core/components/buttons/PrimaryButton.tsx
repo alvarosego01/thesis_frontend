@@ -34,7 +34,11 @@ export const PrimaryButton: FC<Button_I> = ({
             {
                 icon && !isLoading && <i className={`${icon} mr-s_7.5 text-20p`}></i>
             }
-            {label}
+         {
+                label && (
+                    label
+                )
+            }
         </button>
     )
 }

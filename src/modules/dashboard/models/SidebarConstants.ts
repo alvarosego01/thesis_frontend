@@ -56,10 +56,10 @@ export const get_sidebarMenu = (): SidebarMenuLink_I[] => {
                 content: "bx bx-briefcase-alt-2"
 
             },
-            link: '/dashboard/xxx',
+            link: '/dashboard/contracts',
             activeCondition: {
                 type: 'route',
-                content: '/dashboard/xxx'
+                content: '/dashboard/contracts'
             }
         },
         {
