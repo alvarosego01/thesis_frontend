@@ -173,7 +173,7 @@ export const RegisterPage = () => {
                                                     <label className="flex items-center">
                                                         <input type="checkbox" className="form-checkbox" />
                                                         <span className="ml-2 text-sm">
-
+                                                                asdasdadasdasd
                                                         </span>
                                                     </label>
                                                 </div> */}

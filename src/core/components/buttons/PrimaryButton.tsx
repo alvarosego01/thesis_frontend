@@ -3,13 +3,13 @@ import { FC } from "react";
 import { Button_I } from "./interfaces"
 
 export const PrimaryButton: FC<Button_I> = ({
-     label,
-     className = '',
-     disabled,
-     size = 'default',
-     icon,
-     onClick, isLoading
-     }) => {
+    label,
+    className = '',
+    disabled,
+    size = 'default',
+    icon,
+    onClick, isLoading
+}) => {
 
     const sizeButton = (): string => {
         if (size === 'default') return 'bttn';
@@ -21,9 +21,17 @@ export const PrimaryButton: FC<Button_I> = ({
         return 'cursor-pointer';
     }
 
+    const _onclick = () => {
+
+        if (disabled) return;
+        if (isLoading) return;
+        onClick();
+
+    }
+
     return (
         <button type="button" className={`${className} ${sizeButton()} text-white bg-indigo-500 hover:bg-indigo-600 w-fit h-fit ${state_style()}`}
-            onClick={onClick}
+            onClick={_onclick}
             disabled={disabled}
         >
             {isLoading &&
@@ -34,7 +42,7 @@ export const PrimaryButton: FC<Button_I> = ({
             {
                 icon && !isLoading && <i className={`${icon} mr-s_7.5 text-20p`}></i>
             }
-         {
+            {
                 label && (
                     label
                 )

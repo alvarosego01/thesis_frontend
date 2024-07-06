@@ -13,7 +13,7 @@ export const AccountPage: FC = () => {
 
         return (
             <>
-                <ContentSidebar content={Sidebar_ProfilePersonal_Items} />
+                <ContentSidebar content={ Sidebar_ProfilePersonal_Items } />
                 <Dsh_Account_routes />
             </>
         )

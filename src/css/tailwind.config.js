@@ -2,8 +2,6 @@
 
 const plugin = require('tailwindcss/plugin');
 
-
-
 export default {
     content: [
         './index.html',

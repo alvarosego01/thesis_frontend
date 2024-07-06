@@ -1,17 +1,5 @@
 
 
-// export const App_Router = () => {
-//     return (
-//         <Routes>
-
-//             <Route path='/dashboard/*' element={<Dashboard_main />} />
-//             <Route path='/*' element={<Public_main />} />
-
-//         </Routes>
-
-//     )
-// }
-
 
 
 import { useRoutes } from 'react-router-dom';

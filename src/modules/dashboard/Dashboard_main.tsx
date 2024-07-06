@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Dashboard_routes, Sidebar } from "."
 import { Header } from "@components/index";
@@ -21,15 +22,16 @@ export const Dashboard_main = () => {
 
                         <div className="px-4 py-8 mx-auto sm:px-6 lg:px-8 max-w-9xl">
 
-                        <Dashboard_routes />
+                            <Dashboard_routes />
 
                         </div>
                     </div>
+
                 </main>
+
             </div>
 
         </>
-
     )
 }
 

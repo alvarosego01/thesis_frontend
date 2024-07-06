@@ -7,7 +7,6 @@ export interface File_Model_I extends SchemaKey_I {
     file: string;
     format: string;
     folder: string;
-    // details?: string;
-    //statusOrder?: any
-
+    src: string;
+    created_at: string;
 }

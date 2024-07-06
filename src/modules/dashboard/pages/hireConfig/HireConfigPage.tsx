@@ -14,7 +14,7 @@ export const HireConfigPage: FC = () => {
             <>
                 <ContentSidebar content={Sidebar_HiringConfig_Items} />
 
-                    <Dsh_HireConfig_routes />
+                <Dsh_HireConfig_routes />
 
             </>
         )

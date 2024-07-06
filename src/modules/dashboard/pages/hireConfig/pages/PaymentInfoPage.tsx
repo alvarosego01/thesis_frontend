@@ -48,8 +48,6 @@ export const PaymentInfoPage: FC = () => {
         handle_paymentInfoModal
     } = useUiStore();
 
-
-
     const add_new = () => {
 
         handle_paymentInfoModal({

@@ -154,8 +154,6 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
     data
 }) => {
 
-    console.log('data en modal', data);
-
     let Init_Values: Init_valuesData_I = {
         type: {} as SelectValue_I<Payment_Type>,
         bank_name: {} as SelectValue_I<Banks_Type>,
@@ -166,7 +164,6 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
         // date: '',
     }
 
-    // useEffect(() => {
 
         if(data){
             Init_Values = {
@@ -179,8 +176,6 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
             Init_Values.type = Payments_Type_List.find(r => r.value === data.type) as SelectValue_I<Payment_Type> || {};
             Init_Values.bank_name = Banks_List.find(r => r.value === data.bank_name) as SelectValue_I<Banks_Type> || {};
         }
-
-    // }, [])
 
 
     const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(formData, Init_Values);

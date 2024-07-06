@@ -3,17 +3,17 @@ import { FC } from "react";
 import { Button_I } from "./interfaces"
 
 export const TertiaryButton: FC<Button_I> = ({
-     label,
-     className = '',
-     disabled = false,
-     size = 'default',
-     icon,
-     onClick,
-     isLoading,
+    label,
+    className = '',
+    disabled = false,
+    size = 'default',
+    icon,
+    onClick,
+    isLoading,
 
-     ref,
+    ref,
 
-     }) => {
+}) => {
 
     const sizeButton = (): string => {
 
@@ -23,10 +23,18 @@ export const TertiaryButton: FC<Button_I> = ({
 
     }
 
+    const _onclick = () => {
+
+        if (disabled) return;
+        if (isLoading) return;
+        onClick();
+
+    }
+
     return (
         <button
-         type="button" className={`${className} ${sizeButton()} dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-300 w-fit h-fit`}
-            onClick={onClick}
+            type="button" className={`${className} ${sizeButton()} dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-300 w-fit h-fit`}
+            onClick={_onclick}
             disabled={disabled}
         >
             {isLoading &&

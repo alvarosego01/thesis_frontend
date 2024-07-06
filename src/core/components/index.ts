@@ -25,6 +25,7 @@ export { SelectSpecialField as SelectMultipleField } from './forms/SelectSpecial
 export * from "./buttons/PrimaryButton";
 export * from "./buttons/SecondaryButton";
 export * from "./buttons/TertiaryButton";
+export * from "./buttons/OutlineButton";
 export * from "./buttons/Button_ListDoActions";
 
 // Modals
