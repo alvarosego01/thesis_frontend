@@ -84,7 +84,6 @@ export const SecuritySettingsPage: FC = () => {
     } = useUiStore();
 
 
-
     const signature_modal = () => {
         // return
         handle_signatureModal({

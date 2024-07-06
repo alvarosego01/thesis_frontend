@@ -23,7 +23,8 @@
     "react-select": "^5.8.0",
     "react-transition-group": "^4.4.5",
     "vite-plugin-components": "^0.13.3",
-    "yup": "^1.4.0"
+    "yup": "^1.4.0",
+    "@tesis-project/dev-globals": "^1.0.719"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

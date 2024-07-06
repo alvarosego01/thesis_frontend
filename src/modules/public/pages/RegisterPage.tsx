@@ -3,11 +3,12 @@
 import { Link } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 
-import { getAssetPath } from '../../../../core/utils';
-import { FormLayoutBuilder, PrimaryButton } from '../../../../core/components';
-import { useFormInitData } from '../../../../core/hooks';
+import { getAssetPath } from '../../../core/utils';
+import { FormLayoutBuilder, PrimaryButton } from '../../../core/components';
+import { LayoutRow_I } from '../../../core/components/forms/interfaces';
+import { useFormInitData } from '../../../core/hooks';
 
-import { LayoutRow_I } from '../../../../core/components/forms/interfaces';
+
 
 const AuthImage = getAssetPath('/images/auth-image.jpg');
 const AuthDecoration = getAssetPath('/images/auth-decoration.png');

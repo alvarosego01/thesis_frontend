@@ -1,11 +1,11 @@
 
 import { Link } from 'react-router-dom';
-import { Form, Formik } from 'formik';
+import { Form, Formik, FormikProvider, useFormik } from 'formik';
 
-import { getAssetPath } from '../../../../core/utils';
-import { useFormInitData } from '../../../../core/hooks';
-import { LayoutRow_I } from '../../../../core/components/forms/interfaces';
-import { FormLayoutBuilder, PrimaryButton } from '../../../../core/components';
+import { getAssetPath } from '../../../core/utils';
+import { useFormInitData } from '../../../core/hooks';
+import { LayoutRow_I } from '../../../core/components/forms/interfaces';
+import { FormLayoutBuilder, PrimaryButton } from '../../../core/components';
 
 const AuthImage = getAssetPath('/images/auth-image.jpg');
 const AuthDecoration = getAssetPath('/images/auth-decoration.png');
@@ -58,9 +58,35 @@ const formData: LayoutRow_I[] = [
     }
 ]
 
+interface Init_valuesData_I {
+    email: string;
+    password: string;
+}
+
 export const LoginPage = () => {
 
-    const { initialValues, validation_rules } = useFormInitData(formData);
+
+    const Init_Values: Init_valuesData_I = {
+        email: '',
+        password: ''
+    }
+
+    const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(formData, Init_Values);
+
+    const formik = useFormik({
+        initialValues: initialValues,
+        onSubmit: (values) => {
+            console.log('values', values);
+        },
+        validationSchema: validation_rules
+    });
+
+    const {
+        values,
+        errors,
+        submitForm
+    } = formik;
+
 
     return (
         <main className="w-full bg-white dark:bg-slate-900 ">
@@ -99,23 +125,11 @@ export const LoginPage = () => {
                         <div className="w-full max-w-sm px-4 py-8 mx-auto">
                             <h1 className="mb-6 text-3xl font-bold text-slate-800 dark:text-slate-100">Hola de nuevo! ✨</h1>
 
-                            <Formik
-                                initialValues={initialValues}
-                                onSubmit={(values) => {
-                                    console.log('values', values)
-                                }}
-                                validationSchema={validation_rules}
-                            >
-                                {
-                                    ({
-                                        submitForm
-                                    }) => (
+                            <FormikProvider value={formik}>
 
-                                        <Form noValidate
-                                        >
+                                        <Form noValidate >
 
                                             <FormLayoutBuilder rows={formData} />
-
 
                                             <div className="flex flex-col py-5 pb-0 border-t border-slate-200 dark:border-slate-700">
                                                 <div className="flex justify-between">
@@ -127,8 +141,8 @@ export const LoginPage = () => {
                                             </div>
 
                                         </Form>
-                                    )}
-                            </Formik>
+
+                            </FormikProvider>
 
                             {/* Footer */}
                             <div className="pt-5 mt-6 border-t border-slate-200 dark:border-slate-700">

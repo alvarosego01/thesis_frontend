@@ -3,31 +3,23 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 import { User_Auth_I } from "../../../../models";
 
+import {Auth_I} from '@tesis-project/dev-globals/dist/modules/auth/interfaces'
+
 type Status_Session_Type = "checking" | "authenticated" | "not-authenticated";
+
 
 export interface Session_authState_I {
     onLoading: boolean;
     status: Status_Session_Type;
-    auth: User_Auth_I;
+    auth: any;
 }
 
 const initialState: Session_authState_I = {
-    // status: 'not-authenticated',
+    status: 'not-authenticated',
+    // status: 'authenticated',
     onLoading: false,
-    status: 'authenticated',
     auth: {
-        _id: '12345',
-        role: 'ARTIST_ROLE',
-        name: 'Alvaro',
-        last_name: 'Segovia',
-        token: '123456',
-        username: 'alvarosego01',
-        email: 'alvarosego01@gmail.com',
-        status: "ACTIVE",
-        cover_pic: {} as any,
-        profile_pic: {} as any,
-
-    }
+    } as any
 }
 
 export const authSlice = createSlice({
@@ -42,7 +34,7 @@ export const authSlice = createSlice({
             state.onLoading = true;
             state.auth = { ...initialState.auth }
         },
-        onLogin: (state, { payload }: PayloadAction<User_Auth_I>) => {
+        onLogin: (state, { payload }: PayloadAction<any>) => {
             state.status = 'authenticated';
             state.auth = {...payload};
             state.onLoading = false;
