@@ -2,9 +2,16 @@
 import { useState } from "react";
 import { Dashboard_routes, Sidebar } from "."
 import { Header } from "@components/index";
+import { useAuthStore } from "../../core/store";
 
 
 export const Dashboard_main = () => {
+
+    const {
+        state: {
+            status
+        }
+    } = useAuthStore();
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -12,7 +19,11 @@ export const Dashboard_main = () => {
         <>
             <div className="flex h-[100dvh] overflow-hidden">
 
-                <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+                {
+                    status === 'authenticated' && (
+                        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+                    )
+                }
 
                 <main className="grow">
 

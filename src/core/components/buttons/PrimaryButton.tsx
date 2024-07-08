@@ -8,7 +8,8 @@ export const PrimaryButton: FC<Button_I> = ({
     disabled,
     size = 'default',
     icon,
-    onClick, isLoading
+    onClick,
+    isLoading
 }) => {
 
     const sizeButton = (): string => {

@@ -1,6 +1,6 @@
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { Session_profileState_I } from '../reducers/profile/profileSlice';
-import { Reducers_I } from "../../../../core/store/store";
+import { Session_profileState_I } from '../../reducers/profile/profileSlice';
+import { Reducers_I } from "../../../../../core/store/store";
 
 
 interface useHookStore_I {

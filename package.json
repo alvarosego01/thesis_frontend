@@ -13,8 +13,12 @@
     "@react-hooks-library/core": "^0.6.2",
     "@reduxjs/toolkit": "^2.2.6",
     "@tailwindcss/forms": "^0.5.7",
+    "@tesis-project/dev-globals": "^1.0.724",
+    "axios": "^1.7.2",
     "boxicons": "^2.1.4",
+    "dotenv": "^16.4.5",
     "formik": "^2.4.6",
+    "joi": "^17.13.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.2.1",
@@ -23,10 +27,11 @@
     "react-select": "^5.8.0",
     "react-transition-group": "^4.4.5",
     "vite-plugin-components": "^0.13.3",
-    "yup": "^1.4.0",
-    "@tesis-project/dev-globals": "^1.0.719"
+    "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/react-transition-group": "^4.4.10",

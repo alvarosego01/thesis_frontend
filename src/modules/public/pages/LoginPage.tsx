@@ -6,6 +6,8 @@ import { getAssetPath } from '../../../core/utils';
 import { useFormInitData } from '../../../core/hooks';
 import { LayoutRow_I } from '../../../core/components/forms/interfaces';
 import { FormLayoutBuilder, PrimaryButton } from '../../../core/components';
+import { useAuthStore } from '../../../core/store';
+import { FC } from 'react';
 
 const AuthImage = getAssetPath('/images/auth-image.jpg');
 const AuthDecoration = getAssetPath('/images/auth-decoration.png');
@@ -46,8 +48,8 @@ const formData: LayoutRow_I[] = [
                         },
                         {
                             type: "pattern",
-                            value: '^[A-Za-z0-9]{8,}$',
-                            message: "La contraseña debe ser alfanumérica y tener al menos 8 caracteres"
+                            value: "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/",
+                            message: "Debe tener 1 Mayuscula, 1 Minuscula y al menos 8 caracteres"
                         }
                     ]
                 }
@@ -63,8 +65,14 @@ interface Init_valuesData_I {
     password: string;
 }
 
-export const LoginPage = () => {
+export const LoginPage: FC = () => {
 
+    const {
+        emit_login,
+        state: {
+            onLoading
+        },
+    } = useAuthStore();
 
     const Init_Values: Init_valuesData_I = {
         email: '',
@@ -76,7 +84,7 @@ export const LoginPage = () => {
     const formik = useFormik({
         initialValues: initialValues,
         onSubmit: (values) => {
-            console.log('values', values);
+            emit_login(values.email, values.password)
         },
         validationSchema: validation_rules
     });
@@ -136,7 +144,7 @@ export const LoginPage = () => {
                                                     <div className="flex items-center mr-1">
                                                         <Link className="text-sm underline hover:no-underline" to="/reset-password">¿Perdiste tu contraseña?</Link>
                                                     </div>
-                                                    <PrimaryButton onClick={ submitForm } label="Ingresar" />
+                                                    <PrimaryButton onClick={ submitForm } isLoading={onLoading} label="Ingresar" />
                                                 </div>
                                             </div>
 

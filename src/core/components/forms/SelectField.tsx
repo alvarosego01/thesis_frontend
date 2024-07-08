@@ -12,7 +12,6 @@ export const SelectField = ({ label, className, ...props }: SelectField_Props_I)
     const fieldState = (): string => {
 
         if (meta.error && meta.touched) return 'border-rose-300';
-
         if (meta.touched) return 'border-emerald-300';
 
         return '';
@@ -26,7 +25,6 @@ export const SelectField = ({ label, className, ...props }: SelectField_Props_I)
             </label>
             <select className={`w-full form-select ${fieldState()}`} {...field} {...props} />
             <ErrorMessage name={props.name} component='span' className="mt-1 text-xs text-rose-500" />
-
         </div>
     )
 }

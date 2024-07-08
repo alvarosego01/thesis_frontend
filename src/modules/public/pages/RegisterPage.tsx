@@ -1,26 +1,28 @@
 
 
 import { Link } from 'react-router-dom';
-import { Form, Formik } from 'formik';
+import { Form, Formik, FormikProvider, useFormik } from 'formik';
 
 import { getAssetPath } from '../../../core/utils';
 import { FormLayoutBuilder, PrimaryButton } from '../../../core/components';
 import { LayoutRow_I } from '../../../core/components/forms/interfaces';
 import { useFormInitData } from '../../../core/hooks';
+import { User_Role_Enum } from '@tesis-project/dev-globals/dist/modules/auth/interfaces';
+import { FC } from 'react';
 
 
 
 const AuthImage = getAssetPath('/images/auth-image.jpg');
 const AuthDecoration = getAssetPath('/images/auth-decoration.png');
 
-const roles: { value: 'artist_role' | 'contratist_role', label: string }[] = [
+const roles: { value: User_Role_Enum, label: string }[] = [
     {
         label: 'Artista',
-        value: 'artist_role'
+        value: User_Role_Enum.ARTIST_ROLE
     },
     {
         label: 'Contratista',
-        value: 'contratist_role'
+        value: User_Role_Enum.CONTRATIST_ROLE
     }
 ];
 
@@ -28,6 +30,46 @@ const roles: { value: 'artist_role' | 'contratist_role', label: string }[] = [
 const formData: LayoutRow_I[] = [
     {
         fields: [
+            {
+                typeField: 'text',
+                props: {
+                    label: 'Nombre',
+                    name: 'name',
+                    type: 'text',
+                    parent_class: '!mb-4',
+                    validation_rules: [
+                        {
+                            type: "required",
+                            message: "El nombre es requerido"
+                        },
+                        {
+                            type: "minLength",
+                            value: 3,
+                            message: "Debe tener minimo 3 caracteres"
+                        },
+                    ]
+                }
+            },
+            {
+                typeField: 'text',
+                props: {
+                    label: 'Apellido',
+                    name: 'last_name',
+                    type: 'text',
+                    parent_class: '!mb-4',
+                    validation_rules: [
+                        {
+                            type: "required",
+                            message: "El apellido es requerido"
+                        },
+                        {
+                            type: "minLength",
+                            value: 3,
+                            message: "Debe tener minimo 3 caracteres"
+                        },
+                    ]
+                }
+            },
             {
                 typeField: 'text',
                 props: {
@@ -76,8 +118,9 @@ const formData: LayoutRow_I[] = [
                         },
                         {
                             type: "pattern",
-                            value: '^[A-Za-z0-9]{8,}$',
-                            message: "La contraseña debe ser alfanumérica y tener al menos 8 caracteres"
+                            // value: "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/",
+                            value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
+                          message: "Debe tener 1 Mayuscula, 1 Minuscula y al menos 8 caracteres"
                         }
                     ]
                 }
@@ -108,10 +151,43 @@ const formData: LayoutRow_I[] = [
     }
 ]
 
+interface Init_valuesData_I {
+    name: string;
+    last_name: string;
+    email: string;
+    role: User_Role_Enum,
+    password: string;
+    password_repeat: string;
+}
 
-export const RegisterPage = () => {
+export const RegisterPage: FC = () => {
 
-    const { initialValues, validation_rules } = useFormInitData(formData);
+
+    const Init_Values: Init_valuesData_I = {
+        name: '',
+        last_name: '',
+        email: '',
+        role: User_Role_Enum.ARTIST_ROLE,
+        password: '',
+        password_repeat: '',
+    }
+
+    const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(formData, Init_Values);
+
+    const formik = useFormik({
+        initialValues: initialValues,
+        onSubmit: (values) => {
+
+            console.log('register', values);
+        },
+        validationSchema: validation_rules
+    });
+
+    const {
+        values,
+        errors,
+        submitForm
+    } = formik;
 
 
     return (
@@ -153,37 +229,16 @@ export const RegisterPage = () => {
                                 Regístrate ahora ✨
                             </h1>
 
-                            <Formik
-                                initialValues={initialValues}
-                                onSubmit={(values) => {
-                                    console.log('values', values)
-                                }}
-                                validationSchema={validation_rules}>
-                                {
-                                    ({
-                                        submitForm
-                                    }) => (
+                            <FormikProvider value={formik}>
+                                <Form noValidate>
 
-                                        <Form noValidate
-                                        >
+                                    <FormLayoutBuilder rows={formData} />
+                                    <div className="flex items-center justify-end mt-6">
+                                        <PrimaryButton onClick={submitForm} label="Enviar" />
+                                    </div>
 
-                                            <FormLayoutBuilder rows={formData} />
-
-                                            <div className="flex items-center justify-end mt-6">
-                                                {/* <div className="mr-1">
-                                                    <label className="flex items-center">
-                                                        <input type="checkbox" className="form-checkbox" />
-                                                        <span className="ml-2 text-sm">
-                                                                asdasdadasdasd
-                                                        </span>
-                                                    </label>
-                                                </div> */}
-                                                <PrimaryButton onClick={submitForm} label="Enviar" />                                            </div>
-
-                                        </Form>
-
-                                    )}
-                            </Formik>
+                                </Form>
+                            </FormikProvider>
 
                             {/* Footer */}
                             <div className="pt-5 mt-6 border-t border-slate-200 dark:border-slate-700">

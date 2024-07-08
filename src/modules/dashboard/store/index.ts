@@ -5,5 +5,5 @@ export { userSlice } from "./reducers/user/userSlice";
 
 
 /*--------------- Hooks --------------*/
-export { useProfileStore } from "./hooks/useProfileStore";
-export { useUserStore } from "./hooks/useUserStore";
+export { useProfileStore } from "./hooks/profile/useProfileStore";
+export { useUserStore } from "./hooks/user/useUserStore";

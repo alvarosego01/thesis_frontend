@@ -15,6 +15,7 @@ export const useNotificationsStore = (): useHookStore_I=> {
 
     const state = useSelector<Reducers_I, Session_notificationsState_I>(({ global }) => global.session.notifications, shallowEqual);
 
+
     const set_loading = (status: boolean) => {
         dispatch(onSetLoading(status));
     }

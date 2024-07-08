@@ -1,4 +1,4 @@
-import { FC, Suspense, lazy } from "react";
+import { FC, Suspense, lazy, useEffect } from "react";
 import { Navigate, RouteObject, useRoutes } from "react-router-dom";
 import { useAuthStore } from "../../core/store";
 
@@ -48,22 +48,37 @@ export const Dashboard_routes: FC = () => {
 
     const {
         state: {
-            status
-        }
+            status,
+            session_isChecked
+        },
+        emit_checkAuthToken
     } = useAuthStore();
+
+
+    useEffect(() => {
+        emit_checkAuthToken();
+    }, [])
+
+
 
     const routes = useRoutes(dashboard_routesConfig);
 
     return (
         <>
             {
-                (status === 'authenticated') && (
-                    routes
-                )
-            }
-            {
-                (status === 'not-authenticated') && (
-                    <Navigate to='/' replace />
+                (session_isChecked) && (
+                    <>
+                        {
+                            (status === 'authenticated') && (
+                                routes
+                            )
+                        }
+                        {
+                            (status === 'not-authenticated') && (
+                                <Navigate to='/' replace />
+                            )
+                        }
+                    </>
                 )
             }
         </>

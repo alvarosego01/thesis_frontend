@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, FC } from 'react';
 import { ListDoActions, List_I } from '@components/index';
 import { getAssetPath, Transition } from '@utils/index';
-import { useAuthStore } from '@store/index';
+import { useAuthStore, useUserStore } from '@store/index';
 import { transformRoles_P } from '@pipes/index';
 
 const UserAvatar = getAssetPath('/images/auth-image.jpg');
@@ -75,11 +75,14 @@ export const UserProfileDropdown: FC<DropdownProfileProps> = ({ align }) => {
     const dropdown = useRef<HTMLDivElement>(null);
 
     const {
-        state: {
-            auth
-        },
         emit_onLogout
     } = useAuthStore();
+
+    const {
+        state: {
+            user
+        },
+    } = useUserStore();
 
 
 
@@ -127,7 +130,7 @@ export const UserProfileDropdown: FC<DropdownProfileProps> = ({ align }) => {
                 <img className="w-8 h-8 rounded-full" src={UserAvatar} width="32" height="32" alt="User" />
                 <div className="flex items-center truncate">
                     <span className="ml-2 text-sm font-medium truncate dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">
-                        {auth.name} {auth.last_name}
+                        {user.name} {user.last_name}
                     </span>
                     <svg className="w-3 h-3 ml-1 fill-current shrink-0 text-slate-400" viewBox="0 0 12 12">
                         <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
@@ -152,15 +155,15 @@ export const UserProfileDropdown: FC<DropdownProfileProps> = ({ align }) => {
                 >
                     <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-slate-200 dark:border-slate-700">
                         <div className="font-medium text-slate-800 dark:text-slate-100">
-                            {auth.name} {auth.last_name}
+                            {user.name} {user.last_name}
                         </div>
-                        {
+                   {/*      {
                             auth.role && (
                                 <div className="text-xs italic text-slate-500 dark:text-slate-400">
                                     { transformRoles_P(auth.role) }
                                 </div>
                             )
-                        }
+                        } */}
                     </div>
                     <ListDoActions onClick={(action) => onClick_ListDoActions(action)} list={ListDoActions_data} />
                 </div>

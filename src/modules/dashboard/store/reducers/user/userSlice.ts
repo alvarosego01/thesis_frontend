@@ -1,15 +1,14 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from "@reduxjs/toolkit";
+import { User_I } from '@tesis-project/dev-globals/dist/modules/user/interfaces';
 
-import { User_I } from "../../../../../core/models";
 
-export interface Session_userState_I {
+export interface Slice_userState_I {
     onLoading: boolean;
     user: User_I;
 }
 
-const initialState: Session_userState_I = {
-    // status: 'not-authenticated',
+const initialState: Slice_userState_I = {
     onLoading: false,
     user: {
         // _id: '',
@@ -39,21 +38,22 @@ export const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        onSetLoading: (state, {payload}: PayloadAction<boolean>) => {
+        onSetLoading_userSlice: (state, {payload}: PayloadAction<boolean>) => {
             state.onLoading = payload;
         },
-        onSetUser: (state, { payload }: PayloadAction<User_I>) => {
+        onSetUser_userSlice: (state, { payload }: PayloadAction<User_I>) => {
             state.user = {...payload};
             state.onLoading = false;
         },
-        onRestoreDefault: (state) => {
-            state = initialState;
+        onRestoreDefault_userSlice: (state) => {
+            state.onLoading = false,
+            state.user = {...initialState.user}
         },
     }
 });
 
 export const {
-    onSetLoading,
-    onSetUser,
-    onRestoreDefault
+    onSetLoading_userSlice,
+    onSetUser_userSlice,
+    onRestoreDefault_userSlice
 } = userSlice.actions;

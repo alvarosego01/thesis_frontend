@@ -38,7 +38,7 @@ export const FormLayoutBuilder: FC<FormLayoutBuilder_Props_I> = ({ rows }) => {
                                                 }
                                                 {
                                                     f.items.map(({ value, label }) => (
-                                                        <option key={value} value={label}>
+                                                        <option key={value} value={value}>
                                                             {label}
                                                         </option>
                                                     ))

@@ -6,6 +6,8 @@ import { useFormInitData } from "../../../../../core/hooks";
 import { Form, FormikProvider, useFormik } from "formik"
 import { getAssetPath } from "../../../../../core/utils";
 import { estadosVenezuela } from "../../../../../core/constants/Countries";
+import { useAuthStore, useUserStore } from "../../../../../core/store";
+import { Gender_Enum } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
 
 
 const avatar_default = getAssetPath('/images/user-avatar-80.png');
@@ -74,11 +76,11 @@ const userData: LayoutRow_I[] = [
                     items: [
                         {
                             label: 'Mascullino',
-                            value: 'masculine'
+                            value: Gender_Enum.MALE
                         },
                         {
                             label: 'Femenino',
-                            value: 'contratist_role'
+                            value: Gender_Enum.FEMALE
                         }
                     ],
                     placeholder: 'Selecciona tu género',
@@ -171,6 +173,7 @@ interface Init_valuesData_I {
     name: string;
     lastname: string;
     phone: string;
+    gender: Gender_Enum;
     direction: string;
     city: string;
     state: string;
@@ -178,18 +181,23 @@ interface Init_valuesData_I {
 
 export const PersonalPage: FC = () => {
 
-    const Init_Values: Init_valuesData_I = {
-        name: '',
-        lastname: '',
-        phone: '',
-        direction: '',
-        city: '',
-        state: '',
-    }
+    const {
+        state: {
+            onLoading,
+            user
+        },
+        emit_save_user_data,
+    } = useUserStore();
 
-    // const Init_image: { profile_pic: string } = {
-    //     profile_pic: ''
-    // }
+    let Init_Values: Init_valuesData_I = {
+        name: user.name || '',
+        gender: user.gender as Gender_Enum || Gender_Enum.NONE,
+        lastname: user.last_name || '',
+        city: user.direction?.city || '',
+        state: user.direction?.state || '',
+        direction: user.direction?.address || '',
+        phone: user.phone || '',
+    }
 
     const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(userData, Init_Values);
     const { initialValues: initial_image, validation_rules: validation_image } = useFormInitData<{ file: string }>(userImage);
@@ -197,7 +205,17 @@ export const PersonalPage: FC = () => {
     const formik = useFormik({
         initialValues: initialValues,
         onSubmit: (values) => {
-            console.log('values', values);
+            emit_save_user_data(user._id, {
+                name: values.name,
+                last_name: values.lastname,
+                phone: values.phone,
+                gender: values.gender,
+                direction: {
+                    address: values.direction,
+                    city: values.city,
+                    state: values.state
+                }
+            })
         },
         validationSchema: validation_rules
     });
@@ -225,7 +243,7 @@ export const PersonalPage: FC = () => {
 
     useEffect(() => {
 
-        if(isValid_image){
+        if (isValid_image) {
             // Se emite la acción de subir la imagen
         }
 
@@ -249,7 +267,7 @@ export const PersonalPage: FC = () => {
 
                         <FormikProvider value={formik_image}>
                             <Form noValidate>
-                                <FileHideInput {...userImage[0].fields[0].props } />
+                                <FileHideInput {...userImage[0].fields[0].props} />
                             </Form>
                         </FormikProvider>
 
@@ -277,7 +295,7 @@ export const PersonalPage: FC = () => {
             <footer>
                 <div className="flex flex-col px-6 py-5 border-t border-slate-200 dark:border-slate-700">
                     <div className="flex self-end">
-                        <PrimaryButton onClick={submitForm} label="Guardar" />
+                        <PrimaryButton onClick={submitForm} isLoading={onLoading} label="Guardar" />
                     </div>
                 </div>
             </footer>

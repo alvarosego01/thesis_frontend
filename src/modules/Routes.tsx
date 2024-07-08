@@ -1,6 +1,6 @@
 
-import { Suspense, lazy } from 'react';
-import { RouteObject } from "react-router-dom";
+import { FC, Suspense, lazy } from 'react';
+import { Route, RouteObject, Routes } from "react-router-dom";
 import Public_main from './public/Public_main';
 
 const Dashboard = lazy(() => import('./dashboard/Dashboard_main'));
@@ -22,3 +22,5 @@ export const app_routesConfig: RouteObject[] = [
         element: <Public_main />
     }
 ];
+
+
