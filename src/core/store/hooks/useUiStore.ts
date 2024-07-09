@@ -6,6 +6,8 @@ import { on_Handler_PaymentInfoModal, on_Handler_SignatureSelectorModal, uiState
 
 import { SignatureModal_Props_I } from "@modules/dashboard/pages/account/components/modals/SignatureModal";
 import { PaymentInfoModal_Props_I } from "@modules/dashboard/pages/hireConfig/components/modals/PaymentInfoModal";
+import Swal from "sweetalert2";
+
 
 interface useHookStore_I {
     state: uiState_I;
@@ -20,18 +22,20 @@ export const useUiStore = (): useHookStore_I => {
     const state = useSelector<Reducers_I, uiState_I>(({ global }) => global.ui, shallowEqual);
 
     const handle_signatureModal = ({ status, text }: SignatureModal_Props_I) => {
-        dispatch(on_Handler_SignatureSelectorModal( { status, text} ))
+        dispatch(on_Handler_SignatureSelectorModal({ status, text }))
     }
 
-    const handle_paymentInfoModal = ({ status, type, data }: PaymentInfoModal_Props_I ) => {
-        dispatch( on_Handler_PaymentInfoModal( { status, type, data } ))
+    const handle_paymentInfoModal = ({ status, type, data }: PaymentInfoModal_Props_I) => {
+        dispatch(on_Handler_PaymentInfoModal({ status, type, data }))
     }
+
 
     return {
         state,
+
         // Methods
         handle_signatureModal,
-        handle_paymentInfoModal
+        handle_paymentInfoModal,
     }
 
 }

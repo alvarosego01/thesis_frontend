@@ -2,31 +2,37 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 import { Reducers_I } from "../../store";
 
-import { start_check_renew_Tk_authTH, start_login_authTH } from "./authThunks";
+import { start_check_renew_Tk_authTH, start_login_authTH, start_register_authTH } from "./authThunks";
 
 import { _Response_I } from "@tesis-project/dev-globals/dist/core/interfaces";
 
-import { onChecking_authSL, onLogin_authSL, onLogout_authSL, Slice_authState_I } from "../../reducers/session/auth/authSlice";
+import { onChecking_authSL, onLogin_authSL, onLogout_authSL, onSetLoading_authSL, Slice_authState_I } from "../../reducers/session/auth/authSlice";
 import { useUserStore } from "../../../../modules/dashboard/store";
-import { User_I } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
 import { User_Role_Enum } from "@tesis-project/dev-globals/dist/modules/auth/interfaces";
+import { useNavigate } from "react-router-dom";
+import { useUiGlobals } from "../../../hooks";
 
 interface useHookStore_I {
     state: Slice_authState_I;
     emit_onLogout: () => void;
     emit_checkAuthToken: () => void;
     emit_login: (email: string, password: string) => void;
-    emit_register: (name: string, last_name: string, email: string, role: User_Role_Enum, password: string) => void;
+    emit_register_user: (name: string, last_name: string, email: string, role: User_Role_Enum, password: string) => void;
 }
 
 export const useAuthStore = (): useHookStore_I => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const {
         emit_get_user,
         emit_clear_user
     } = useUserStore();
+
+    const {
+        emit_swalToast
+    } = useUiGlobals();
 
     const state = useSelector<Reducers_I, Slice_authState_I>(({ global }) => global.session.auth, shallowEqual);
 
@@ -36,9 +42,25 @@ export const useAuthStore = (): useHookStore_I => {
         emit_clear_user();
     }
 
-    const emit_register = (name: string, last_name: string, email: string, role: User_Role_Enum, password: string) => {
+    const emit_register_user = async (name: string, last_name: string, email: string, role: User_Role_Enum, password: string) => {
 
+        dispatch(onSetLoading_authSL(true));
 
+        try {
+
+            const { data } = await start_register_authTH(name, last_name, email, role, password);
+            if (!data) return;
+
+            dispatch(onSetLoading_authSL(false));
+
+            emit_swalToast({ type: 'success', message: 'Usuario registrado' });
+
+            navigate('/login');
+
+        } catch (error) {
+
+            dispatch(onSetLoading_authSL(false));
+        }
 
     }
 
@@ -53,7 +75,11 @@ export const useAuthStore = (): useHookStore_I => {
 
             localStorage.setItem('token', data.token!);
             dispatch(onLogin_authSL(data));
+
+            emit_swalToast({ type: 'success', message: 'Bienvenido' });
+
             emit_get_user(data.user);
+
 
         } catch (error) {
 
@@ -84,8 +110,6 @@ export const useAuthStore = (): useHookStore_I => {
 
     }
 
-
-
     return {
         //Params
         state,
@@ -94,6 +118,6 @@ export const useAuthStore = (): useHookStore_I => {
         emit_onLogout,
         emit_checkAuthToken,
         emit_login,
-        emit_register
+        emit_register_user
     }
 }

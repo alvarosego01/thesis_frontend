@@ -18,8 +18,8 @@ importers:
         specifier: ^0.5.7
         version: 0.5.7(tailwindcss@3.4.4)
       '@tesis-project/dev-globals':
-        specifier: ^1.0.724
-        version: 1.0.724(@formkit/tempo@0.1.2)(@mikro-orm/core@6.2.9)(@nestjs/mapped-types@2.0.5(@nestjs/common@10.3.10(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2))(class-transformer@0.5.1)(class-validator@0.14.1)
+        specifier: ^1.0.725
+        version: 1.0.725(@formkit/tempo@0.1.2)(@mikro-orm/core@6.2.9)(@nestjs/mapped-types@2.0.5(@nestjs/common@10.3.10(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2))(class-transformer@0.5.1)(class-validator@0.14.1)
       axios:
         specifier: ^1.7.2
         version: 1.7.2
@@ -56,6 +56,9 @@ importers:
       react-transition-group:
         specifier: ^4.4.5
         version: 4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      sweetalert2:
+        specifier: ^11.12.2
+        version: 11.12.2
       vite-plugin-components:
         specifier: ^0.13.3
         version: 0.13.3(vite@5.3.3(@types/node@20.14.10)(sass@1.77.6))
@@ -692,8 +695,8 @@ packages:
     peerDependencies:
       tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1'
 
-  '@tesis-project/dev-globals@1.0.724':
-    resolution: {integrity: sha512-yRIXnprgeBbokhIzAC1Szmqvfo0kD97TRWhpTH21x18nr3/tl090dapeeEIniSjFEJXDxWkz3uC1a0NfKzBKEg==, tarball: https://npm.pkg.github.com/download/@tesis-project/dev-globals/1.0.724/85deb1dc21c11ecc0ceca26a3fd34b5c0dcc463a}
+  '@tesis-project/dev-globals@1.0.725':
+    resolution: {integrity: sha512-Thv2PcVvMvUH9wJzaLGdTIpSN4tAYg3hbceP9YvA+GPyNEtQ2/HBwepxTxBqRnI6g+m9cQtn6UkIA0memwor/Q==, tarball: https://npm.pkg.github.com/download/@tesis-project/dev-globals/1.0.725/3fa0ca3c09136bfcfc7489faceaee97bb560a97e}
     peerDependencies:
       '@formkit/tempo': ^0.1.1
       '@mikro-orm/core': ^6.2.9
@@ -1810,6 +1813,9 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
+  sweetalert2@11.12.2:
+    resolution: {integrity: sha512-Rwv5iRYlApkDSXeX22aLhhWMlWPzFxnNBVLZajkFKYhaVEfQkMOPQQRhBtSFxKBPCoko9U3SccWm9hI4o3Id0Q==}
+
   tailwind-bootstrap-grid@5.1.0:
     resolution: {integrity: sha512-B++VQUxYyBdOV8M+LCGb1SJaESX/SqFZbbY9mOK5YNiVS2htR83m6RPOppWApSGPK19xSWxzFt/jPUXGfWCa7w==}
     engines: {node: '>= 12.0.0'}
@@ -2537,7 +2543,7 @@ snapshots:
       mini-svg-data-uri: 1.4.4
       tailwindcss: 3.4.4
 
-  '@tesis-project/dev-globals@1.0.724(@formkit/tempo@0.1.2)(@mikro-orm/core@6.2.9)(@nestjs/mapped-types@2.0.5(@nestjs/common@10.3.10(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2))(class-transformer@0.5.1)(class-validator@0.14.1)':
+  '@tesis-project/dev-globals@1.0.725(@formkit/tempo@0.1.2)(@mikro-orm/core@6.2.9)(@nestjs/mapped-types@2.0.5(@nestjs/common@10.3.10(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2))(class-transformer@0.5.1)(class-validator@0.14.1)':
     dependencies:
       '@formkit/tempo': 0.1.2
       '@mikro-orm/core': 6.2.9
@@ -3698,6 +3704,8 @@ snapshots:
       has-flag: 4.0.0
 
   supports-preserve-symlinks-flag@1.0.0: {}
+
+  sweetalert2@11.12.2: {}
 
   tailwind-bootstrap-grid@5.1.0(tailwindcss@3.4.4):
     dependencies:

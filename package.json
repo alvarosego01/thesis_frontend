@@ -13,7 +13,7 @@
     "@react-hooks-library/core": "^0.6.2",
     "@reduxjs/toolkit": "^2.2.6",
     "@tailwindcss/forms": "^0.5.7",
-    "@tesis-project/dev-globals": "^1.0.724",
+    "@tesis-project/dev-globals": "^1.0.725",
     "axios": "^1.7.2",
     "boxicons": "^2.1.4",
     "dotenv": "^16.4.5",
@@ -26,6 +26,7 @@
     "react-router-dom": "^6.24.1",
     "react-select": "^5.8.0",
     "react-transition-group": "^4.4.5",
+    "sweetalert2": "^11.12.2",
     "vite-plugin-components": "^0.13.3",
     "yup": "^1.4.0"
   },

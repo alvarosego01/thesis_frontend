@@ -1,7 +1,7 @@
 
 
 import { Link } from 'react-router-dom';
-import { Form, Formik, FormikProvider, useFormik } from 'formik';
+import { Form, FormikProvider, useFormik } from 'formik';
 
 import { getAssetPath } from '../../../core/utils';
 import { FormLayoutBuilder, PrimaryButton } from '../../../core/components';
@@ -9,6 +9,7 @@ import { LayoutRow_I } from '../../../core/components/forms/interfaces';
 import { useFormInitData } from '../../../core/hooks';
 import { User_Role_Enum } from '@tesis-project/dev-globals/dist/modules/auth/interfaces';
 import { FC } from 'react';
+import { useAuthStore } from '../../../core/store';
 
 
 
@@ -118,9 +119,8 @@ const formData: LayoutRow_I[] = [
                         },
                         {
                             type: "pattern",
-                            // value: "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/",
                             value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
-                          message: "Debe tener 1 Mayuscula, 1 Minuscula y al menos 8 caracteres"
+                            message: "Debe tener 1 Mayuscula, 1 Minuscula y al menos 8 caracteres"
                         }
                     ]
                 }
@@ -162,6 +162,12 @@ interface Init_valuesData_I {
 
 export const RegisterPage: FC = () => {
 
+    const {
+        state: {
+            onLoading
+        },
+        emit_register_user
+    } = useAuthStore();
 
     const Init_Values: Init_valuesData_I = {
         name: '',
@@ -178,7 +184,8 @@ export const RegisterPage: FC = () => {
         initialValues: initialValues,
         onSubmit: (values) => {
 
-            console.log('register', values);
+            emit_register_user(values.name, values.last_name, values.email, values.role, values.password);
+
         },
         validationSchema: validation_rules
     });
@@ -234,7 +241,7 @@ export const RegisterPage: FC = () => {
 
                                     <FormLayoutBuilder rows={formData} />
                                     <div className="flex items-center justify-end mt-6">
-                                        <PrimaryButton onClick={submitForm} label="Enviar" />
+                                        <PrimaryButton onClick={submitForm} isLoading={onLoading} label="Enviar" />
                                     </div>
 
                                 </Form>

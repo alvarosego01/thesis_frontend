@@ -4,7 +4,7 @@ import { AppRoutes } from './AppRoutes';
 import { Provider } from 'react-redux';
 
 import { core_store } from '../core/store';
-import { envs } from '../core/config/envs';
+import { GlobalElements } from './global';
 
 const App = () => {
 

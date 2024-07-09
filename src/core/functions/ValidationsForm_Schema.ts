@@ -47,7 +47,7 @@ export const get_Validation = (rule: ValidationRule_I, schema: any) => {
         schema = schema.url(rule.message);
     }
     if (rule.type === 'pattern') {
-        schema = schema.matches(new RegExp(String(rule.value), "i"), rule.message);
+        schema = schema.matches(rule.value, rule.message);
     }
     if (rule.type === 'same_field') {
         schema = schema.oneOf([Yup.ref(String(rule.value))], rule.message)

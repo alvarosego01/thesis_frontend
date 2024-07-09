@@ -1,12 +1,12 @@
 
 import { Link } from 'react-router-dom';
-import { Form, Formik, FormikProvider, useFormik } from 'formik';
+import { Form, FormikProvider, useFormik } from 'formik';
 
 import { getAssetPath } from '../../../core/utils';
 import { useFormInitData } from '../../../core/hooks';
 import { LayoutRow_I } from '../../../core/components/forms/interfaces';
 import { FormLayoutBuilder, PrimaryButton } from '../../../core/components';
-import { useAuthStore } from '../../../core/store';
+import { useAuthStore, useUiStore } from '../../../core/store';
 import { FC } from 'react';
 
 const AuthImage = getAssetPath('/images/auth-image.jpg');
@@ -40,7 +40,7 @@ const formData: LayoutRow_I[] = [
                     label: 'Contraseña',
                     name: 'password',
                     type: 'password',
-                            parent_class: '!mb-4',
+                    parent_class: '!mb-4',
                     validation_rules: [
                         {
                             type: "required",
@@ -48,7 +48,7 @@ const formData: LayoutRow_I[] = [
                         },
                         {
                             type: "pattern",
-                            value: "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/",
+                            value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
                             message: "Debe tener 1 Mayuscula, 1 Minuscula y al menos 8 caracteres"
                         }
                     ]
@@ -73,6 +73,8 @@ export const LoginPage: FC = () => {
             onLoading
         },
     } = useAuthStore();
+
+
 
     const Init_Values: Init_valuesData_I = {
         email: '',
@@ -135,20 +137,20 @@ export const LoginPage: FC = () => {
 
                             <FormikProvider value={formik}>
 
-                                        <Form noValidate >
+                                <Form noValidate >
 
-                                            <FormLayoutBuilder rows={formData} />
+                                    <FormLayoutBuilder rows={formData} />
 
-                                            <div className="flex flex-col py-5 pb-0 border-t border-slate-200 dark:border-slate-700">
-                                                <div className="flex justify-between">
-                                                    <div className="flex items-center mr-1">
-                                                        <Link className="text-sm underline hover:no-underline" to="/reset-password">¿Perdiste tu contraseña?</Link>
-                                                    </div>
-                                                    <PrimaryButton onClick={ submitForm } isLoading={onLoading} label="Ingresar" />
-                                                </div>
+                                    <div className="flex flex-col py-5 pb-0 border-t border-slate-200 dark:border-slate-700">
+                                        <div className="flex justify-between">
+                                            <div className="flex items-center mr-1">
+                                                <Link className="text-sm underline hover:no-underline" to="/reset-password">¿Perdiste tu contraseña?</Link>
                                             </div>
+                                            <PrimaryButton onClick={submitForm} isLoading={onLoading} label="Ingresar" />
+                                        </div>
+                                    </div>
 
-                                        </Form>
+                                </Form>
 
                             </FormikProvider>
 
