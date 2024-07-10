@@ -21,7 +21,7 @@ export const useUiGlobals = (): useUiGlobals_I => {
             toast: true,
             position: "top-end",
             showConfirmButton: false,
-            timer: 3000,
+            timer: 2500,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.onmouseenter = Swal.stopTimer;

@@ -10,7 +10,7 @@ import { onChecking_authSL, onLogin_authSL, onLogout_authSL, onSetLoading_authSL
 import { useUserStore } from "../../../../modules/dashboard/store";
 import { User_Role_Enum } from "@tesis-project/dev-globals/dist/modules/auth/interfaces";
 import { useNavigate } from "react-router-dom";
-import { useUiGlobals } from "../../../hooks";
+import { useSession, useUiGlobals } from "../../../hooks";
 
 interface useHookStore_I {
     state: Slice_authState_I;
@@ -34,12 +34,17 @@ export const useAuthStore = (): useHookStore_I => {
         emit_swalToast
     } = useUiGlobals();
 
+    const {
+        emit_clear_all_data
+    } = useSession();
+
     const state = useSelector<Reducers_I, Slice_authState_I>(({ global }) => global.session.auth, shallowEqual);
 
     const emit_onLogout = () => {
         localStorage.clear();
         dispatch(onLogout_authSL())
-        emit_clear_user();
+        // emit_clear_user();
+        emit_clear_all_data();
     }
 
     const emit_register_user = async (name: string, last_name: string, email: string, role: User_Role_Enum, password: string) => {

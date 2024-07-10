@@ -5,7 +5,6 @@ import { start_get_sessionUser_userTH, start_save_user_data } from "../../../../
 import { User_I } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
 import { useUiGlobals } from "../../../../../core/hooks";
 
-
 interface useHookStore_I {
     state: Slice_userState_I;
     emit_save_user_data: (user_id: string, user: Partial<User_I>) => void;

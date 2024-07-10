@@ -1,13 +1,14 @@
+
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
-import { File_Model_I, User_Profile_I } from '../../../../../core/models';
+import { Profile_I } from '@tesis-project/dev-globals/dist/modules/profile/interfaces';
 
 
-export interface Session_profileState_I {
+export interface Slice_ProfileState_I {
     onLoading: boolean;
-    profile: User_Profile_I;
+    profile: Profile_I;
 }
 
-const initialState: Session_profileState_I = {
+const initialState: Slice_ProfileState_I = {
     // status: 'not-authenticated',
     onLoading: false,
     profile: {
@@ -31,28 +32,29 @@ const initialState: Session_profileState_I = {
         //     youtube: '',
         //     tiktok: '',
         // } as
-    } as User_Profile_I
+    } as Profile_I
 }
 
 export const profileSlice = createSlice({
     name: "profile",
     initialState,
     reducers: {
-        onSetLoading: (state, { payload }: PayloadAction<boolean>) => {
+        onSetLoading_profileSlice: (state, { payload }: PayloadAction<boolean>) => {
             state.onLoading = payload;
         },
-        onSetProfile: (state, { payload }: PayloadAction<User_Profile_I>) => {
+        onSetProfile_profileSlice: (state, { payload }: PayloadAction<Profile_I>) => {
             state.profile = {...payload};
             state.onLoading = false;
         },
-        onRestoreDefault: (state) => {
-            state = initialState;
+        onRestoreDefault_profileSlice: (state) => {
+            state.onLoading = false,
+            state.profile = {...initialState.profile}
         },
     }
 });
 
 export const {
-    onSetLoading,
-    onRestoreDefault,
-    onSetProfile
+    onSetLoading_profileSlice,
+    onRestoreDefault_profileSlice,
+    onSetProfile_profileSlice
 } = profileSlice.actions;

@@ -18,8 +18,8 @@ importers:
         specifier: ^0.5.7
         version: 0.5.7(tailwindcss@3.4.4)
       '@tesis-project/dev-globals':
-        specifier: ^1.0.725
-        version: 1.0.725(@formkit/tempo@0.1.2)(@mikro-orm/core@6.2.9)(@nestjs/mapped-types@2.0.5(@nestjs/common@10.3.10(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2))(class-transformer@0.5.1)(class-validator@0.14.1)
+        specifier: ^1.0.727
+        version: 1.0.727(@formkit/tempo@0.1.2)(@mikro-orm/core@6.2.9)(@nestjs/mapped-types@2.0.5(@nestjs/common@10.3.10(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2))(class-transformer@0.5.1)(class-validator@0.14.1)
       axios:
         specifier: ^1.7.2
         version: 1.7.2
@@ -695,8 +695,8 @@ packages:
     peerDependencies:
       tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1'
 
-  '@tesis-project/dev-globals@1.0.725':
-    resolution: {integrity: sha512-Thv2PcVvMvUH9wJzaLGdTIpSN4tAYg3hbceP9YvA+GPyNEtQ2/HBwepxTxBqRnI6g+m9cQtn6UkIA0memwor/Q==, tarball: https://npm.pkg.github.com/download/@tesis-project/dev-globals/1.0.725/3fa0ca3c09136bfcfc7489faceaee97bb560a97e}
+  '@tesis-project/dev-globals@1.0.727':
+    resolution: {integrity: sha512-SQr/pKfBVntwvirI3enZaNDCa1qhar3SKvIifJvfUd3kycuoT7miAvROLnAb4v5oNCQ+nIvRQtTfTplZtWCKUA==, tarball: https://npm.pkg.github.com/download/@tesis-project/dev-globals/1.0.727/017e7f6cf949da95676856452f84b12259537e8e}
     peerDependencies:
       '@formkit/tempo': ^0.1.1
       '@mikro-orm/core': ^6.2.9
@@ -2543,7 +2543,7 @@ snapshots:
       mini-svg-data-uri: 1.4.4
       tailwindcss: 3.4.4
 
-  '@tesis-project/dev-globals@1.0.725(@formkit/tempo@0.1.2)(@mikro-orm/core@6.2.9)(@nestjs/mapped-types@2.0.5(@nestjs/common@10.3.10(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2))(class-transformer@0.5.1)(class-validator@0.14.1)':
+  '@tesis-project/dev-globals@1.0.727(@formkit/tempo@0.1.2)(@mikro-orm/core@6.2.9)(@nestjs/mapped-types@2.0.5(@nestjs/common@10.3.10(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2))(class-transformer@0.5.1)(class-validator@0.14.1)':
     dependencies:
       '@formkit/tempo': 0.1.2
       '@mikro-orm/core': 6.2.9

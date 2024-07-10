@@ -3,7 +3,7 @@ import { LayoutRow_I } from '../../../../../core/components/forms/interfaces';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { FormLayoutBuilder, PrimaryButton } from '../../../../../core/components';
 import { estadosVenezuela } from '../../../../../core/constants/Countries';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 const formData: LayoutRow_I[] = [
     {
@@ -51,19 +51,19 @@ const formData: LayoutRow_I[] = [
                     label: 'Teléfono',
                     name: 'phone',
                     type: 'tel',
-                    validation_rules: [
-                        {
-                            type: "tel",
-                            message: "El teléfono no es válido"
-                        }
-                    ]
+                    // validation_rules: [
+                    //     {
+                    //         type: "tel",
+                    //         message: "El teléfono no es válido"
+                    //     }
+                    // ]
                 }
             },
 
         ],
         grid_columns: 'grid-cols-1 pcTab:grid-cols-2'
     },
-     {
+    {
         fields: [
             {
                 typeField: 'text',
@@ -71,13 +71,13 @@ const formData: LayoutRow_I[] = [
                     label: 'Dirección',
                     name: 'address',
                     type: 'text',
-                    validation_rules: [
-                        {
-                            type: "minLength",
-                            value: 5,
-                            message: "La dirección debe tener al menos 3 caracteres"
-                        }
-                    ]
+                    // validation_rules: [
+                    //     {
+                    //         type: "minLength",
+                    //         value: 5,
+                    //         message: "La dirección debe tener al menos 3 caracteres"
+                    //     }
+                    // ]
 
                 }
             },
@@ -87,13 +87,13 @@ const formData: LayoutRow_I[] = [
                     label: 'Ciudad',
                     name: 'city',
                     type: 'text',
-                    validation_rules: [
-                        {
-                            type: "minLength",
-                            value: 5,
-                            message: "La ciudad debe tener al menos 3 caracteres"
-                        }
-                    ]
+                    // validation_rules: [
+                    //     {
+                    //         type: "minLength",
+                    //         value: 5,
+                    //         message: "La ciudad debe tener al menos 3 caracteres"
+                    //     }
+                    // ]
                 }
             },
             {
@@ -121,7 +121,7 @@ interface Init_valuesData_I {
 
 export const PersonalConditionsPage: FC = () => {
 
-    const Init_Values: Init_valuesData_I = {
+    const [initValues, setInitValues] = useState<Init_valuesData_I>({
         address: '',
         city: '',
         phone: '',
@@ -129,9 +129,30 @@ export const PersonalConditionsPage: FC = () => {
         rif: '',
         social_reason: '',
         state: '',
-    }
+    });
 
-    const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(formData, Init_Values);
+/*
+      useEffect(() => {
+        emit_get_profile_data();
+    }, []);
+
+    useEffect(() => {
+        if (profile) {
+            setInitValues({
+                artistic_name: profile.artistic_name || '',
+                biography_review: profile.bio_short || '',
+                social_facebook: profile.socials?.facebook || '',
+                social_instagram: profile.socials?.instagram || '',
+                social_twitter: profile.socials?.twitter || '',
+                social_linkedin: profile.socials?.linkedin || '',
+                social_tiktok: profile.socials?.tiktok || '',
+                social_youtube: profile.socials?.youtube || '',
+            });
+        }
+    }, [profile]);
+ */
+
+    const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(formData, initValues);
 
     const formik = useFormik({
         initialValues: initialValues,
