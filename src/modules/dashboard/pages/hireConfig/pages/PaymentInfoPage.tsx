@@ -1,11 +1,13 @@
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { useUiStore } from "@store/index";
 import { PaymentInfo, PaymentInfoModal } from "../components";
 import { PrimaryButton } from "@components/index";
 import { NotFoundContent } from "../../../components";
-import { Payment_Account_I } from "@models/index";
+import { useHiringDataStore } from "../../../store/hooks/hiring_data/useHiringDataStore";
+import { signal } from '@preact/signals-react';
+import { Payment_Account_I } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
 
-const aux_data: Payment_Account_I[] = [
+/* const aux_data: Payment_Account_I[] = [
     {
         bank_name: "bc_venezuela",
         date: "2021-09-01",
@@ -33,9 +35,12 @@ const aux_data: Payment_Account_I[] = [
         titular: "Juan Perez",
         type: "mobile_payment"
     }
-]
+] */
 
 export const PaymentInfoPage: FC = () => {
+
+    // aux_data: Payment_Account_I[]
+    const aux_data = signal<Payment_Account_I[]>([])
 
     const {
         state: {
@@ -48,14 +53,27 @@ export const PaymentInfoPage: FC = () => {
         handle_paymentInfoModal
     } = useUiStore();
 
+    const {
+        state: {
+            onLoading,
+            hiring_data: {
+                payment_accounts
+            },
+            hiring_data
+        },
+    } = useHiringDataStore();
+
     const add_new = () => {
 
         handle_paymentInfoModal({
             status: true,
             type: 'new',
-
         })
 
+    }
+
+    if (payment_accounts) {
+        aux_data.value = payment_accounts;
     }
 
     return (
@@ -66,19 +84,22 @@ export const PaymentInfoPage: FC = () => {
 
                     <h2 className="flex flex-row justify-between mb-5 text-2xl font-bold text-slate-800 dark:text-slate-100">
                         Información de pago y cuentas
-
-                        <PrimaryButton onClick={add_new} label="Añadir" icon="bx bx-plus" />
+                        {
+                            (aux_data.value.length > 0) && (
+                                <PrimaryButton onClick={add_new} label="Añadir" icon="bx bx-plus" />
+                            )
+                        }
                     </h2>
 
                     {
-                        (aux_data.length === 0) ? (
+                        (aux_data.value.length === 0) ? (
                             <section>
                                 <NotFoundContent onClick={add_new} enableButton={true} title="Sin información de pago añadida" />
                             </section>
                         ) : (
                             <div className="grid grid-cols-12 gap-5 paymentInfo">
                                 {
-                                    aux_data.map((data, index) => {
+                                    aux_data.value.map((data, index) => {
                                         return (
                                             <div key={index} className="col-span-full sm:col-span-6 xl:col-span-4">
                                                 <PaymentInfo {...data} />

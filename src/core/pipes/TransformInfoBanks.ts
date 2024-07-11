@@ -1,11 +1,11 @@
-import { Banks_Type, Payment_Type } from "../models";
+import { Banks_Enum, Payment_Type_Enum } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
 
-export const transformTypePay_P = (type: Payment_Type): string => {
+export const transformTypePay_P = (type: Payment_Type_Enum): string => {
 
     switch (type) {
-        case "bank_account":
+        case Payment_Type_Enum.BANK_ACCOUNT:
             return "Cuenta Bancaria";
-        case "mobile_payment":
+        case Payment_Type_Enum.MOBILE_PAYMENT:
             return "Pago Móvil";
         default:
             return "No definido";
@@ -13,20 +13,20 @@ export const transformTypePay_P = (type: Payment_Type): string => {
 
 }
 
-export const transformBankName_P = (type: Banks_Type): string => {
+export const transformBankName_P = (type: Banks_Enum): string => {
 
     switch (type) {
-        case 'bc_bicentenario':
+        case Banks_Enum.BC_BICENTENARIO:
             return "Banco Bicentenario";
-        case 'bc_banesco':
+        case Banks_Enum.BC_BANESCO:
             return "Banco Banesco";
-        case 'bc_tesoro':
+        case Banks_Enum.BC_TESORO:
             return "Banco Tesoro";
-        case 'bc_provincial':
+        case Banks_Enum.BC_PROVINCIAL:
             return "Banco Provincial";
-        case 'bc_mercantil':
+        case Banks_Enum.BC_MERCANTIL:
             return "Banco Mercantil";
-        case 'bc_venezuela':
+        case Banks_Enum.BC_VENEZUELA:
             return "Banco de Venezuela";
         default:
             return '';

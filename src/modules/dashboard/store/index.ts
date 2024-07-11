@@ -2,6 +2,8 @@
 /*--------------- Slices --------------*/
 export { profileSlice } from "./reducers/profile/profileSlice";
 export { userSlice } from "./reducers/user/userSlice";
+export { hiringDataSlice } from "./reducers/hiring_data/hiringDataSlice";
+
 
 
 /*--------------- Hooks --------------*/

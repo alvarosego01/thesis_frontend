@@ -43,12 +43,15 @@ export const profileSlice = createSlice({
             state.onLoading = payload;
         },
         onSetProfile_profileSlice: (state, { payload }: PayloadAction<Profile_I>) => {
-            state.profile = {...payload};
+            state.profile = {
+                ...state.profile,
+                ...payload
+            };
             state.onLoading = false;
         },
         onRestoreDefault_profileSlice: (state) => {
-            state.onLoading = false,
-            state.profile = {...initialState.profile}
+            state.onLoading = false;
+            state.profile = { ...initialState.profile }
         },
     }
 });

@@ -4,6 +4,11 @@ import { Form, FormikProvider, useFormik } from 'formik';
 import { FormLayoutBuilder, PrimaryButton } from '../../../../../core/components';
 import { estadosVenezuela } from '../../../../../core/constants/Countries';
 import { FC, useEffect, useState } from 'react';
+import { useHiringDataStore } from '../../../store/hooks/hiring_data/useHiringDataStore';
+import { useUserStore } from '../../../store';
+import { User_HiringData_I } from '@tesis-project/dev-globals/dist/modules/user/interfaces';
+
+import { signal } from '@preact/signals-react';
 
 const formData: LayoutRow_I[] = [
     {
@@ -51,12 +56,12 @@ const formData: LayoutRow_I[] = [
                     label: 'Teléfono',
                     name: 'phone',
                     type: 'tel',
-                    // validation_rules: [
-                    //     {
-                    //         type: "tel",
-                    //         message: "El teléfono no es válido"
-                    //     }
-                    // ]
+                    validation_rules: [
+                        {
+                            type: "tel",
+                            message: "El teléfono no es válido, debe iniciar con +58"
+                        }
+                    ]
                 }
             },
 
@@ -121,43 +126,56 @@ interface Init_valuesData_I {
 
 export const PersonalConditionsPage: FC = () => {
 
-    const [initValues, setInitValues] = useState<Init_valuesData_I>({
-        address: '',
-        city: '',
-        phone: '',
-        postal_code: '',
-        rif: '',
-        social_reason: '',
-        state: '',
-    });
+    const {
+        state: {
+            onLoading,
+            hiring_data: {
+                personal
+            },
+            hiring_data
+        },
+        emit_save_user_hiringData_personal
+    } = useHiringDataStore();
 
-/*
-      useEffect(() => {
-        emit_get_profile_data();
-    }, []);
+
+    const initValues = signal<Init_valuesData_I>({
+        address: personal?.address || '',
+        city: personal?.city || '',
+        phone: personal?.phone || '',
+        postal_code: personal?.postal_code || '',
+        rif: personal?.rif || '',
+        social_reason: personal?.social_reason || '',
+        state: personal?.state || '',
+    })
 
     useEffect(() => {
-        if (profile) {
-            setInitValues({
-                artistic_name: profile.artistic_name || '',
-                biography_review: profile.bio_short || '',
-                social_facebook: profile.socials?.facebook || '',
-                social_instagram: profile.socials?.instagram || '',
-                social_twitter: profile.socials?.twitter || '',
-                social_linkedin: profile.socials?.linkedin || '',
-                social_tiktok: profile.socials?.tiktok || '',
-                social_youtube: profile.socials?.youtube || '',
+        if (personal) {
+
+            initValues.value = {
+                address: personal?.address || '',
+                city: personal?.city || '',
+                phone: personal?.phone || '',
+                postal_code: personal?.postal_code || '',
+                rif: personal?.rif || '',
+                social_reason: personal?.social_reason || '',
+                state: personal?.state || '',
+            };
+            setValues({
+                ...initValues.value
             });
         }
-    }, [profile]);
- */
+    }, [personal]);
 
-    const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(formData, initValues);
+    const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(formData, initValues.value);
 
     const formik = useFormik({
         initialValues: initialValues,
         onSubmit: (values) => {
-            console.log('values', values);
+
+            emit_save_user_hiringData_personal(hiring_data._id, {
+                ...values
+            })
+
         },
         validationSchema: validation_rules
     });
@@ -165,7 +183,8 @@ export const PersonalConditionsPage: FC = () => {
     const {
         values,
         errors,
-        submitForm
+        submitForm,
+        setValues
     } = formik;
 
     return (
@@ -200,7 +219,7 @@ export const PersonalConditionsPage: FC = () => {
             <footer>
                 <div className="flex flex-col px-6 py-5 border-t border-slate-200 dark:border-slate-700">
                     <div className="flex self-end">
-                        <PrimaryButton onClick={submitForm} label="Guardar" />
+                        <PrimaryButton onClick={submitForm} isLoading={onLoading} label="Guardar" />
                     </div>
                 </div>
             </footer>

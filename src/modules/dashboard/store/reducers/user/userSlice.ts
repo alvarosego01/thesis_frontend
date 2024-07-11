@@ -1,6 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from "@reduxjs/toolkit";
-import { User_HiringData_I, User_I } from '@tesis-project/dev-globals/dist/modules/user/interfaces';
+import { User_I } from '@tesis-project/dev-globals/dist/modules/user/interfaces';
 
 
 export interface Slice_userState_I {
@@ -20,16 +20,19 @@ export const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        onSetLoading_userSlice: (state, {payload}: PayloadAction<boolean>) => {
+        onSetLoading_userSlice: (state, { payload }: PayloadAction<boolean>) => {
             state.onLoading = payload;
         },
         onSetUser_userSlice: (state, { payload }: PayloadAction<User_I>) => {
-            state.user = {...payload};
+            state.user = {
+                ...state.user,
+                ...payload
+            };
             state.onLoading = false;
         },
         onRestoreDefault_userSlice: (state) => {
-            state.onLoading = false,
-            state.user = {...initialState.user}
+            state.onLoading = false;
+            state.user = { ...initialState.user }
         },
     }
 });

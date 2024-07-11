@@ -6,7 +6,8 @@ import { useFormInitData } from '@hooks/index';
 import { FormLayoutBuilder, PrimaryButton, TextInputField } from "@components/index";
 import { Banks_List, Payments_Type_List } from "@constants/Banks"
 import { LayoutRow_I, SelectValue_I } from "@components/forms/interfaces"
-import { Banks_Type, Payment_Account_I, Payment_Type } from "@models/index";
+import { Banks_Enum, Payment_Account_I, Payment_Type_Enum } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
+import { signal } from '@preact/signals-react';
 
 const formData: LayoutRow_I[] = [
     {
@@ -102,11 +103,15 @@ const formData: LayoutRow_I[] = [
                     type: 'number',
                     validation_rules: [
                         {
+                            type: "required",
+                            message: "El número de cuenta es requerido"
+                        },
+                        {
                             type: "conditional_required",
                             message: "El número de cuenta es requerido",
                             conditional: {
                                 key: 'type.value',
-                                is: 'bank_account',
+                                is: Payment_Type_Enum.BANK_ACCOUNT,
                             }
                         },
                     ]
@@ -124,9 +129,13 @@ const formData: LayoutRow_I[] = [
                             message: "El teléfono es requerido",
                             conditional: {
                                 key: 'type.value',
-                                is: 'mobile_payment',
+                                is: Payment_Type_Enum.MOBILE_PAYMENT,
                             }
                         },
+                        {
+                            type: "tel",
+                            message: "El teléfono no es válido, debe iniciar con +58"
+                        }
                     ]
                 }
             },
@@ -137,8 +146,8 @@ const formData: LayoutRow_I[] = [
 ];
 
 interface Init_valuesData_I {
-    type: SelectValue_I<Payment_Type>;
-    bank_name: SelectValue_I<Banks_Type>;
+    type: SelectValue_I<Payment_Type_Enum>;
+    bank_name: SelectValue_I<Banks_Enum>;
     titular: string;
     person_id: string;
     phone?: string;
@@ -154,32 +163,29 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
     data
 }) => {
 
-    let Init_Values: Init_valuesData_I = {
-        type: {} as SelectValue_I<Payment_Type>,
-        bank_name: {} as SelectValue_I<Banks_Type>,
+    let Init_Values = signal<Init_valuesData_I>({
+        type: {} as SelectValue_I<Payment_Type_Enum>,
+        bank_name: {} as SelectValue_I<Banks_Enum>,
         titular: '',
         person_id: '',
         number: '',
         phone: '',
         // date: '',
+    })
+
+    if (data) {
+        Init_Values.value = {
+            ...Init_Values.value,
+            titular: data.titular,
+            person_id: data.person_id,
+            number: data.number,
+            phone: data.phone,
+        }
+        Init_Values.value.type = Payments_Type_List.find(r => r.value === data.type) as SelectValue_I<Payment_Type_Enum> || {};
+        Init_Values.value.bank_name = Banks_List.find(r => r.value === data.bank_name) as SelectValue_I<Banks_Enum> || {};
     }
 
-
-        if(data){
-            Init_Values = {
-                ...Init_Values,
-                titular: data.titular,
-                person_id: data.person_id,
-                number: data.number,
-                phone: data.phone,
-            }
-            Init_Values.type = Payments_Type_List.find(r => r.value === data.type) as SelectValue_I<Payment_Type> || {};
-            Init_Values.bank_name = Banks_List.find(r => r.value === data.bank_name) as SelectValue_I<Banks_Type> || {};
-        }
-
-
-    const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(formData, Init_Values);
-
+    const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(formData, Init_Values.value);
 
     const formik = useFormik({
         initialValues: initialValues,
@@ -190,11 +196,18 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
 
     const {
         values,
-        errors,
         submitForm,
-        setErrors,
         isValid,
+        errors
     } = formik;
+
+    useEffect(() => {
+
+        console.log('values', { ...values });
+        console.log('errors', { ...errors });
+
+    }, [values]);
+
 
     return (
         <div className="px-5 py-2">
@@ -218,12 +231,12 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
                             values.type.value && (
                                 <div className="grid grid-cols-1 pcTab:mt-4">
                                     {
-                                        values.type.value === 'bank_account' && (
+                                        values.type.value === Payment_Type_Enum.BANK_ACCOUNT && (
                                             <TextInputField {...formData[2].fields[0].props} />
                                         )
                                     }
                                     {
-                                        values.type.value === 'mobile_payment' && (
+                                        values.type.value === Payment_Type_Enum.MOBILE_PAYMENT && (
                                             <TextInputField {...formData[2].fields[1].props} />
                                         )
                                     }

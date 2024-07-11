@@ -2,7 +2,9 @@ import { SelectValue_I, ValidationRule_I, ValidationsRule_Separate_I } from "../
 import * as Yup from 'yup';
 
 
-const venezuelaPhoneRegex = /^(?:\+58)?0?(412|414|424|426)\d{7}$/;
+const venezuelaPhoneRegex = /^\+58(412|414|424|426)\d{7}$/;
+
+
 
 
 export const get_Validation = (rule: ValidationRule_I, schema: any) => {
@@ -56,7 +58,7 @@ export const get_Validation = (rule: ValidationRule_I, schema: any) => {
         if (!rule.conditional) return schema;
         const { key, is, then, otherwise } = rule.conditional;
         schema = schema.when(key, {
-            is: (value: string) => value === is,
+            is: (value: any) => value === is,
             then: (schm: any) => schm.required(rule.message),
             otherwise: (schm: any) => schm.notRequired(),
         });

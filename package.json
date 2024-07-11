@@ -10,10 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@preact/signals-react": "^2.1.0",
     "@react-hooks-library/core": "^0.6.2",
     "@reduxjs/toolkit": "^2.2.6",
     "@tailwindcss/forms": "^0.5.7",
-    "@tesis-project/dev-globals": "^1.0.727",
+    "@tesis-project/dev-globals": "^1.0.730",
     "axios": "^1.7.2",
     "boxicons": "^2.1.4",
     "dotenv": "^16.4.5",
@@ -36,22 +37,22 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/react-transition-group": "^4.4.10",
-    "@typescript-eslint/eslint-plugin": "^7.15.0",
-    "@typescript-eslint/parser": "^7.15.0",
+    "@typescript-eslint/eslint-plugin": "^7.16.0",
+    "@typescript-eslint/parser": "^7.16.0",
     "@vitejs/plugin-react-swc": "^3.7.0",
     "autoprefixer": "^10.4.19",
     "daisyui": "^4.12.10",
     "eslint": "^9.6.0",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-react-refresh": "^0.4.7",
+    "eslint-plugin-react-refresh": "^0.4.8",
     "postcss": "^8.4.39",
-    "sass": "^1.77.6",
+    "sass": "^1.77.7",
     "tailwind-bootstrap-grid": "^5.1.0",
     "tailwind-scrollbar": "^3.1.0",
     "tailwindcss": "^3.4.4",
     "tailwindcss-percentage-width": "^1.0.3",
     "typescript": "^5.5.3",
     "vite": "^5.3.3",
-    "vite-plugin-checker": "^0.7.0"
+    "vite-plugin-checker": "^0.7.1"
   }
 }

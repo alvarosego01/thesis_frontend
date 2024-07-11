@@ -4,7 +4,7 @@ import { FC } from "react";
 import { InfoModal } from "@components/index";
 import { useUiStore } from "@store/index";
 import { PaymentInfoSelectors } from "../PaymentInfoSelectors";
-import { Payment_Account_I } from "@models/index";
+import { Payment_Account_I } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
 
 export interface PaymentInfoModal_Props_I {
     status: boolean;

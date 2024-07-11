@@ -8,6 +8,7 @@ import { useFormInitData } from "../../../../../core/hooks";
 
 import { LayoutRow_I } from "../../../../../core/components/forms/interfaces";
 import { useProfileStore } from "../../../store";
+import { signal } from '@preact/signals-react';
 
 const data_artistName: LayoutRow_I[] = [
     {
@@ -193,15 +194,15 @@ export const ProfessionalPage: FC = () => {
         emit_get_profile_data
     } = useProfileStore();
 
-    const [initValues, setInitValues] = useState<Init_valuesData_I>({
-        artistic_name: '',
-        biography_review: '',
-        social_facebook: '',
-        social_instagram: '',
-        social_twitter: '',
-        social_linkedin: '',
-        social_tiktok: '',
-        social_youtube: '',
+    const initValues = signal<Init_valuesData_I>({
+        artistic_name: profile.artistic_name || '',
+        biography_review: profile.bio_short || '',
+        social_facebook: profile.socials?.facebook || '',
+        social_instagram: profile.socials?.instagram || '',
+        social_twitter: profile.socials?.twitter || '',
+        social_linkedin: profile.socials?.linkedin || '',
+        social_tiktok: profile.socials?.tiktok || '',
+        social_youtube: profile.socials?.youtube || '',
     });
 
     useEffect(() => {
@@ -210,7 +211,7 @@ export const ProfessionalPage: FC = () => {
 
     useEffect(() => {
         if (profile) {
-            setInitValues({
+            initValues.value = {
                 artistic_name: profile.artistic_name || '',
                 biography_review: profile.bio_short || '',
                 social_facebook: profile.socials?.facebook || '',
@@ -219,7 +220,10 @@ export const ProfessionalPage: FC = () => {
                 social_linkedin: profile.socials?.linkedin || '',
                 social_tiktok: profile.socials?.tiktok || '',
                 social_youtube: profile.socials?.youtube || '',
-            });
+            };
+            setValues({
+                ...initValues.value
+            })
         }
     }, [profile]);
 

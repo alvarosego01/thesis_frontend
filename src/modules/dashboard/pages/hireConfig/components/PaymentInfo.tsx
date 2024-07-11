@@ -1,8 +1,8 @@
 import { FC } from "react"
-import { Payment_Account_I } from "@models/index"
-import { transformBankName_P, transformTypePay_P } from "@pipes/index"
+import { Transform_dateShort, transformBankName_P, transformTypePay_P } from "@pipes/index"
 import { Button_ListDoActions, InfoList, InfoList_Props_I, List_I } from "@components/index";
 import { useUiStore } from "../../../../../core/store";
+import { Payment_Account_I, Payment_Type_Enum } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
 
 type optionAction_Type =
     | 'edit'
@@ -61,13 +61,13 @@ export const PaymentInfo: FC<Payment_Account_I> = ({
                 }
             },
         ];
-        if (props.type === 'bank_account') {
+        if (props.type === Payment_Type_Enum.BANK_ACCOUNT) {
             items_content.push({
                 label: "Número de cuenta",
                 contain: props.number,
             })
         }
-        if (props.type === 'mobile_payment') {
+        if (props.type === Payment_Type_Enum.MOBILE_PAYMENT) {
             items_content.push({
                 label: "Número de teléfono",
                 contain: props.phone,
@@ -105,12 +105,12 @@ export const PaymentInfo: FC<Payment_Account_I> = ({
                                 <div
                                     className="flex items-center justify-center p-3 text-indigo-400 bg-gray-100 icon rounded-rd_5 trans ">
                                     {
-                                        (props.type === 'bank_account') && (
+                                        (props.type === Payment_Type_Enum.BANK_ACCOUNT) && (
                                             <i className='text-2xl bx bxs-bank'></i>
                                         )
                                     }
                                     {
-                                        (props.type === 'mobile_payment') && (
+                                        (props.type === Payment_Type_Enum.MOBILE_PAYMENT) && (
                                             <i className='text-2xl bx bx-mobile-alt' ></i>
                                         )
                                     }
@@ -124,7 +124,7 @@ export const PaymentInfo: FC<Payment_Account_I> = ({
                                     </div>
                                     <div className="flex items-center">
                                         <span className="text-xs leading-normal">
-                                            {transformTypePay_P(props.type)} - {props.date}
+                                            { transformTypePay_P(props.type)} - { Transform_dateShort(props.created_at) }
                                         </span>
                                     </div>
                                 </div>
