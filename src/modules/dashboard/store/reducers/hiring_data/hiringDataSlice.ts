@@ -1,6 +1,6 @@
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User_HiringData_I, User_Personal_Data_I } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
+import { Payment_Account_I, User_HiringData_I, User_Personal_Data_I } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
 
 
 export interface Slice_hiringDataState_I {
@@ -29,14 +29,24 @@ export const hiringDataSlice = createSlice({
                 ...state.hiring_data,
                 ...payload
             };
-            state.onLoading = false;
         },
         onSetPersonal_hiringDataSlice: (state, { payload }: PayloadAction<User_Personal_Data_I>) => {
             state.hiring_data.personal = {
                 ...state.hiring_data.personal,
                 ...payload
             };
-            state.onLoading = false;
+        },
+        onSetBankData_hiringDataSlice: (state, { payload }: PayloadAction<Payment_Account_I[]>) => {
+            state.hiring_data.payment_accounts = [...payload]
+        },
+        onAddBankData_hiringDataSlice: (state, { payload }: PayloadAction<Payment_Account_I>) => {
+            state.hiring_data.payment_accounts?.push(payload);
+        },
+        onRemoveBankData_hiringDataSlice: (state, { payload }: PayloadAction<{index: number}>) => {
+            state.hiring_data.payment_accounts?.splice(payload.index, 1);
+        },
+        onEditBankData_hiringDataSlice: (state, { payload }: PayloadAction<{data: Payment_Account_I, index: number}>) => {
+            state.hiring_data.payment_accounts?.splice(payload.index, 1, payload.data);
         },
         onRestoreDefault_hiringDataSlice: (state) => {
             state.onLoading = false;
@@ -49,5 +59,9 @@ export const {
     onSetLoading_hiringDataSlice,
     onSetHiringData_hiringDataSlice,
     onSetPersonal_hiringDataSlice,
-    onRestoreDefault_hiringDataSlice
+    onSetBankData_hiringDataSlice,
+    onRemoveBankData_hiringDataSlice,
+    onEditBankData_hiringDataSlice,
+    onAddBankData_hiringDataSlice,
+    onRestoreDefault_hiringDataSlice,
 } = hiringDataSlice.actions;

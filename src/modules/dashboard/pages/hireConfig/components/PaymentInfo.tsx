@@ -1,8 +1,9 @@
 import { FC } from "react"
 import { Transform_dateShort, transformBankName_P, transformTypePay_P } from "@pipes/index"
 import { Button_ListDoActions, InfoList, InfoList_Props_I, List_I } from "@components/index";
-import { useUiStore } from "../../../../../core/store";
 import { Payment_Account_I, Payment_Type_Enum } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
+import { useHiringDataStore } from "../../../store/hooks/hiring_data/useHiringDataStore";
+import { useUiStore } from "../../../../../core/store";
 
 type optionAction_Type =
     | 'edit'
@@ -30,19 +31,19 @@ const Button_ListDoActions_items: List_I<optionAction_Type>[] = [
     }
 ]
 
-export const PaymentInfo: FC<Payment_Account_I> = ({
-    ...props
+interface Props_I {
+    props: Payment_Account_I;
+    index: number
+}
+
+export const PaymentInfo: FC<Props_I> = ({
+    props,
+    index
 }) => {
 
-      const {
-        // state: {
-        //     modals: {
-        //         dashboard: {
-        //             paymentInfo_handler_modal
-        //         }
-        //     }
-        // },
-        handle_paymentInfoModal
+    const {
+        emit_handle_delete_bankData_Modal,
+        emit_handle_paymentInfoModal
     } = useUiStore();
 
      const items_content: InfoList_Props_I[] = [
@@ -78,7 +79,7 @@ export const PaymentInfo: FC<Payment_Account_I> = ({
 
         switch (action) {
             case 'edit':
-                handle_paymentInfoModal({
+                emit_handle_paymentInfoModal({
                     status: true,
                     type: 'new',
                     data: props
@@ -124,7 +125,7 @@ export const PaymentInfo: FC<Payment_Account_I> = ({
                                     </div>
                                     <div className="flex items-center">
                                         <span className="text-xs leading-normal">
-                                            { transformTypePay_P(props.type)} - { Transform_dateShort(props.created_at) }
+                                            { transformTypePay_P(props.type)} - { Transform_dateShort(props.created_at!) }
                                         </span>
                                     </div>
                                 </div>

@@ -37,7 +37,6 @@ export const FeedbackModal: FC<Modal_Feedback_I> = ({
                 return '';
 
         }
-
     }
 
     useEffect(() => {

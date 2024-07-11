@@ -1,5 +1,5 @@
 import { _Response_I } from "@tesis-project/dev-globals/dist/core/interfaces";
-import { User_HiringData_I, User_Personal_Data_I } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
+import { Payment_Account_I, User_HiringData_I, User_Personal_Data_I } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
 import Backend_Api from "../../../../../core/api/axiosBase";
 import { AxiosError } from "axios";
 
@@ -44,6 +44,56 @@ export const start_save_user_hiringData_personal = (hiring_data_id: string, pers
         try {
 
             const resp: _Response_I<User_Personal_Data_I> = await Backend_Api.post(`user/hiring-data/personal/${hiring_data_id}`, personal).then(r => r);
+            resolve(resp);
+
+        } catch (error: any) {
+
+            let r: _Response_I;
+            console.error('Axios error:', error.response?.data);
+
+            if (error instanceof AxiosError) {
+                r = {
+                    ...error.response?.data,
+                }
+            } else {
+                r = {
+                    ok: false,
+                    statusCode: 500,
+                    message: 'Unexpected error',
+                    err: error
+                }
+            }
+            reject(r);
+
+        }
+    })
+
+}
+
+export const start_save_user_hiringData_bankData = (hiring_data_id: string, bank_data: Payment_Account_I[]): Promise<_Response_I<Payment_Account_I[]>>  => {
+
+    return new Promise(async (resolve, reject) => {
+
+        try {
+
+            let payment_accounts: Partial<Payment_Account_I>[] = bank_data;
+
+            payment_accounts = payment_accounts.map( (item) => {
+
+                if(item._id === ''){
+                    delete item._id
+                }
+
+                delete item.created_at;
+                delete item.updated_at;
+
+                return item;
+
+             })
+
+            const resp: _Response_I<Payment_Account_I[]> = await Backend_Api.post(`user/hiring-data/bank/${hiring_data_id}`, {
+                payment_accounts: [...payment_accounts]
+            }).then(r => r);
             resolve(resp);
 
         } catch (error: any) {

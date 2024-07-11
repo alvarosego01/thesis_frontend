@@ -8,6 +8,7 @@ import { Banks_List, Payments_Type_List } from "@constants/Banks"
 import { LayoutRow_I, SelectValue_I } from "@components/forms/interfaces"
 import { Banks_Enum, Payment_Account_I, Payment_Type_Enum } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
 import { signal } from '@preact/signals-react';
+import { useHiringDataStore } from "../../../store/hooks/hiring_data/useHiringDataStore";
 
 const formData: LayoutRow_I[] = [
     {
@@ -100,7 +101,7 @@ const formData: LayoutRow_I[] = [
                 props: {
                     label: 'Número de cuenta',
                     name: 'number',
-                    type: 'number',
+                    type: 'text',
                     validation_rules: [
                         {
                             type: "required",
@@ -150,8 +151,8 @@ interface Init_valuesData_I {
     bank_name: SelectValue_I<Banks_Enum>;
     titular: string;
     person_id: string;
-    phone?: string;
-    number?: string;
+    phone: string;
+    number: string;
     // date: string;
 }
 
@@ -162,6 +163,13 @@ interface PaymentInfoSelectors_Props_I {
 export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
     data
 }) => {
+
+    const {
+        state: {
+            hiring_data
+        },
+        emit_add_bankData
+    } = useHiringDataStore()
 
     let Init_Values = signal<Init_valuesData_I>({
         type: {} as SelectValue_I<Payment_Type_Enum>,
@@ -190,6 +198,16 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
     const formik = useFormik({
         initialValues: initialValues,
         onSubmit: (values) => {
+
+            emit_add_bankData( hiring_data._id, {
+                bank_name: values.bank_name.value,
+                type: values.type.value,
+                number: values.number,
+                phone: values.phone,
+                titular: values.titular,
+                person_id: values.person_id
+            })
+
         },
         validationSchema: validation_rules
     });
@@ -200,14 +218,6 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
         isValid,
         errors
     } = formik;
-
-    useEffect(() => {
-
-        console.log('values', { ...values });
-        console.log('errors', { ...errors });
-
-    }, [values]);
-
 
     return (
         <div className="px-5 py-2">
@@ -255,3 +265,4 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
         </div>
     )
 }
+

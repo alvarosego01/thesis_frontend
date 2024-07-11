@@ -1,11 +1,12 @@
 import { FC, useEffect } from "react"
 import { useUiStore } from "@store/index";
 import { PaymentInfo, PaymentInfoModal } from "../components";
-import { PrimaryButton } from "@components/index";
+import { FeedbackModal, PrimaryButton } from "@components/index";
 import { NotFoundContent } from "../../../components";
 import { useHiringDataStore } from "../../../store/hooks/hiring_data/useHiringDataStore";
 import { signal } from '@preact/signals-react';
 import { Payment_Account_I } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
+import { ConfirmDeleteModal } from "../components/modals/ConfirmDeleteModal";
 
 /* const aux_data: Payment_Account_I[] = [
     {
@@ -39,19 +40,18 @@ import { Payment_Account_I } from "@tesis-project/dev-globals/dist/modules/user/
 
 export const PaymentInfoPage: FC = () => {
 
-    // aux_data: Payment_Account_I[]
-    const aux_data = signal<Payment_Account_I[]>([])
+    const aux_data = signal<Payment_Account_I[]>([]);
 
     const {
         state: {
             modals: {
-                dashboard: {
-                    paymentInfo_handler_modal
-                }
+                dashboard
             }
         },
-        handle_paymentInfoModal
+        emit_handle_paymentInfoModal
     } = useUiStore();
+
+    const payment_accounts_modals = dashboard.hiring_data.payment_accounts;
 
     const {
         state: {
@@ -59,13 +59,12 @@ export const PaymentInfoPage: FC = () => {
             hiring_data: {
                 payment_accounts
             },
-            hiring_data
         },
     } = useHiringDataStore();
 
     const add_new = () => {
 
-        handle_paymentInfoModal({
+        emit_handle_paymentInfoModal({
             status: true,
             type: 'new',
         })
@@ -86,7 +85,7 @@ export const PaymentInfoPage: FC = () => {
                         Información de pago y cuentas
                         {
                             (aux_data.value.length > 0) && (
-                                <PrimaryButton onClick={add_new} label="Añadir" icon="bx bx-plus" />
+                                <PrimaryButton onClick={add_new} isLoading={onLoading} label="Añadir" icon="bx bx-plus" />
                             )
                         }
                     </h2>
@@ -102,7 +101,7 @@ export const PaymentInfoPage: FC = () => {
                                     aux_data.value.map((data, index) => {
                                         return (
                                             <div key={index} className="col-span-full sm:col-span-6 xl:col-span-4">
-                                                <PaymentInfo {...data} />
+                                                <PaymentInfo props={data} index={index} />
                                             </div>
                                         )
                                     })
@@ -115,7 +114,10 @@ export const PaymentInfoPage: FC = () => {
 
             </div>
 
-            <PaymentInfoModal {...paymentInfo_handler_modal} />
+            <PaymentInfoModal {...payment_accounts_modals.paymentInfo_handler_modal } />
+
+            <ConfirmDeleteModal data_modal={ payment_accounts_modals.delete_PaymentInfo_modal } onAccept={(index) => {}} onClose={() => {}} />
+
         </>
     )
 }

@@ -8,6 +8,7 @@ import { getAssetPath } from "../../../../../core/utils";
 import { estadosVenezuela } from "../../../../../core/constants/Countries";
 import { useAuthStore, useUserStore } from "../../../../../core/store";
 import { Gender_Enum } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
+import { signal } from "@preact/signals-react";
 
 
 const avatar_default = getAssetPath('/images/user-avatar-80.png');
@@ -189,7 +190,7 @@ export const PersonalPage: FC = () => {
         emit_save_user_data,
     } = useUserStore();
 
-    let Init_Values: Init_valuesData_I = {
+    let Init_Values = signal<Init_valuesData_I>({
         name: user.name || '',
         gender: user.gender as Gender_Enum || Gender_Enum.NONE,
         lastname: user.last_name || '',
@@ -197,9 +198,9 @@ export const PersonalPage: FC = () => {
         state: user.direction?.state || '',
         direction: user.direction?.address || '',
         phone: user.phone || '',
-    }
+    })
 
-    const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(userData, Init_Values);
+    const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(userData, Init_Values.value);
     const { initialValues: initial_image, validation_rules: validation_image } = useFormInitData<{ file: string }>(userImage);
 
     const formik = useFormik({

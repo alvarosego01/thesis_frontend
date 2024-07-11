@@ -20,25 +20,26 @@ export const PaymentInfoModal: FC<PaymentInfoModal_Props_I> = ({
         state: {
             modals: {
                 dashboard: {
-                    paymentInfo_handler_modal: modal_data
+                    hiring_data: {
+                        payment_accounts: {
+                            paymentInfo_handler_modal: modal_data
+                        }
+                    }
                 }
             }
-
         },
-        handle_paymentInfoModal
+        emit_handle_paymentInfoModal
     } = useUiStore();
 
     const closeModal = () => {
 
-        handle_paymentInfoModal({
+        emit_handle_paymentInfoModal({
             status: false,
             type: 'none',
             data: {} as Payment_Account_I,
         })
 
     }
-
-
 
     return (
         <>
