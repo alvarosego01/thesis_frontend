@@ -1,13 +1,11 @@
 
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { onRestoreDefault_hiringDataSlice, onSetLoading_hiringDataSlice, onSetHiringData_hiringDataSlice, Slice_hiringDataState_I, onSetPersonal_hiringDataSlice, onSetBankData_hiringDataSlice, onAddBankData_hiringDataSlice } from '../../reducers/hiring_data/hiringDataSlice';
-import { Reducers_I } from "../../../../../core/store/store";
-import { start_get_user_hiringData, start_save_user_hiringData_bankData, start_save_user_hiringData_personal } from "./hiringDataThunks";
+import { onRestoreDefault_hiringDataSlice, onSetLoading_hiringDataSlice, onSetHiringData_hiringDataSlice, Slice_hiringDataState_I, onSetPersonal_hiringDataSlice, onSetBankData_hiringDataSlice } from '../../reducers/hiring_data/hiringDataSlice';
+import { Reducers_I } from "@store/store";
+import { start_delete_user_hiringData_bankData, start_get_user_hiringData, start_get_user_hiringData_payment, start_save_user_hiringData_bankData, start_save_user_hiringData_personal } from "./hiringDataThunks";
 import { Payment_Account_I, User_Personal_Data_I } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
-import { on_Handler_delete_PaymentInfoModal, on_Handler_PaymentInfoModal, uiState_I } from "../../../../../core/store/reducers/ui/uiSlice";
-import { ConfirmDeleteModal_Props_I } from "../../../pages/hireConfig/components/modals/ConfirmDeleteModal";
-import { PaymentInfoModal_Props_I } from "../../../pages/hireConfig/components";
-
+import { useUiStore } from "../../../../../core/store";
+import { useUiGlobals } from "../../../../../core/hooks";
 
 interface useHookStore_I {
     state: Slice_hiringDataState_I;
@@ -16,7 +14,7 @@ interface useHookStore_I {
     emit_get_user_hiringData: (hiring_data_id: string) => void;
     emit_save_user_hiringData_personal: (hiring_data_id: string, personal: Partial<User_Personal_Data_I>) => void;
     emit_add_bankData: (hiring_data_id: string, bank_data: Partial<Payment_Account_I>) => void;
-    emit_delete_bankData: (index: number) => void;
+    emit_delete_bankData: (hiring_data_id: string, index: number) => void;
 
 }
 
@@ -24,8 +22,16 @@ export const useHiringDataStore = (): useHookStore_I => {
 
     const dispatch = useDispatch();
 
+    const {
+        emit_swalToast
+    } = useUiGlobals()
+
+    const {
+        emit_handle_paymentInfoModal,
+        emit_handle_delete_bankData_Modal
+    } = useUiStore()
+
     const state = useSelector<Reducers_I, Slice_hiringDataState_I>(({ dashboard }) => dashboard.hiring_data, shallowEqual);
-    const uiSlice_state = useSelector<Reducers_I, uiState_I>(({ global }) => global.ui, shallowEqual);
 
     const emit_clear_user_hiringData = () => {
 
@@ -64,6 +70,12 @@ export const useHiringDataStore = (): useHookStore_I => {
                 ...data
             }));
 
+            emit_swalToast({
+                message: 'Información personal guardada',
+                type: 'success'
+            })
+
+
         } catch (error) {
 
 
@@ -72,16 +84,29 @@ export const useHiringDataStore = (): useHookStore_I => {
 
     }
 
-    const emit_save_bankData = () => {
-        return
-    }
-
     const emit_add_bankData = async (hiring_data_id: string, { bank_name, type, number, phone, titular, person_id }: Partial<Payment_Account_I>) => {
 
         dispatch(onSetLoading_hiringDataSlice(true));
+
         try {
 
             let payments_data: Payment_Account_I[] = [...state.hiring_data.payment_accounts!] || [];
+
+            payments_data = payments_data.map((item) => {
+
+                let aux: Payment_Account_I = {
+                    bank_name: item.bank_name,
+                    person_id: item.person_id,
+                    number: item.number,
+                    phone: item.phone,
+                    titular: item.titular,
+                    type: item.type,
+                    _id: item._id
+                }
+                return aux;
+
+            })
+
             payments_data.push({
                 bank_name: bank_name!,
                 person_id: person_id!,
@@ -89,18 +114,29 @@ export const useHiringDataStore = (): useHookStore_I => {
                 phone: phone!,
                 titular: titular!,
                 type: type!,
-                _id: "",
-                created_at: new Date() as any,
-                updated_at: new Date() as any
+                _id: ""
             });
 
-            const { data } = await start_save_user_hiringData_bankData(hiring_data_id, payments_data);
-            if (!data) return;
+            await start_save_user_hiringData_bankData(hiring_data_id, payments_data);
 
-            console.log('data respuesta', data);
+            const new_payment = await start_get_user_hiringData_payment(hiring_data_id);
+            if (!new_payment) return;
+            dispatch(onSetBankData_hiringDataSlice(new_payment.data!));
+
+            emit_handle_paymentInfoModal({
+                status: false,
+                type: 'none',
+                data: {} as Payment_Account_I
+            });
+
+            emit_swalToast({
+                message: 'Información guardada',
+                type: 'success'
+            })
 
 
         } catch (error) {
+            console.log('error', error);
 
 
         }
@@ -109,12 +145,42 @@ export const useHiringDataStore = (): useHookStore_I => {
 
     }
 
-    const emit_delete_bankData = (index: number) => {
+    const emit_delete_bankData = async (hiring_data_id: string, index: number) => {
 
+        dispatch(onSetLoading_hiringDataSlice(true));
+
+        try {
+
+            let payments_data: Payment_Account_I[] = [...state.hiring_data.payment_accounts!] || [];
+
+            if (payments_data.length === 0) return;
+
+            let bank_data_id: string = payments_data[index]._id || '';
+
+            await start_delete_user_hiringData_bankData(bank_data_id);
+
+            const new_payment = await start_get_user_hiringData_payment(hiring_data_id);
+            if (!new_payment) return;
+            dispatch(onSetBankData_hiringDataSlice(new_payment.data!));
+
+            emit_handle_delete_bankData_Modal({
+                index: -1,
+                status: false
+            });
+
+            emit_swalToast({
+                message: 'Información eliminada',
+                type: 'success'
+            })
+
+        } catch (error) {
+            console.log('error', error);
+
+        }
+
+        dispatch(onSetLoading_hiringDataSlice(false));
 
     }
-
-
 
     return {
         // Params

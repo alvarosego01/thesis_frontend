@@ -4,7 +4,7 @@ import Backend_Api from "../../../../../core/api/axiosBase";
 import { AxiosError } from "axios";
 
 
-export const start_get_user_hiringData = (hiring_data_id: string): Promise<_Response_I<User_HiringData_I>>  => {
+export const start_get_user_hiringData = (hiring_data_id: string): Promise<_Response_I<User_HiringData_I>> => {
 
     return new Promise(async (resolve, reject) => {
 
@@ -37,7 +37,40 @@ export const start_get_user_hiringData = (hiring_data_id: string): Promise<_Resp
 
 }
 
-export const start_save_user_hiringData_personal = (hiring_data_id: string, personal: Partial<User_Personal_Data_I>): Promise<_Response_I<User_Personal_Data_I>>  => {
+export const start_get_user_hiringData_payment = (hiring_data_id: string): Promise<_Response_I<Payment_Account_I[]>> => {
+
+    return new Promise(async (resolve, reject) => {
+
+        try {
+
+            const resp: _Response_I<Payment_Account_I[]> = await Backend_Api.get(`user/hiring-data/bank/${hiring_data_id}`).then(r => r);
+            resolve(resp);
+
+        } catch (error: any) {
+
+            let r: _Response_I;
+            console.error('Axios error:', error.response?.data);
+
+            if (error instanceof AxiosError) {
+                r = {
+                    ...error.response?.data,
+                }
+            } else {
+                r = {
+                    ok: false,
+                    statusCode: 500,
+                    message: 'Unexpected error',
+                    err: error
+                }
+            }
+            reject(r);
+
+        }
+    })
+
+}
+
+export const start_save_user_hiringData_personal = (hiring_data_id: string, personal: Partial<User_Personal_Data_I>): Promise<_Response_I<User_Personal_Data_I>> => {
 
     return new Promise(async (resolve, reject) => {
 
@@ -70,30 +103,58 @@ export const start_save_user_hiringData_personal = (hiring_data_id: string, pers
 
 }
 
-export const start_save_user_hiringData_bankData = (hiring_data_id: string, bank_data: Payment_Account_I[]): Promise<_Response_I<Payment_Account_I[]>>  => {
+export const start_save_user_hiringData_bankData = (hiring_data_id: string, bank_data: Partial<Payment_Account_I>[]): Promise<_Response_I<any>> => {
 
     return new Promise(async (resolve, reject) => {
 
         try {
 
-            let payment_accounts: Partial<Payment_Account_I>[] = bank_data;
+            bank_data = bank_data.map((item) => {
 
-            payment_accounts = payment_accounts.map( (item) => {
-
-                if(item._id === ''){
-                    delete item._id
+                if(item._id === '') {
+                    delete item._id;
                 }
-
-                delete item.created_at;
-                delete item.updated_at;
 
                 return item;
 
-             })
+            })
 
             const resp: _Response_I<Payment_Account_I[]> = await Backend_Api.post(`user/hiring-data/bank/${hiring_data_id}`, {
-                payment_accounts: [...payment_accounts]
+                payment_accounts: [...bank_data]
             }).then(r => r);
+            resolve(resp);
+
+        } catch (error: any) {
+
+            let r: _Response_I;
+            console.error('Axios error:', error.response?.data);
+
+            if (error instanceof AxiosError) {
+                r = {
+                    ...error.response?.data,
+                }
+            } else {
+                r = {
+                    ok: false,
+                    statusCode: 500,
+                    message: 'Unexpected error',
+                    err: error
+                }
+            }
+            reject(r);
+
+        }
+    })
+
+}
+
+export const start_delete_user_hiringData_bankData = (bank_data_id: string): Promise<_Response_I<Payment_Account_I>> => {
+
+    return new Promise(async (resolve, reject) => {
+
+        try {
+
+            const resp: _Response_I<Payment_Account_I> = await Backend_Api.delete(`user/hiring-data/bank/${bank_data_id}`).then(r => r);
             resolve(resp);
 
         } catch (error: any) {

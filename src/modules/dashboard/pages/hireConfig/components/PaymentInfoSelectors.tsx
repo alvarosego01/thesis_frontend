@@ -166,6 +166,7 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
 
     const {
         state: {
+            onLoading,
             hiring_data
         },
         emit_add_bankData
@@ -257,7 +258,7 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
                     </section>
 
                     <div className="flex flex-row justify-end py-5 space-x-4 border-t border-slate-200">
-                        <PrimaryButton disabled={!isValid} label='Guardar' onClick={() => submitForm()} />
+                        <PrimaryButton disabled={!isValid} isLoading={onLoading} label='Guardar' onClick={() => submitForm()} />
                     </div>
 
                 </Form>

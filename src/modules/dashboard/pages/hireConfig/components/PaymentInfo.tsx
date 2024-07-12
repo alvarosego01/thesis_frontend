@@ -86,7 +86,10 @@ export const PaymentInfo: FC<Props_I> = ({
                 });
                 break;
             case 'delete':
-                console.log('delete')
+                emit_handle_delete_bankData_Modal({
+                    index,
+                    status: true
+                })
                 break;
             default:
                 break;
@@ -95,8 +98,11 @@ export const PaymentInfo: FC<Props_I> = ({
 
     }
 
+
+
     return (
-        <div className="w-full bg-white border rounded-sm shadow-lg dark:bg-slate-800 border-slate-200 dark:border-slate-700">
+        // <div className="w-full bg-white border rounded-sm shadow-lg dark:bg-slate-800 border-slate-200 dark:border-slate-700">
+        <div className="w-full transition border border-gray-200 shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700/60 hover:border-gray-300 dark:hover:border-gray-600">
             <div className="flex flex-col h-full">
                 <div className="p-5 space-y-5 grow">
                     <div className="flex items-start justify-between">

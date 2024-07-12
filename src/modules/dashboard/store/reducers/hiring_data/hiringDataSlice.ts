@@ -37,6 +37,7 @@ export const hiringDataSlice = createSlice({
             };
         },
         onSetBankData_hiringDataSlice: (state, { payload }: PayloadAction<Payment_Account_I[]>) => {
+            state.hiring_data.payment_accounts = []
             state.hiring_data.payment_accounts = [...payload]
         },
         onAddBankData_hiringDataSlice: (state, { payload }: PayloadAction<Payment_Account_I>) => {

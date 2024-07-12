@@ -41,7 +41,7 @@ export const ConfirmDeleteModal: FC<Props_I> = ({
                     <FeedbackModal
                         labelAccept="Aceptar"
                         type="info"
-                        title="Eliminar cuenta de pago"
+                        title="Eliminar información de cuenta y pagos"
                         text="¿Estás seguro?"
                         onClose={onClose}
                         onAccept={() => onAccept(delete_bankData_Modal.index)}

@@ -25,7 +25,8 @@ export const ContentPage_Box_LY: FC<ContentPage_Box_LY_Props_I> = ({
                     }
                 </div>
 
-                <div className="mb-8 bg-white rounded-sm shadow-lg dark:bg-slate-800">
+                {/* <div className="mb-8 bg-white rounded-sm shadow-lg dark:bg-slate-800"> */}
+                <div className="mb-8 bg-white shadow-sm dark:bg-gray-800 rounded-xl">
 
                     <div className="flex flex-col p-5 md:flex-row md:-mr-px">
 

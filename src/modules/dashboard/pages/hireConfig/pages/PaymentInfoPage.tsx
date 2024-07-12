@@ -48,7 +48,8 @@ export const PaymentInfoPage: FC = () => {
                 dashboard
             }
         },
-        emit_handle_paymentInfoModal
+        emit_handle_paymentInfoModal,
+        emit_handle_delete_bankData_Modal
     } = useUiStore();
 
     const payment_accounts_modals = dashboard.hiring_data.payment_accounts;
@@ -59,8 +60,25 @@ export const PaymentInfoPage: FC = () => {
             hiring_data: {
                 payment_accounts
             },
+            hiring_data
         },
+        emit_delete_bankData
     } = useHiringDataStore();
+
+    const onClose_deleteModal = () => {
+
+        emit_handle_delete_bankData_Modal({
+            index: -1,
+            status: false
+        })
+
+    }
+
+    const onAccept_deleteModal = (index: number) => {
+
+        emit_delete_bankData(hiring_data._id, index)
+
+    }
 
     const add_new = () => {
 
@@ -114,9 +132,9 @@ export const PaymentInfoPage: FC = () => {
 
             </div>
 
-            <PaymentInfoModal {...payment_accounts_modals.paymentInfo_handler_modal } />
+            <PaymentInfoModal {...payment_accounts_modals.paymentInfo_handler_modal} />
 
-            <ConfirmDeleteModal data_modal={ payment_accounts_modals.delete_PaymentInfo_modal } onAccept={(index) => {}} onClose={() => {}} />
+            <ConfirmDeleteModal data_modal={payment_accounts_modals.delete_PaymentInfo_modal} onAccept={(index) => onAccept_deleteModal(index)} onClose={onClose_deleteModal} />
 
         </>
     )
