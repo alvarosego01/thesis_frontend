@@ -4,6 +4,112 @@ import { _Response_I } from "@tesis-project/dev-globals/dist/core/interfaces";
 import { AxiosError } from "axios";
 
 
+export const start_update_profile_pic = (profile_pic: File): Promise<_Response_I<Profile_I>> => {
+    return new Promise(async (resolve, reject) => {
+
+        try {
+
+            const formData = new FormData();
+            formData.append('file', profile_pic);
+
+            const resp: _Response_I<Profile_I> = await Backend_Api.post(`profile/profile_pic`, formData).then(r => r);
+            resolve(resp);
+
+        } catch (error: any) {
+
+            let r: _Response_I;
+            console.error('Axios error:', error.response?.data);
+
+            if (error instanceof AxiosError) {
+                r = {
+                    ...error.response?.data,
+                }
+            } else {
+                r = {
+                    ok: false,
+                    statusCode: 500,
+                    message: 'Unexpected error',
+                    err: error
+                }
+            }
+            reject(r);
+
+        }
+
+    })
+}
+
+
+export const start_set_credentials_identity_file = (identity_file: File): Promise<_Response_I<Profile_I>> => {
+    return new Promise(async (resolve, reject) => {
+
+        try {
+
+            const formData = new FormData();
+            formData.append('file', identity_file);
+
+            const resp: _Response_I<Profile_I> = await Backend_Api.post(`profile/credentials_identity_file`, formData).then(r => r);
+            resolve(resp);
+
+        } catch (error: any) {
+
+            let r: _Response_I;
+            console.error('Axios error:', error.response?.data);
+
+            if (error instanceof AxiosError) {
+                r = {
+                    ...error.response?.data,
+                }
+            } else {
+                r = {
+                    ok: false,
+                    statusCode: 500,
+                    message: 'Unexpected error',
+                    err: error
+                }
+            }
+            reject(r);
+
+        }
+
+    })
+}
+
+export const start_set_credentials_profesional_file = (profesional_file: File): Promise<_Response_I<Profile_I>> => {
+    return new Promise(async (resolve, reject) => {
+
+        try {
+
+            const formData = new FormData();
+            formData.append('file', profesional_file);
+
+            const resp: _Response_I<Profile_I> = await Backend_Api.post(`profile/profesional_file`, formData).then(r => r);
+            resolve(resp);
+
+        } catch (error: any) {
+
+            let r: _Response_I;
+            console.error('Axios error:', error.response?.data);
+
+            if (error instanceof AxiosError) {
+                r = {
+                    ...error.response?.data,
+                }
+            } else {
+                r = {
+                    ok: false,
+                    statusCode: 500,
+                    message: 'Unexpected error',
+                    err: error
+                }
+            }
+            reject(r);
+
+        }
+
+    })
+}
+
 
 export const start_update_user_profile = (profile_id: string, profile: Partial<Profile_I>): Promise<_Response_I<Profile_I>> => {
 
@@ -39,9 +145,10 @@ export const start_update_user_profile = (profile_id: string, profile: Partial<P
 
 }
 
-export const start_get_profile_data = (_id: string): Promise<_Response_I<Profile_I>>  => {
+export const start_get_profile_data = (_id: string): Promise<_Response_I<Profile_I>> => {
 
     return new Promise(async (resolve, reject) => {
+
 
         try {
 
@@ -71,4 +178,3 @@ export const start_get_profile_data = (_id: string): Promise<_Response_I<Profile
     })
 
 }
-

@@ -2,9 +2,14 @@ import { Navigate, Route, Routes } from "react-router-dom"
 import { HomePage, LoginPage, RegisterPage } from "."
 import { useAuthStore } from "../../core/store";
 import { FC, useEffect } from "react";
+import { useSignal } from "@preact/signals-react";
+import { useSignals } from "@preact/signals-react/runtime";
 
 
 export const Public_routes: FC = () => {
+
+    useSignals()
+    const isMounted = useSignal(false);
 
     const {
         state: {
@@ -13,11 +18,14 @@ export const Public_routes: FC = () => {
         emit_checkAuthToken
     } = useAuthStore();
 
+    useEffect(() => {
+        if (isMounted.value === false) return;
+        emit_checkAuthToken();
+    }, [isMounted.value]);
 
     useEffect(() => {
-        emit_checkAuthToken();
-    }, [])
-
+        isMounted.value = true;
+    }, []);
 
     return (
         <Routes>

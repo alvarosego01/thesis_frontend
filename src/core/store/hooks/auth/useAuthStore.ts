@@ -7,10 +7,10 @@ import { start_check_renew_Tk_authTH, start_login_authTH, start_register_authTH 
 import { _Response_I } from "@tesis-project/dev-globals/dist/core/interfaces";
 
 import { onChecking_authSL, onLogin_authSL, onLogout_authSL, onSetLoading_authSL, Slice_authState_I } from "../../reducers/session/auth/authSlice";
-import { useUserStore } from "../../../../modules/dashboard/store";
+import { useProfileStore, useUserStore } from "../../../../modules/dashboard/store";
 import { User_Role_Enum } from "@tesis-project/dev-globals/dist/modules/auth/interfaces";
 import { useNavigate } from "react-router-dom";
-import { useSession, useUiGlobals } from "../../../hooks";
+import { useSession, useUiGlobals } from "@hooks/index";
 
 interface useHookStore_I {
     state: Slice_authState_I;
@@ -27,8 +27,11 @@ export const useAuthStore = (): useHookStore_I => {
 
     const {
         emit_get_user,
-        emit_clear_user
     } = useUserStore();
+
+    const {
+        emit_get_profile_data
+    } = useProfileStore()
 
     const {
         emit_swalToast
@@ -84,6 +87,7 @@ export const useAuthStore = (): useHookStore_I => {
             emit_swalToast({ type: 'success', message: 'Bienvenido' });
 
             emit_get_user(data.user);
+            emit_get_profile_data(data.user)
 
 
         } catch (error) {
@@ -107,6 +111,7 @@ export const useAuthStore = (): useHookStore_I => {
             localStorage.setItem('token', data.token!);
             dispatch(onLogin_authSL(data));
             emit_get_user(data.user);
+            emit_get_profile_data(data.user)
 
         } catch (error) {
             localStorage.clear();

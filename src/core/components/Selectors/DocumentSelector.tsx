@@ -1,37 +1,42 @@
 import { FC, useEffect, useRef } from "react";
 
-import { PrimaryButton } from "../buttons/PrimaryButton";
 import { Form, FormikProvider, useFormik } from "formik";
+import { useSignal } from "@preact/signals-react";
+import { useSignals } from "@preact/signals-react/runtime";
+import { LayoutRow_I } from "../forms/interfaces";
+import { useFormInitData } from "../../hooks";
+import { PrimaryButton } from "..";
 
-interface DocumentSelector_Props_I {
+interface Props_I {
+    onSelect: (file: File) => void;
     name: string;
     text: string;
-    file_name: string;
-    initialValues: any;
-    validation_rules: any;
-    [x: string]: any,
+    isLoading: boolean;
+    define_file: LayoutRow_I[]
+    [x: string]: any;
 
 }
 
-export const DocumentSelector: FC<DocumentSelector_Props_I> = ({
+export const DocumentSelector: FC<Props_I> = ({
     name = 'Documento',
     text = 'lorem ipsum dolor sit amet consectetur adipisicing elit. Id similique, minus qui magni adipisci voluptate placeat ullam exercitationem delectus,',
-    initialValues,
-    validation_rules,
-    file_name
-    // onChange,
-    // onView
+    isLoading = false,
+    define_file
 }) => {
 
+    useSignals();
+    const isMounted = useSignal(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
+    const { initialValues: file_initial, validation_rules: file_validation } = useFormInitData(define_file);
+
     const formik = useFormik({
-        validateOnChange: true,
-        initialValues: initialValues,
+        initialValues: file_initial,
         onSubmit: (values) => {
-            console.log('values', values);
+            console.log('values emit file', values);
         },
-        validationSchema: validation_rules
+        validationSchema: file_validation,
+        validateOnChange: true
     });
 
     const {
@@ -45,29 +50,16 @@ export const DocumentSelector: FC<DocumentSelector_Props_I> = ({
         validateField,
     } = formik;
 
-    useEffect(() => {
-
-        if (isValid) {
-            // Se emite la acción de subir la imagen
-            // console.log('valid');
-            // console.log('values', values)
-        } else {
-            // console.log('invalid')
-        }
-
-    }, [values, isValid]);
-
     const onChangeDocument = ({ target }: any) => {
 
         if (!target.files[0]) return;
 
-        resetForm();
-        setTimeout(() => {
-
-            setValues(values[file_name] = target.files[0]);
-            validateField(file_name);
-            validateForm();
-        }, 100);
+        // resetForm();
+        // setTimeout( async () => {
+        //     setValues(values['File'] = target.files[0]);
+        //     validateField('File')
+        //     validateForm();
+        // }, 100);
 
     }
 
@@ -83,11 +75,13 @@ export const DocumentSelector: FC<DocumentSelector_Props_I> = ({
     const show_errors = () => {
 
         if (errors) {
+            // console.log('errors');
             for (const key in errors) {
 
                 return (
                     <span className="block w-full mx-auto mt-1 text-xs text-center text-rose-500">
-                        {String(errors[key])}
+                        {String(errors['File'])}
+                        {/* errors */}
                     </span>
                 )
             }
@@ -96,6 +90,24 @@ export const DocumentSelector: FC<DocumentSelector_Props_I> = ({
         }
 
     }
+
+    useEffect(() => {
+
+        if (isMounted.value === false) return;
+
+        if(values?.File?.size > 0){
+            console.log('values', values.File);
+
+            submitForm();
+
+        }
+
+    }, [values]);
+
+    useEffect(() => {
+        isMounted.value = true;
+    }, []);
+
 
     return (
         <>
@@ -136,7 +148,7 @@ export const DocumentSelector: FC<DocumentSelector_Props_I> = ({
                                     onChange={onChangeDocument}
                                     ref={fileInputRef}
                                     type="file"
-                                    name={file_name}
+                                    name="File"
                                     // value={values[file_name]}
                                     accept="application/pdf"
                                     // multiple
@@ -146,15 +158,13 @@ export const DocumentSelector: FC<DocumentSelector_Props_I> = ({
                                 />
 
                                 <div className="flex justify-end w-full">
-                                    {/* <SecondaryButton onClick={() => {}} label="Ver documento" /> */}
-                                    <PrimaryButton onClick={openSelector} label="Cargar archivo" className="ml-3" />
+                                    <PrimaryButton isLoading={isLoading} onClick={openSelector} label="Cargar archivo" className="ml-3" />
                                 </div>
                                 {
                                     show_errors()
                                 }
                                 {/*
                                 <ErrorMessage name={file_name} component='span' className="mt-1 text-xs text-rose-500" /> */}
-
 
                             </Form>
                         </FormikProvider>

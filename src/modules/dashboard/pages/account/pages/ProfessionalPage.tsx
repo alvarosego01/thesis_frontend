@@ -194,6 +194,8 @@ export const ProfessionalPage: FC = () => {
         emit_get_profile_data
     } = useProfileStore();
 
+    const isMounted = signal(false);
+
     const initValues = signal<Init_valuesData_I>({
         artistic_name: profile.artistic_name || '',
         biography_review: profile.bio_short || '',
@@ -206,10 +208,8 @@ export const ProfessionalPage: FC = () => {
     });
 
     useEffect(() => {
-        emit_get_profile_data();
-    }, []);
+        if (isMounted.value === false) return;
 
-    useEffect(() => {
         if (profile) {
             initValues.value = {
                 artistic_name: profile.artistic_name || '',
@@ -258,6 +258,12 @@ export const ProfessionalPage: FC = () => {
         setValues,
         submitForm
     } = formik;
+
+    useEffect(() => {
+
+        isMounted.value = true;
+    }, []);
+
 
     return (
         <div className="grow">

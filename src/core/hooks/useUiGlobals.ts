@@ -1,4 +1,6 @@
+import { Media_I } from "@tesis-project/dev-globals/dist/modules/media/interfaces";
 import Swal from "sweetalert2";
+import { start_getFile } from "../thunks/useUiThunks";
 
 
 
@@ -10,12 +12,13 @@ interface Toast_I {
 interface useUiGlobals_I {
 
     emit_swalToast: ({ type, message }: Toast_I) => void;
+
 }
 
 export const useUiGlobals = (): useUiGlobals_I => {
 
 
-        const emit_swalToast = ({ type, message }: Toast_I) => {
+    const emit_swalToast = ({ type, message }: Toast_I) => {
 
         const Toast = Swal.mixin({
             toast: true,
@@ -35,10 +38,12 @@ export const useUiGlobals = (): useUiGlobals_I => {
 
     }
 
+
     return {
 
         // Methods
-        emit_swalToast
+        emit_swalToast,
+
     }
 
 }

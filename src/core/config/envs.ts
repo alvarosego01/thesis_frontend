@@ -9,11 +9,12 @@ enum NodeEnv {
 interface EnvVars_I {
     VITE_API_URL: string;
     VITE_NODE_ENV: NodeEnv;
+
 }
 
 const envsSchema = joi.object({
     VITE_NODE_ENV: joi.string().valid(NodeEnv.DEVELOPMENT, NodeEnv.STAGING, NodeEnv.PRODUCTION).required(),
-    VITE_API_URL: joi.string().required()
+    VITE_API_URL: joi.string().required(),
 }).unknown(true);
 
 const {

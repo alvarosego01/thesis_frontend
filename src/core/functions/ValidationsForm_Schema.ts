@@ -65,9 +65,9 @@ export const get_Validation = (rule: ValidationRule_I, schema: any) => {
     }
     //
     if (rule.type === 'fileFormat_document') {
-        schema = schema.test('fileFormat', 'Solo se permiten documentos PDF', (value: any) => {
+        schema = schema.test('fileFormat', rule.message, (value: any) => {
             if (value) {
-                const supportedFormats = ['pdf'];
+                const supportedFormats = ['pdf, doc, docx'];
                 const aux_name = (value.name.split('.').pop()).toLowerCase();
                 return supportedFormats.includes(aux_name);
             }
@@ -75,7 +75,7 @@ export const get_Validation = (rule: ValidationRule_I, schema: any) => {
         })
     }
     if (rule.type === 'fileFormat_image') {
-        schema = schema.test('fileFormat', 'Solo se permiten imágenes png | jpg | jpeg', (value: any) => {
+        schema = schema.test('fileFormat', rule.message, (value: any) => {
             if (value) {
                 const supportedFormats = ['png', 'jpg', 'jpeg'];
                 const aux_name = (value.name.split('.').pop()).toLowerCase();

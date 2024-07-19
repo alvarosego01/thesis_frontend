@@ -29,10 +29,19 @@ export const OutlineButton: FC<Button_I> = ({
 
     }
 
+    const set_disabled = (): boolean => {
+
+        if (disabled) return true;
+        if (isLoading) return true;
+        return false;
+
+    }
+
+
     return (
         <button type="button" className={`${className} ${sizeButton()} hover:text-indigo-500 trans shadow-none  text-slate-600  w-fit h-fit ${state_style()}`}
             onClick={_onclick}
-            disabled={disabled}
+            disabled={set_disabled()}
         >
             {isLoading &&
                 <svg className="w-4 h-4 fill-current mr-s_7.5 animate-spin shrink-0" viewBox="0 0 16 16">

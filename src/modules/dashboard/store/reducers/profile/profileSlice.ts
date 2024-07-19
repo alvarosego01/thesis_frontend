@@ -5,33 +5,16 @@ import { Profile_I } from '@tesis-project/dev-globals/dist/modules/profile/inter
 
 export interface Slice_ProfileState_I {
     onLoading: boolean;
+    onLoading_identity_file: boolean;
+    onLoading_profesional_file: boolean;
     profile: Profile_I;
 }
 
 const initialState: Slice_ProfileState_I = {
-    // status: 'not-authenticated',
     onLoading: false,
+    onLoading_identity_file: false,
+    onLoading_profesional_file: false,
     profile: {
-        // _id: '',
-        // artistic_name: '',
-        // bio_short: '',
-        // profile_pic: {} as File_Model_I,
-        // cover_pic: {} as File_Model_I,
-        // credentials: {
-        //     identity_file: {} as File_Model_I,
-        //     profesional_file: {} as File_Model_I
-        // },
-        // media: {
-        //     image_gallery: [],
-        //     video_gallery: []
-        // },
-        // socials: {
-        //     facebook: '',
-        //     twitter: '',
-        //     instagram: '',
-        //     youtube: '',
-        //     tiktok: '',
-        // } as
     } as Profile_I
 }
 
@@ -41,6 +24,12 @@ export const profileSlice = createSlice({
     reducers: {
         onSetLoading_profileSlice: (state, { payload }: PayloadAction<boolean>) => {
             state.onLoading = payload;
+        },
+        onLoading_identity_file: (state, { payload }: PayloadAction<boolean>) => {
+            state.onLoading_identity_file = payload;
+        },
+        onLoading_profesional_file: (state, { payload }: PayloadAction<boolean>) => {
+            state.onLoading_profesional_file = payload;
         },
         onSetProfile_profileSlice: (state, { payload }: PayloadAction<Profile_I>) => {
             state.profile = {
@@ -58,6 +47,8 @@ export const profileSlice = createSlice({
 
 export const {
     onSetLoading_profileSlice,
+    onLoading_identity_file,
+    onLoading_profesional_file,
     onRestoreDefault_profileSlice,
     onSetProfile_profileSlice
 } = profileSlice.actions;

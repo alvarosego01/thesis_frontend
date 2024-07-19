@@ -1,17 +1,16 @@
 import { FC, useEffect } from "react";
-import { FileHideInput, FormLayoutBuilder, PrimaryButton } from "../../../../../core/components"
-import { LayoutRow_I } from "../../../../../core/components/forms/interfaces"
-import { useFormInitData } from "../../../../../core/hooks";
+import { FileHideInput, FormLayoutBuilder, PrimaryButton } from "@components/index"
+import { LayoutRow_I } from "@components/forms/interfaces"
+import { useFormInitData } from "@hooks/index";
 
 import { Form, FormikProvider, useFormik } from "formik"
-import { getAssetPath } from "../../../../../core/utils";
-import { estadosVenezuela } from "../../../../../core/constants/Countries";
-import { useAuthStore, useUserStore } from "../../../../../core/store";
+import { getAssetPath } from "@utils/index";
+import { estadosVenezuela } from "@core/constants/Countries";
+import { useProfileStore, useUserStore } from "@store/index";
 import { Gender_Enum } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
-import { signal } from "@preact/signals-react";
+import { signal, useSignal } from "@preact/signals-react";
+import { useSignals } from "@preact/signals-react/runtime";
 
-
-const avatar_default = getAssetPath('/images/user-avatar-80.png');
 
 const userData: LayoutRow_I[] = [
     {
@@ -85,9 +84,6 @@ const userData: LayoutRow_I[] = [
                         }
                     ],
                     placeholder: 'Selecciona tu género',
-                    // validation_rules: [
-
-                    // ]
                 }
             },
         ],
@@ -151,10 +147,6 @@ const userImage: LayoutRow_I[] = [
                     type: 'file',
                     accept: 'image/png, image/jpeg, image/jpg',
                     validation_rules: [
-                        // {
-                        //     type: 'required',
-                        //     message: 'La foto de perfil es necesaria'
-                        // },
                         {
                             type: "fileSize_5m",
                             message: "El archivo debe ser menor a 5MB"
@@ -182,6 +174,9 @@ interface Init_valuesData_I {
 
 export const PersonalPage: FC = () => {
 
+    useSignals();
+    const avatar = useSignal(getAssetPath('/images/user_anon.png'));
+
     const {
         state: {
             onLoading,
@@ -190,7 +185,20 @@ export const PersonalPage: FC = () => {
         emit_save_user_data,
     } = useUserStore();
 
-    let Init_Values = signal<Init_valuesData_I>({
+      const isMounted = useSignal(false);
+
+    const {
+        state: {
+            onLoading: onLoading_profile,
+            profile: {
+                profile_pic
+            }
+        },
+        emit_set_profile_pic,
+    } = useProfileStore();
+
+
+    let Init_Values = useSignal<Init_valuesData_I>({
         name: user.name || '',
         gender: user.gender as Gender_Enum || Gender_Enum.NONE,
         lastname: user.last_name || '',
@@ -201,7 +209,8 @@ export const PersonalPage: FC = () => {
     })
 
     const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(userData, Init_Values.value);
-    const { initialValues: initial_image, validation_rules: validation_image } = useFormInitData<{ file: string }>(userImage);
+
+    const { initialValues: initial_image, validation_rules: validation_image } = useFormInitData<{profile_pic: File}>( userImage );
 
     const formik = useFormik({
         initialValues: initialValues,
@@ -223,32 +232,50 @@ export const PersonalPage: FC = () => {
 
     const formik_image = useFormik({
         initialValues: initial_image,
-        onSubmit: (values) => {
-            console.log('values', values);
+        onSubmit: (values, helpers) => {
+            helpers.validateForm();
+            emit_set_profile_pic(values.profile_pic);
         },
-        validationSchema: validation_image
+        validationSchema: validation_image,
+        validateOnChange: true
+
     });
 
     const {
-        values,
-        errors,
-        submitForm
+        submitForm,
     } = formik;
 
     const {
         values: values_image,
         submitForm: submitForm_image,
-        isValid: isValid_image,
-        // errors: errors_image
     } = formik_image;
+
+    useEffect( () => {
+
+        if(isMounted.value === false) return;
+
+        if(values_image?.profile_pic?.size > 0){
+            submitForm_image();
+        }
+
+    }, [values_image]);
 
     useEffect(() => {
 
-        if (isValid_image) {
-            // Se emite la acción de subir la imagen
+        console.log('profile_pic?.src', profile_pic?.src)
+
+        if(isMounted.value === false) return;
+
+        if(profile_pic?.src) {
+            avatar.value = profile_pic?.src;
         }
 
-    }, [values_image, isValid_image])
+
+     }, [profile_pic?.src])
+
+    useEffect(() => {
+        isMounted.value = true;
+    }, []);
 
     return (
 
@@ -259,21 +286,24 @@ export const PersonalPage: FC = () => {
                 <h2 className="mb-5 text-2xl font-bold text-slate-800 dark:text-slate-100 ">
                     Perfil personal
                 </h2>
-                {/* Picture */}
+
                 <section>
                     <div className="flex items-center">
                         <div className="mr-4">
-                            <img className="w-20 h-20 rounded-full" src={avatar_default} width="80" height="80" alt="User upload" />
+
+                            <img className="object-cover object-center w-20 h-20 rounded-full" src={avatar.value} width="80" height="80" alt="User upload" />
+
                         </div>
 
                         <FormikProvider value={formik_image}>
                             <Form noValidate>
-                                <FileHideInput {...userImage[0].fields[0].props} />
+                                <FileHideInput {...userImage[0].fields[0].props} isLoading={onLoading_profile} />
                             </Form>
                         </FormikProvider>
 
                     </div>
                 </section>
+
                 <section>
                     <h2 className="mb-1 text-xl font-bold leading-snug text-slate-800 dark:text-slate-100">
                         Datos de usuario
@@ -287,8 +317,6 @@ export const PersonalPage: FC = () => {
                             <FormLayoutBuilder rows={userData} />
                         </Form>
                     </FormikProvider>
-
-
                 </section>
 
             </div>

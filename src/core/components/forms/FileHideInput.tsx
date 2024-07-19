@@ -6,6 +6,7 @@ import { PrimaryButton } from "../buttons/PrimaryButton";
 
 export const FileHideInput: FC<FileHideInput_Props_I> = ({
     label,
+    isLoading = false,
     ...props
 }) => {
 
@@ -38,6 +39,7 @@ export const FileHideInput: FC<FileHideInput_Props_I> = ({
             <div className="flex flex-col">
                 <PrimaryButton
                     // disabled={isLoading}
+                    isLoading={isLoading}
                     onClick={() => {
                         fileInputRef.current?.click()
                     }} label={`${label}`} />

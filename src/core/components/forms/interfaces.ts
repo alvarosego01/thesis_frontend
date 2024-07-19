@@ -107,6 +107,7 @@ export interface FileHideInput_Props_I {
     accept: string;
     validation_rules?: ValidationRule_I[];
     // parent_class?: string;
+    isLoading?: boolean;
     [x: string]: any,
 }
 

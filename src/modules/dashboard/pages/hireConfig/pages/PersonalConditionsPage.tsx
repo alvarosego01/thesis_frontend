@@ -137,6 +137,8 @@ export const PersonalConditionsPage: FC = () => {
         emit_save_user_hiringData_personal
     } = useHiringDataStore();
 
+    const isMounted = signal(false);
+
 
     const initValues = signal<Init_valuesData_I>({
         address: personal?.address || '',
@@ -149,6 +151,9 @@ export const PersonalConditionsPage: FC = () => {
     })
 
     useEffect(() => {
+
+        if(isMounted.value === false) return;
+
         if (personal) {
 
             initValues.value = {
@@ -186,6 +191,10 @@ export const PersonalConditionsPage: FC = () => {
         submitForm,
         setValues
     } = formik;
+
+    useEffect(() => {
+        isMounted.value = true;
+    }, []);
 
     return (
 

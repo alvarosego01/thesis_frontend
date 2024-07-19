@@ -31,11 +31,20 @@ export const TertiaryButton: FC<Button_I> = ({
 
     }
 
+    const set_disabled = (): boolean => {
+
+        if (disabled) return true;
+        if (isLoading) return true;
+        return false;
+
+    }
+
+
     return (
         <button
             type="button" className={`${className} ${sizeButton()} dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-300 w-fit h-fit`}
             onClick={_onclick}
-            disabled={disabled}
+            disabled={set_disabled()}
         >
             {isLoading &&
                 <svg className="w-4 h-4 fill-current mr-s_7.5 animate-spin shrink-0" viewBox="0 0 16 16">

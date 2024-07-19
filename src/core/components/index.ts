@@ -44,3 +44,6 @@ export * from './tabsCollapse/TabsCollapse';
 
 //Handle Info
 export * from './handleInfo/InfoList';
+
+// ImageCloud
+export * from './imageCloud/ImageCloud';

@@ -3,7 +3,7 @@ import { onRestoreDefault_profileSlice, onSetLoading_profileSlice, onSetProfile_
 import { Reducers_I } from "../../../../../core/store/store";
 import { Profile_I } from "@tesis-project/dev-globals/dist/modules/profile/interfaces";
 import { useUiGlobals } from "../../../../../core/hooks";
-import { start_get_profile_data, start_update_user_profile } from "./profileThunks";
+import { start_get_profile_data, start_update_profile_pic, start_update_user_profile } from "./profileThunks";
 import { Slice_userState_I } from "../../reducers/user/userSlice";
 
 
@@ -11,7 +11,10 @@ interface useHookStore_I {
     state: Slice_ProfileState_I;
     emit_clear_profile: () => void;
     emit_update_user_profile: (profile_id: string, profile: Partial<Profile_I>) => void;
-    emit_get_profile_data: () => Promise<boolean>;
+    emit_get_profile_data: (_id: string) => void;
+    emit_set_profile_pic: (file: File) => void;
+    emit_set_identity_file: (file: File) => void;
+    emit_set_profesional_file: (file: File) => void;
 }
 export const useProfileStore = (): useHookStore_I => {
 
@@ -32,6 +35,62 @@ export const useProfileStore = (): useHookStore_I => {
 
     }
 
+    const emit_set_identity_file = async (file: File) => {
+
+
+        dispatch(onSetLoading_profileSlice(true))
+        try {
+
+            // const {data} = await start_update_profile_pic(file);
+            // if (!data) return;
+
+            emit_get_profile_data(state_user.user._id);
+
+        } catch (error) {
+            console.log('error', error)
+
+        }
+        dispatch(onSetLoading_profileSlice(false))
+
+    }
+
+    const emit_set_profesional_file = async (file: File) => {
+
+        dispatch(onSetLoading_profileSlice(true))
+        try {
+
+            // const {data} = await start_update_profile_pic(file);
+            // if (!data) return;
+
+            emit_get_profile_data(state_user.user._id);
+
+        } catch (error) {
+            console.log('error', error)
+
+        }
+        dispatch(onSetLoading_profileSlice(false))
+
+    }
+
+    const emit_set_profile_pic = async (file: File) => {
+
+
+        dispatch(onSetLoading_profileSlice(true))
+        try {
+
+            const {data} = await start_update_profile_pic(file);
+            if (!data) return;
+
+            emit_get_profile_data(state_user.user._id);
+
+        } catch (error) {
+            console.log('error', error)
+
+        }
+        dispatch(onSetLoading_profileSlice(false))
+
+    }
+
 
     const emit_update_user_profile = async (profile_id: string, profile: Partial<Profile_I>) => {
 
@@ -49,6 +108,7 @@ export const useProfileStore = (): useHookStore_I => {
             })
 
         } catch (error) {
+            console.log('error', error)
 
         }
         dispatch(onSetLoading_profileSlice(false))
@@ -56,27 +116,25 @@ export const useProfileStore = (): useHookStore_I => {
 
     }
 
-    const emit_get_profile_data = async (): Promise<boolean> => {
+    const emit_get_profile_data = async (_id: string) => {
 
-           dispatch(onSetLoading_profileSlice(true))
+        dispatch(onSetLoading_profileSlice(true))
         try {
 
-            const { data } = await start_get_profile_data(state.profile._id || state_user.user._id);
+            const { data } = await start_get_profile_data(_id);
             if (!data) return false;
 
             dispatch(onSetProfile_profileSlice(data));
 
-
         } catch (error) {
-
+            console.log('error', error)
 
         }
         dispatch(onSetLoading_profileSlice(false))
-            return true;
-
-
 
     }
+
+
 
 
     return {
@@ -86,6 +144,9 @@ export const useProfileStore = (): useHookStore_I => {
 
         // Methods
         emit_clear_profile,
+        emit_set_profile_pic,
+        emit_set_identity_file,
+        emit_set_profesional_file,
         emit_update_user_profile,
         emit_get_profile_data
     }
