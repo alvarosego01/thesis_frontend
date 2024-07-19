@@ -67,7 +67,7 @@ export const get_Validation = (rule: ValidationRule_I, schema: any) => {
     if (rule.type === 'fileFormat_document') {
         schema = schema.test('fileFormat', rule.message, (value: any) => {
             if (value) {
-                const supportedFormats = ['pdf, doc, docx'];
+                const supportedFormats = ['pdf', 'doc', 'docx'];
                 const aux_name = (value.name.split('.').pop()).toLowerCase();
                 return supportedFormats.includes(aux_name);
             }

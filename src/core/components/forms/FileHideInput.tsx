@@ -7,6 +7,7 @@ import { PrimaryButton } from "../buttons/PrimaryButton";
 export const FileHideInput: FC<FileHideInput_Props_I> = ({
     label,
     isLoading = false,
+    inlineErrors = true,
     ...props
 }) => {
 
@@ -44,7 +45,7 @@ export const FileHideInput: FC<FileHideInput_Props_I> = ({
                         fileInputRef.current?.click()
                     }} label={`${label}`} />
                 {
-                    meta.error && (
+                    (meta.error && inlineErrors) && (
                         <span className="mt-1 text-xs text-rose-500">
                             {meta.error}
                         </span>

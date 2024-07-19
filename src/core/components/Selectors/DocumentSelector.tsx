@@ -1,18 +1,19 @@
-import { FC, useEffect, useRef } from "react";
+import { FC, useEffect } from "react";
 
 import { Form, FormikProvider, useFormik } from "formik";
 import { useSignal } from "@preact/signals-react";
 import { useSignals } from "@preact/signals-react/runtime";
 import { LayoutRow_I } from "../forms/interfaces";
 import { useFormInitData } from "../../hooks";
-import { PrimaryButton } from "..";
+import { FileHideInput, OutlineButton } from "..";
 
 interface Props_I {
     onSelect: (file: File) => void;
     name: string;
     text: string;
     isLoading: boolean;
-    define_file: LayoutRow_I[]
+    define_file: LayoutRow_I[];
+    doc_src?: string;
     [x: string]: any;
 
 }
@@ -21,67 +22,50 @@ export const DocumentSelector: FC<Props_I> = ({
     name = 'Documento',
     text = 'lorem ipsum dolor sit amet consectetur adipisicing elit. Id similique, minus qui magni adipisci voluptate placeat ullam exercitationem delectus,',
     isLoading = false,
-    define_file
+    define_file,
+    doc_src = '',
+    onSelect,
 }) => {
 
     useSignals();
     const isMounted = useSignal(false);
-    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const { initialValues: file_initial, validation_rules: file_validation } = useFormInitData(define_file);
 
     const formik = useFormik({
         initialValues: file_initial,
-        onSubmit: (values) => {
-            console.log('values emit file', values);
+        onSubmit: (values, helpers) => {
+            helpers.validateForm();
+            // emit_set_profile_pic(values.profile_pic);
+            onSelect(values.File);
         },
         validationSchema: file_validation,
         validateOnChange: true
     });
 
     const {
-        values,
+        values: values_file,
         submitForm,
-        errors,
-        setValues,
-        isValid,
-        resetForm,
-        validateForm,
-        validateField,
+        errors
     } = formik;
 
-    const onChangeDocument = ({ target }: any) => {
+    useEffect(() => {
 
-        if (!target.files[0]) return;
+        if (isMounted.value === false) return;
 
-        // resetForm();
-        // setTimeout( async () => {
-        //     setValues(values['File'] = target.files[0]);
-        //     validateField('File')
-        //     validateForm();
-        // }, 100);
+        if (values_file?.File?.size > 0) {
+            submitForm();
+        }
 
-    }
-
-    const openSelector = () => {
-
-        resetForm();
-
-        fileInputRef.current?.click();
-
-        return
-    }
+    }, [values_file]);
 
     const show_errors = () => {
 
         if (errors) {
-            // console.log('errors');
             for (const key in errors) {
-
                 return (
                     <span className="block w-full mx-auto mt-1 text-xs text-center text-rose-500">
                         {String(errors['File'])}
-                        {/* errors */}
                     </span>
                 )
             }
@@ -91,32 +75,29 @@ export const DocumentSelector: FC<Props_I> = ({
 
     }
 
-    useEffect(() => {
+    const download_doc = () => {
 
-        if (isMounted.value === false) return;
+        const link = document.createElement('a');
+        link.href = doc_src;
+        link.setAttribute('download', name);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
 
-        if(values?.File?.size > 0){
-            console.log('values', values.File);
-
-            submitForm();
-
-        }
-
-    }, [values]);
+    }
 
     useEffect(() => {
         isMounted.value = true;
     }, []);
 
-
     return (
         <>
             <div className="w-full bg-white border rounded-sm shadow-lg dark:bg-slate-800 border-slate-200 dark:border-slate-700">
                 <div className="flex flex-col h-full">
-                    {/* Card top */}
+
                     <div className="p-5 grow">
                         <div className="flex items-start justify-between">
-                            {/* Image + name */}
+
                             <header>
                                 <div className="flex mb-2">
                                     <div className="flex items-center justify-center icon mr-s_10">
@@ -131,40 +112,32 @@ export const DocumentSelector: FC<Props_I> = ({
                             </header>
 
                         </div>
-                        {/* Bio */}
+
                         <div className="mt-2">
                             <div className="text-sm leading-normal">
                                 {text}
                             </div>
                         </div>
                     </div>
-                    {/* Card footer */}
+
                     <div className="flex flex-col px-6 py-5 border-t border-slate-200 dark:border-slate-700">
 
                         <FormikProvider value={formik}>
                             <Form noValidate className="w-full">
 
-                                <input
-                                    onChange={onChangeDocument}
-                                    ref={fileInputRef}
-                                    type="file"
-                                    name="File"
-                                    // value={values[file_name]}
-                                    accept="application/pdf"
-                                    // multiple
-                                    style={{
-                                        display: 'none'
-                                    }}
-                                />
-
-                                <div className="flex justify-end w-full">
-                                    <PrimaryButton isLoading={isLoading} onClick={openSelector} label="Cargar archivo" className="ml-3" />
+                                <div className="relative flex justify-end w-full">
+                                    {
+                                        (doc_src !== '') && (
+                                            <div className="absolute top-0 bottom-0 left-0 tooltip" data-tip="Visualizar documento">
+                                                <OutlineButton  icon="bx bx-download" onClick={download_doc} />
+                                            </div>
+                                        )
+                                    }
+                                    <FileHideInput {...define_file[0].fields[0].props} isLoading={isLoading} inlineErrors={false} />
                                 </div>
                                 {
                                     show_errors()
                                 }
-                                {/*
-                                <ErrorMessage name={file_name} component='span' className="mt-1 text-xs text-rose-500" /> */}
 
                             </Form>
                         </FormikProvider>

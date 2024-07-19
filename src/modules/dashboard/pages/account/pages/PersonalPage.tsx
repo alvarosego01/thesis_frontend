@@ -230,6 +230,10 @@ export const PersonalPage: FC = () => {
         validationSchema: validation_rules
     });
 
+    const {
+        submitForm,
+    } = formik;
+
     const formik_image = useFormik({
         initialValues: initial_image,
         onSubmit: (values, helpers) => {
@@ -238,12 +242,7 @@ export const PersonalPage: FC = () => {
         },
         validationSchema: validation_image,
         validateOnChange: true
-
     });
-
-    const {
-        submitForm,
-    } = formik;
 
     const {
         values: values_image,
@@ -261,8 +260,6 @@ export const PersonalPage: FC = () => {
     }, [values_image]);
 
     useEffect(() => {
-
-        console.log('profile_pic?.src', profile_pic?.src)
 
         if(isMounted.value === false) return;
 

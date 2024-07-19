@@ -51,7 +51,6 @@ export const useFormInitData = <T = any>(data: LayoutRow_I[], init_fieldValues?:
                     validation_rules[field.props.name] = schema_files;
                 }
 
-            // validation_rules[field.props.name] = (isFileField) ? schema_files : schema_fields;
 
         }
 
