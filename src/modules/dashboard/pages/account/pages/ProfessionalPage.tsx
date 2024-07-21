@@ -1,14 +1,14 @@
 
 
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import { Form, FormikProvider, useFormik } from "formik"
 
-import { FormLayoutBuilder, GallerySelector, PrimaryButton, VideoGallerySelector } from "../../../../../core/components";
-import { useFormInitData } from "../../../../../core/hooks";
+import { FormLayoutBuilder, GallerySelector, PrimaryButton, VideoGallerySelector } from "@components/index";
+import { useFormInitData } from "@hooks/index";
 
-import { LayoutRow_I } from "../../../../../core/components/forms/interfaces";
+import { LayoutRow_I } from "@components/forms/interfaces";
 import { useProfileStore } from "../../../store";
-import { signal } from '@preact/signals-react';
+import { useSignal, useSignals } from "@preact/signals-react/runtime";
 
 const data_artistName: LayoutRow_I[] = [
     {
@@ -185,18 +185,19 @@ interface Init_valuesData_I {
 }
 export const ProfessionalPage: FC = () => {
 
+    useSignals();
+
     const {
         state: {
             onLoading,
             profile
         },
         emit_update_user_profile,
-        emit_get_profile_data
     } = useProfileStore();
 
-    const isMounted = signal(false);
+    const isMounted = useSignal(false);
 
-    const initValues = signal<Init_valuesData_I>({
+    const initValues = useSignal<Init_valuesData_I>({
         artistic_name: profile.artistic_name || '',
         biography_review: profile.bio_short || '',
         social_facebook: profile.socials?.facebook || '',
@@ -260,10 +261,8 @@ export const ProfessionalPage: FC = () => {
     } = formik;
 
     useEffect(() => {
-
         isMounted.value = true;
     }, []);
-
 
     return (
         <div className="grow">
@@ -298,31 +297,6 @@ export const ProfessionalPage: FC = () => {
                             <FormLayoutBuilder rows={data_socialNetworks} />
                         </section>
 
-                        <hr />
-                        <section>
-                            <h2 className="mb-1 text-xl font-bold leading-snug text-slate-800 dark:text-slate-100">
-                                Area multimedia
-                            </h2>
-                            <div className="text-sm mb-s_25">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed neque aut et cumque, labo
-                            </div>
-
-                            <div className="grid grid-cols-1">
-                                <div className="mb-s_25">
-                                    <GallerySelector gallery={[
-                                        'https://loremflickr.com/800/600',
-                                        'https://loremflickr.com/800/600',
-                                        'https://loremflickr.com/800/600',
-                                        'https://loremflickr.com/800/600',
-                                        'https://loremflickr.com/800/600',
-                                        'https://loremflickr.com/800/600'
-                                    ]} />
-                                </div>
-                                <div className="mb-s_25">
-                                    <VideoGallerySelector gallery={[]} />
-                                </div>
-                            </div>
-                        </section>
                     </div>
 
                     <footer>

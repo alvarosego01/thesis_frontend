@@ -35,7 +35,7 @@ export const FileHideInput: FC<FileHideInput_Props_I> = ({
                     display: 'none'
                 }}
                 value={undefined}
-                onChange={handleFileChange} // Añadir el manejador de cambio aquí
+                onChange={handleFileChange}
             />
             <div className="flex flex-col">
                 <PrimaryButton

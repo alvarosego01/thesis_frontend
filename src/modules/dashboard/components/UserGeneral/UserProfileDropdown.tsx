@@ -3,10 +3,8 @@
 import { useState, useRef, useEffect, FC } from 'react';
 import { ListDoActions, List_I } from '@components/index';
 import { getAssetPath, Transition } from '@utils/index';
-import { useAuthStore, useUserStore } from '@store/index';
-import { transformRoles_P } from '@pipes/index';
-
-const UserAvatar = getAssetPath('/images/auth-image.jpg');
+import { useAuthStore, useProfileStore, useUserStore } from '@store/index';
+import { useSignal, useSignals } from '@preact/signals-react/runtime';
 
 interface DropdownProfileProps {
     align: 'right' | 'left'; // Asumiendo que align solo puede ser 'right' o 'left'
@@ -68,9 +66,12 @@ const ListDoActions_data: List_I[] = [
 
 export const UserProfileDropdown: FC<DropdownProfileProps> = ({ align }) => {
 
+    useSignals();
+    const avatar = useSignal(getAssetPath('/images/user_anon.png'));
+    const isMounted = useSignal(false);
+
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
-    // Usando useRef con el tipo correcto para HTMLButtonElement y HTMLDivElement
     const trigger = useRef<HTMLButtonElement>(null);
     const dropdown = useRef<HTMLDivElement>(null);
 
@@ -84,20 +85,23 @@ export const UserProfileDropdown: FC<DropdownProfileProps> = ({ align }) => {
         },
     } = useUserStore();
 
-
+    const {
+        state: {
+            profile: {
+                profile_pic
+            }
+        },
+    } = useProfileStore();
 
     const onClick_ListDoActions = (action: string) => {
-
         switch (action) {
             case 'logout':
                 emit_onLogout();
                 break;
         }
-
         return
     }
 
-    // close on click outside
     useEffect(() => {
         const clickHandler = ({ target }: any) => {
             if (!dropdown.current) return;
@@ -108,7 +112,6 @@ export const UserProfileDropdown: FC<DropdownProfileProps> = ({ align }) => {
         return () => document.removeEventListener('click', clickHandler);
     });
 
-    // close if the esc key is pressed
     useEffect(() => {
         const keyHandler = ({ keyCode }: any) => {
             if (!dropdownOpen || keyCode !== 27) return;
@@ -117,6 +120,20 @@ export const UserProfileDropdown: FC<DropdownProfileProps> = ({ align }) => {
         document.addEventListener('keydown', keyHandler);
         return () => document.removeEventListener('keydown', keyHandler);
     });
+
+    useEffect(() => {
+
+        if (isMounted.value === false) return;
+
+        if (profile_pic?.src) {
+            avatar.value = profile_pic?.src;
+        }
+
+    }, [profile_pic?.src])
+
+    useEffect(() => {
+        isMounted.value = true;
+    }, []);
 
     return (
         <div className="relative inline-flex">
@@ -127,7 +144,7 @@ export const UserProfileDropdown: FC<DropdownProfileProps> = ({ align }) => {
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 aria-expanded={dropdownOpen}
             >
-                <img className="w-8 h-8 rounded-full" src={UserAvatar} width="32" height="32" alt="User" />
+                <img className="w-8 h-8 rounded-full" src={avatar.value} width="32" height="32" alt="User" />
                 <div className="flex items-center truncate">
                     <span className="ml-2 text-sm font-medium truncate dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">
                         {user.name} {user.last_name}
@@ -157,7 +174,7 @@ export const UserProfileDropdown: FC<DropdownProfileProps> = ({ align }) => {
                         <div className="font-medium text-slate-800 dark:text-slate-100">
                             {user.name} {user.last_name}
                         </div>
-                   {/*      {
+                        {/*      {
                             auth.role && (
                                 <div className="text-xs italic text-slate-500 dark:text-slate-400">
                                     { transformRoles_P(auth.role) }

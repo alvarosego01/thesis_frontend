@@ -23,6 +23,14 @@ export const Sidebar_ProfilePersonal_Items: ContentSidebarMenuLink_I[] = [
 
             },
             {
+                title: 'Medios',
+                link: '/dashboard/account/media',
+                icon: {
+                    type: 'icon',
+                    content: "bx bx-movie-play"
+                },
+            },
+            {
                 title: 'Credenciales',
                 link: '/dashboard/account/credentials',
                 icon: {

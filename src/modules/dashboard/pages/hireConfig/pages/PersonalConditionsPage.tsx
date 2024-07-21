@@ -3,12 +3,10 @@ import { LayoutRow_I } from '../../../../../core/components/forms/interfaces';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { FormLayoutBuilder, PrimaryButton } from '../../../../../core/components';
 import { estadosVenezuela } from '../../../../../core/constants/Countries';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { useHiringDataStore } from '../../../store/hooks/hiring_data/useHiringDataStore';
-import { useUserStore } from '../../../store';
-import { User_HiringData_I } from '@tesis-project/dev-globals/dist/modules/user/interfaces';
 
-import { signal } from '@preact/signals-react';
+import { useSignal, useSignals } from '@preact/signals-react/runtime';
 
 const formData: LayoutRow_I[] = [
     {
@@ -126,6 +124,8 @@ interface Init_valuesData_I {
 
 export const PersonalConditionsPage: FC = () => {
 
+    useSignals();
+
     const {
         state: {
             onLoading,
@@ -137,10 +137,10 @@ export const PersonalConditionsPage: FC = () => {
         emit_save_user_hiringData_personal
     } = useHiringDataStore();
 
-    const isMounted = signal(false);
+    const isMounted = useSignal(false);
 
 
-    const initValues = signal<Init_valuesData_I>({
+    const initValues = useSignal<Init_valuesData_I>({
         address: personal?.address || '',
         city: personal?.city || '',
         phone: personal?.phone || '',

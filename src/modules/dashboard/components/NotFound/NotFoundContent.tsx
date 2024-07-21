@@ -7,6 +7,7 @@ interface NotFoundContent_Props_I {
     text?: string;
     icon?: string;
     enableButton?: boolean;
+    isLoading?: boolean;
 }
 
 export const NotFoundContent: FC<NotFoundContent_Props_I> = ({
@@ -14,7 +15,8 @@ export const NotFoundContent: FC<NotFoundContent_Props_I> = ({
     text = '',
     icon = 'bx bx-sad',
     onClick,
-    enableButton = true
+    enableButton = true,
+    isLoading = false
 }) => {
     return (
         <div className="px-4 text-center">
@@ -33,7 +35,7 @@ export const NotFoundContent: FC<NotFoundContent_Props_I> = ({
             }
             {
                 enableButton && (
-                    <PrimaryButton icon='bx bx-plus' onClick={ onClick } label='Añadir' />
+                    <PrimaryButton isLoading={isLoading} icon='bx bx-plus' onClick={ onClick } label='Añadir' />
                 )
             }
         </div>

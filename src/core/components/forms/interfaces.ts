@@ -21,7 +21,9 @@ const type_array_default = [
     "same_field",
     "fileFormat_document",
     "fileFormat_image",
-    "fileSize_5m"
+    "fileFormat_video",
+    "fileSize_5m",
+    "fileSize_10m"
 ] as const;
 export type Validations_Type = typeof type_array_default[number];
 

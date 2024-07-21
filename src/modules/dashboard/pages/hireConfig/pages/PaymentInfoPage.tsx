@@ -1,46 +1,20 @@
 import { FC, useEffect } from "react"
 import { useUiStore } from "@store/index";
 import { PaymentInfo, PaymentInfoModal } from "../components";
-import { FeedbackModal, PrimaryButton } from "@components/index";
+import { PrimaryButton } from "@components/index";
 import { NotFoundContent } from "../../../components";
 import { useHiringDataStore } from "../../../store/hooks/hiring_data/useHiringDataStore";
-import { signal } from '@preact/signals-react';
+import { useSignal } from '@preact/signals-react';
 import { Payment_Account_I } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
 import { ConfirmDeleteModal } from "../components/modals/ConfirmDeleteModal";
-
-/* const aux_data: Payment_Account_I[] = [
-    {
-        bank_name: "bc_venezuela",
-        date: "2021-09-01",
-        number: "123456789",
-        person_id: "123456789",
-        phone: "",
-        titular: "Juan Perez",
-        type: "bank_account"
-    },
-    {
-        bank_name: "bc_banesco",
-        date: "2021-09-01",
-        number: "123456789",
-        person_id: "123456789",
-        phone: "",
-        titular: "Juan Perez",
-        type: "bank_account"
-    },
-    {
-        bank_name: "bc_mercantil",
-        date: "2021-09-01",
-        number: "",
-        person_id: "123456789",
-        phone: "123456789",
-        titular: "Juan Perez",
-        type: "mobile_payment"
-    }
-] */
+import { useSignals } from "@preact/signals-react/runtime";
 
 export const PaymentInfoPage: FC = () => {
 
-    const aux_data = signal<Payment_Account_I[]>([]);
+    useSignals();
+    const isMounted = useSignal(false);
+
+    const aux_data = useSignal<Payment_Account_I[]>([]);
 
     const {
         state: {
@@ -85,13 +59,17 @@ export const PaymentInfoPage: FC = () => {
         emit_handle_paymentInfoModal({
             status: true,
             type: 'new',
-        })
+        });
 
     }
 
     if (payment_accounts) {
         aux_data.value = payment_accounts;
     }
+
+    useEffect(() => {
+        isMounted.value = true;
+    }, []);
 
     return (
         <>
@@ -133,7 +111,6 @@ export const PaymentInfoPage: FC = () => {
             </div>
 
             <PaymentInfoModal {...payment_accounts_modals.paymentInfo_handler_modal} />
-
             <ConfirmDeleteModal data_modal={payment_accounts_modals.delete_PaymentInfo_modal} onAccept={(index) => onAccept_deleteModal(index)} onClose={onClose_deleteModal} />
 
         </>

@@ -2,7 +2,7 @@
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 import { Reducers_I } from "../store";
-import { on_Handler_delete_PaymentInfoModal, on_Handler_PaymentInfoModal, on_Handler_SignatureSelectorModal, uiState_I } from "../reducers/ui/uiSlice";
+import { on_Handler_delete_PaymentInfoModal, on_Handler_Login_LostPasswordModal, on_Handler_PaymentInfoModal, on_Handler_SignatureSelectorModal, uiState_I } from "../reducers/ui/uiSlice";
 
 import { SignatureModal_Props_I } from "@modules/dashboard/pages/account/components/modals/SignatureModal";
 import { PaymentInfoModal_Props_I } from "@modules/dashboard/pages/hireConfig/components/modals/PaymentInfoModal";
@@ -14,6 +14,7 @@ interface useHookStore_I {
     handle_signatureModal: (x: SignatureModal_Props_I) => void;
     emit_handle_delete_bankData_Modal: ({ index, status }: ConfirmDeleteModal_Props_I) => void;
     emit_handle_paymentInfoModal: (x: PaymentInfoModal_Props_I) => void;
+    emit_handle_login_lostPassword_Modal: (status: boolean) => void;
 }
 
 export const useUiStore = (): useHookStore_I => {
@@ -39,6 +40,11 @@ export const useUiStore = (): useHookStore_I => {
 
     }
 
+    const emit_handle_login_lostPassword_Modal = (status: boolean) => {
+
+        dispatch(on_Handler_Login_LostPasswordModal(status));
+
+    }
 
     return {
         state,
@@ -46,6 +52,7 @@ export const useUiStore = (): useHookStore_I => {
         // Methods
         emit_handle_paymentInfoModal,
         emit_handle_delete_bankData_Modal,
+        emit_handle_login_lostPassword_Modal,
         handle_signatureModal,
     }
 

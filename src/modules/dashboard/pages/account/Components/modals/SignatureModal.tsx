@@ -7,7 +7,7 @@ import { FieldValue_I, LayoutRow_I } from '@components/forms/interfaces';
 import { useFormInitData } from '@hooks/index';
 import { useUiStore } from '@store/index';
 
-const formData: LayoutRow_I[] = [
+const data: LayoutRow_I[] = [
     {
         fields: [
             {
@@ -49,7 +49,7 @@ export const SignatureModal: FC<SignatureModal_Props_I> = ({
     const init_fieldValues: FieldValue_I = {
         signature: text
     }
-    const { initialValues, validation_rules } = useFormInitData(formData, init_fieldValues);
+    const { initialValues, validation_rules } = useFormInitData(data, init_fieldValues);
 
     const formik = useFormik({
         initialValues: initialValues,
@@ -107,7 +107,7 @@ export const SignatureModal: FC<SignatureModal_Props_I> = ({
                             <FormikProvider value={formik}>
                                 <Form noValidate>
 
-                                    <FormLayoutBuilder rows={formData} />
+                                    <FormLayoutBuilder rows={data} />
 
                                     <div className="flex items-center justify-center mt-s_10">
                                         <PrimaryButton onClick={submitForm} label="Guardar" />

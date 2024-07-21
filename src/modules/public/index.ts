@@ -1,6 +1,6 @@
 
 export { HomePage } from "./pages/HomePage";
-export { LoginPage } from "./pages/LoginPage";
+export { LoginPage } from "./pages/Login/LoginPage";
 export { RegisterPage } from "./pages/RegisterPage";
 
 export { Public_main } from "./Public_main";

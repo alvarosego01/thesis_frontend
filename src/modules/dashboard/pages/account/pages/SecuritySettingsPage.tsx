@@ -160,7 +160,7 @@ export const SecuritySettingsPage: FC = () => {
                         </div>
                     </section>
 
-                    <hr />
+                {/*     <hr />
                     <section>
                         {
                             signature.signature && (
@@ -179,7 +179,7 @@ export const SecuritySettingsPage: FC = () => {
 
                         </div>
 
-                    </section>
+                    </section> */}
 
 
                 </div>

@@ -2,15 +2,15 @@
 import { Link } from 'react-router-dom';
 import { Form, FormikProvider, useFormik } from 'formik';
 
-import { getAssetPath } from '../../../core/utils';
-import { useFormInitData } from '../../../core/hooks';
-import { LayoutRow_I } from '../../../core/components/forms/interfaces';
-import { FormLayoutBuilder, PrimaryButton } from '../../../core/components';
-import { useAuthStore, useUiStore } from '../../../core/store';
+import { getAssetPath } from '@utils/index';
+import { useFormInitData } from '../../../../core/hooks';
+import { LayoutRow_I } from '../../../../core/components/forms/interfaces';
+import { FormLayoutBuilder, PrimaryButton } from '../../../../core/components';
+import { useAuthStore, useUiStore } from '../../../../core/store';
 import { FC } from 'react';
+import { LostPasswordModal } from './components/LostPasswordModal';
 
 const AuthImage = getAssetPath('/images/auth-image.jpg');
-const AuthDecoration = getAssetPath('/images/auth-decoration.png');
 
 const formData: LayoutRow_I[] = [
     {
@@ -74,7 +74,14 @@ export const LoginPage: FC = () => {
         },
     } = useAuthStore();
 
+    const {
+        state: {
+            modals
+        },
+        emit_handle_login_lostPassword_Modal
+    } = useUiStore();
 
+    const LostPassword_Modal = modals.public.login.lostPassword_modal;
 
     const Init_Values: Init_valuesData_I = {
         email: '',
@@ -144,7 +151,10 @@ export const LoginPage: FC = () => {
                                     <div className="flex flex-col py-5 pb-0 border-t border-slate-200 dark:border-slate-700">
                                         <div className="flex justify-between">
                                             <div className="flex items-center mr-1">
-                                                <Link className="text-sm underline hover:no-underline" to="/reset-password">¿Perdiste tu contraseña?</Link>
+                                                {/* <Link className="text-sm underline hover:no-underline" to="/reset-password">¿Perdiste tu contraseña?</Link> */}
+                                                <a onClick={() => emit_handle_login_lostPassword_Modal(true)} className='text-sm underline hover:cursor-pointer hover:no-underline'>
+                                                    ¿Perdiste tu contraseña?
+                                                </a>
                                             </div>
                                             <PrimaryButton onClick={submitForm} isLoading={onLoading} label="Ingresar" />
                                         </div>
@@ -177,6 +187,11 @@ export const LoginPage: FC = () => {
 
             </div>
 
+            <LostPasswordModal status={LostPassword_Modal.status} />
+
         </main>
+
+
     )
 }
+

@@ -16,6 +16,14 @@ export interface uiState_I {
                     delete_PaymentInfo_modal: ConfirmDeleteModal_Props_I;
                 }
             }
+        },
+        public: {
+            login: {
+                lostPassword_modal: {
+                    status: boolean;
+                }
+            }
+
         }
     }
 }
@@ -40,6 +48,13 @@ const initialState: uiState_I = {
                     }
                 }
             }
+        },
+        public: {
+            login: {
+                lostPassword_modal: {
+                    status: false
+                }
+            }
         }
     }
 }
@@ -48,6 +63,9 @@ export const uiSlice = createSlice({
     name: "ui",
     initialState,
     reducers: {
+        on_Handler_Login_LostPasswordModal: (state, {payload}: PayloadAction<boolean>) => {
+            state.modals.public.login.lostPassword_modal.status = payload;
+        },
         on_Handler_SignatureSelectorModal: (state, {payload}: PayloadAction<SignatureModal_Props_I>) => {
             const { status, text } = payload;
             state.modals.dashboard.signature_selector_modal = {
@@ -80,6 +98,7 @@ export const {
     on_Handler_SignatureSelectorModal,
     on_Handler_PaymentInfoModal,
     on_Handler_delete_PaymentInfoModal,
+    on_Handler_Login_LostPasswordModal,
     on_restoreDefault
 
 } = uiSlice.actions;

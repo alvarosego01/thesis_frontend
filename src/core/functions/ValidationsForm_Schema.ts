@@ -67,8 +67,9 @@ export const get_Validation = (rule: ValidationRule_I, schema: any) => {
     if (rule.type === 'fileFormat_document') {
         schema = schema.test('fileFormat', rule.message, (value: any) => {
             if (value) {
+                const name = value.name;
                 const supportedFormats = ['pdf', 'doc', 'docx'];
-                const aux_name = (value.name.split('.').pop()).toLowerCase();
+                const aux_name = (name.split('.').pop()).toLowerCase();
                 return supportedFormats.includes(aux_name);
             }
             return true;
@@ -77,8 +78,20 @@ export const get_Validation = (rule: ValidationRule_I, schema: any) => {
     if (rule.type === 'fileFormat_image') {
         schema = schema.test('fileFormat', rule.message, (value: any) => {
             if (value) {
+                const name = value.name;
                 const supportedFormats = ['png', 'jpg', 'jpeg'];
-                const aux_name = (value.name.split('.').pop()).toLowerCase();
+                const aux_name = (name.split('.').pop()).toLowerCase();
+                return supportedFormats.includes(aux_name);
+            }
+            return true;
+        })
+    }
+    if (rule.type === 'fileFormat_video') {
+        schema = schema.test('fileFormat', rule.message, (value: any) => {
+            if (value) {
+                const name = value.name;
+                const supportedFormats = ['mp4'];
+                const aux_name = (name.split('.').pop()).toLowerCase();
                 return supportedFormats.includes(aux_name);
             }
             return true;
@@ -89,6 +102,15 @@ export const get_Validation = (rule: ValidationRule_I, schema: any) => {
             (value: any) => {
                 if (value) {
                     return value.size <= 5000000;
+                }
+                return true;
+            });
+    }
+    if (rule.type === 'fileSize_10m') {
+        schema = schema.test('fileSize', 'Solo se permiten archivos no mayores a 10MB',
+            (value: any) => {
+                if (value) {
+                    return value.size <= 10000000;
                 }
                 return true;
             });

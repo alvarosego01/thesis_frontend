@@ -7,6 +7,7 @@ import { start_getFile } from "../thunks/useUiThunks";
 interface Toast_I {
     type: "success" | "error" | "info" | "warning";
     message: string;
+    message2?: string;
 }
 
 interface useUiGlobals_I {
@@ -18,13 +19,13 @@ interface useUiGlobals_I {
 export const useUiGlobals = (): useUiGlobals_I => {
 
 
-    const emit_swalToast = ({ type, message }: Toast_I) => {
+    const emit_swalToast = ({ type, message, message2 }: Toast_I) => {
 
         const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
             showConfirmButton: false,
-            timer: 2500,
+            timer: 3500,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.onmouseenter = Swal.stopTimer;
@@ -33,7 +34,8 @@ export const useUiGlobals = (): useUiGlobals_I => {
         });
         Toast.fire({
             icon: type,
-            title: message
+            title: message,
+            text: message2
         });
 
     }

@@ -175,6 +175,8 @@ interface Init_valuesData_I {
 export const PersonalPage: FC = () => {
 
     useSignals();
+      const isMounted = useSignal(false);
+
     const avatar = useSignal(getAssetPath('/images/user_anon.png'));
 
     const {
@@ -185,7 +187,6 @@ export const PersonalPage: FC = () => {
         emit_save_user_data,
     } = useUserStore();
 
-      const isMounted = useSignal(false);
 
     const {
         state: {
@@ -266,7 +267,6 @@ export const PersonalPage: FC = () => {
         if(profile_pic?.src) {
             avatar.value = profile_pic?.src;
         }
-
 
      }, [profile_pic?.src])
 

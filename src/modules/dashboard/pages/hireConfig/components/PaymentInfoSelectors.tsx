@@ -1,5 +1,5 @@
 
-import { FC, useEffect } from "react"
+import { FC, useEffect, useState } from "react"
 import { Form, FormikProvider, useFormik } from "formik";
 
 import { useFormInitData } from '@hooks/index';
@@ -7,8 +7,9 @@ import { FormLayoutBuilder, PrimaryButton, TextInputField } from "@components/in
 import { Banks_List, Payments_Type_List } from "@constants/Banks"
 import { LayoutRow_I, SelectValue_I } from "@components/forms/interfaces"
 import { Banks_Enum, Payment_Account_I, Payment_Type_Enum } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
-import { signal } from '@preact/signals-react';
 import { useHiringDataStore } from "../../../store/hooks/hiring_data/useHiringDataStore";
+import { useSignal, useSignals } from "@preact/signals-react/runtime";
+import { signal } from "@preact/signals-react";
 
 const formData: LayoutRow_I[] = [
     {
@@ -164,7 +165,11 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
     data
 }) => {
 
-    const {
+    useSignals();
+    const isMounted = useSignal(false);
+    // const [isMounted, setisMounted] = useState(false)
+
+   const {
         state: {
             onLoading,
             hiring_data
@@ -172,7 +177,7 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
         emit_add_bankData
     } = useHiringDataStore()
 
-    let Init_Values = signal<Init_valuesData_I>({
+    let Init_Values: Init_valuesData_I = {
         type: {} as SelectValue_I<Payment_Type_Enum>,
         bank_name: {} as SelectValue_I<Banks_Enum>,
         titular: '',
@@ -180,27 +185,27 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
         number: '',
         phone: '',
         // date: '',
-    })
+    }
 
     if (data) {
-        Init_Values.value = {
-            ...Init_Values.value,
+        Init_Values = {
+            ...Init_Values,
             titular: data.titular,
             person_id: data.person_id,
             number: data.number,
             phone: data.phone,
         }
-        Init_Values.value.type = Payments_Type_List.find(r => r.value === data.type) as SelectValue_I<Payment_Type_Enum> || {};
-        Init_Values.value.bank_name = Banks_List.find(r => r.value === data.bank_name) as SelectValue_I<Banks_Enum> || {};
+        Init_Values.type = Payments_Type_List.find(r => r.value === data.type) as SelectValue_I<Payment_Type_Enum> || {};
+        Init_Values.bank_name = Banks_List.find(r => r.value === data.bank_name) as SelectValue_I<Banks_Enum> || {};
     }
 
-    const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(formData, Init_Values.value);
+    const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(formData, Init_Values);
 
     const formik = useFormik({
         initialValues: initialValues,
         onSubmit: (values) => {
 
-            emit_add_bankData( hiring_data._id, {
+            emit_add_bankData(hiring_data._id, {
                 bank_name: values.bank_name.value,
                 type: values.type.value,
                 number: values.number,
@@ -220,12 +225,15 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
         errors
     } = formik;
 
+    useEffect(() => {
+        isMounted.value = true;
+    }, []);
+
     return (
         <div className="px-5 py-2">
-            <FormikProvider value={formik}>
+           <FormikProvider value={formik}>
                 <Form noValidate>
-
-                    <section className="py-5">
+                   <section className="py-5">
 
                         <h3 className="mb-1 font-bold leading-snug text-md text-slate-800 dark:text-slate-100">
                             Datos de cuenta
@@ -260,7 +268,6 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
                     <div className="flex flex-row justify-end py-5 space-x-4 border-t border-slate-200">
                         <PrimaryButton disabled={!isValid} isLoading={onLoading} label='Guardar' onClick={() => submitForm()} />
                     </div>
-
                 </Form>
             </FormikProvider>
         </div>

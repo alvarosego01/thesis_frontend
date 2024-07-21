@@ -6,6 +6,7 @@ import { useSignals } from "@preact/signals-react/runtime";
 import { LayoutRow_I } from "../forms/interfaces";
 import { useFormInitData } from "../../hooks";
 import { FileHideInput, OutlineButton } from "..";
+import { Navigate } from "react-router-dom";
 
 interface Props_I {
     onSelect: (file: File) => void;
@@ -77,12 +78,7 @@ export const DocumentSelector: FC<Props_I> = ({
 
     const download_doc = () => {
 
-        const link = document.createElement('a');
-        link.href = doc_src;
-        link.setAttribute('download', name);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        window.open(doc_src, '_blank');
 
     }
 
@@ -141,7 +137,6 @@ export const DocumentSelector: FC<Props_I> = ({
 
                             </Form>
                         </FormikProvider>
-
 
                     </div>
                 </div>

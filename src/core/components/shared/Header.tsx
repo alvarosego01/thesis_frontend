@@ -67,7 +67,6 @@ export const Header: FC<Header_I> = ({
                         )
                     }
 
-
                 </div>
             </div>
         </header>

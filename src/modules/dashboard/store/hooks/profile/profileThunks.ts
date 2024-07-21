@@ -40,6 +40,140 @@ export const start_update_profile_pic = (profile_pic: File): Promise<_Response_I
 }
 
 
+export const start_delete_gallery_image = (_id: string): Promise<_Response_I<Profile_I>> => {
+    return new Promise(async (resolve, reject) => {
+
+        try {
+
+            const resp: _Response_I<Profile_I> = await Backend_Api.delete(`profile/image_gallery/${_id}`).then(r => r);
+            resolve(resp);
+
+        } catch (error: any) {
+
+            let r: _Response_I;
+            console.error('Axios error:', error.response?.data);
+
+            if (error instanceof AxiosError) {
+                r = {
+                    ...error.response?.data,
+                }
+            } else {
+                r = {
+                    ok: false,
+                    statusCode: 500,
+                    message: 'Unexpected error',
+                    err: error
+                }
+            }
+            reject(r);
+
+        }
+
+    })
+}
+
+export const start_delete_gallery_video = (_id: string): Promise<_Response_I<Profile_I>> => {
+    return new Promise(async (resolve, reject) => {
+
+        try {
+
+            const resp: _Response_I<Profile_I> = await Backend_Api.delete(`profile/video_gallery/${_id}`).then(r => r);
+            resolve(resp);
+
+        } catch (error: any) {
+
+            let r: _Response_I;
+            console.error('Axios error:', error.response?.data);
+
+            if (error instanceof AxiosError) {
+                r = {
+                    ...error.response?.data,
+                }
+            } else {
+                r = {
+                    ok: false,
+                    statusCode: 500,
+                    message: 'Unexpected error',
+                    err: error
+                }
+            }
+            reject(r);
+
+        }
+
+    })
+}
+
+export const start_add_gallery_image = (File: File): Promise<_Response_I<Profile_I>> => {
+    return new Promise(async (resolve, reject) => {
+
+        try {
+
+            const formData = new FormData();
+            formData.append('file', File);
+
+            const resp: _Response_I<Profile_I> = await Backend_Api.post(`profile/image_gallery`, formData).then(r => r);
+            resolve(resp);
+
+        } catch (error: any) {
+
+            let r: _Response_I;
+            console.error('Axios error:', error.response?.data);
+
+            if (error instanceof AxiosError) {
+                r = {
+                    ...error.response?.data,
+                }
+            } else {
+                r = {
+                    ok: false,
+                    statusCode: 500,
+                    message: 'Unexpected error',
+                    err: error
+                }
+            }
+            reject(r);
+
+        }
+
+    })
+}
+
+export const start_add_gallery_video = (File: File): Promise<_Response_I<Profile_I>> => {
+    return new Promise(async (resolve, reject) => {
+
+        try {
+
+            const formData = new FormData();
+            formData.append('file', File);
+
+            const resp: _Response_I<Profile_I> = await Backend_Api.post(`profile/video_gallery`, formData).then(r => r);
+            resolve(resp);
+
+        } catch (error: any) {
+
+            let r: _Response_I;
+            console.error('Axios error:', error.response?.data);
+
+            if (error instanceof AxiosError) {
+                r = {
+                    ...error.response?.data,
+                }
+            } else {
+                r = {
+                    ok: false,
+                    statusCode: 500,
+                    message: 'Unexpected error',
+                    err: error
+                }
+            }
+            reject(r);
+
+        }
+
+    })
+}
+
 export const start_set_credentials_identity_file = (identity_file: File): Promise<_Response_I<Profile_I>> => {
     return new Promise(async (resolve, reject) => {
 
