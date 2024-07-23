@@ -1,14 +1,13 @@
 
 
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { Form, FormikProvider, useFormik } from "formik"
 
-import { FormLayoutBuilder, GallerySelector, PrimaryButton, VideoGallerySelector } from "@components/index";
+import { FormLayoutBuilder, PrimaryButton } from "@components/index";
 import { useFormInitData } from "@hooks/index";
 
 import { LayoutRow_I } from "@components/forms/interfaces";
 import { useProfileStore } from "../../../store";
-import { useSignal, useSignals } from "@preact/signals-react/runtime";
 
 const data_artistName: LayoutRow_I[] = [
     {
@@ -185,8 +184,6 @@ interface Init_valuesData_I {
 }
 export const ProfessionalPage: FC = () => {
 
-    useSignals();
-
     const {
         state: {
             onLoading,
@@ -195,9 +192,9 @@ export const ProfessionalPage: FC = () => {
         emit_update_user_profile,
     } = useProfileStore();
 
-    const isMounted = useSignal(false);
+    const [isMounted, setisMounted] = useState(false)
 
-    const initValues = useSignal<Init_valuesData_I>({
+    let initValues: Init_valuesData_I = {
         artistic_name: profile.artistic_name || '',
         biography_review: profile.bio_short || '',
         social_facebook: profile.socials?.facebook || '',
@@ -206,13 +203,13 @@ export const ProfessionalPage: FC = () => {
         social_linkedin: profile.socials?.linkedin || '',
         social_tiktok: profile.socials?.tiktok || '',
         social_youtube: profile.socials?.youtube || '',
-    });
+    };
 
     useEffect(() => {
-        if (isMounted.value === false) return;
+        if (isMounted === false) return;
 
         if (profile) {
-            initValues.value = {
+            initValues = {
                 artistic_name: profile.artistic_name || '',
                 biography_review: profile.bio_short || '',
                 social_facebook: profile.socials?.facebook || '',
@@ -223,7 +220,7 @@ export const ProfessionalPage: FC = () => {
                 social_youtube: profile.socials?.youtube || '',
             };
             setValues({
-                ...initValues.value
+                ...initValues
             })
         }
     }, [profile]);
@@ -261,7 +258,7 @@ export const ProfessionalPage: FC = () => {
     } = formik;
 
     useEffect(() => {
-        isMounted.value = true;
+        setisMounted(true)
     }, []);
 
     return (

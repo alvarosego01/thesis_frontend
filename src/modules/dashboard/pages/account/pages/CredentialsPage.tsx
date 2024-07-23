@@ -1,9 +1,8 @@
 
 
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { DocumentSelector } from "@components/index";
 import { LayoutRow_I } from '@components/forms/interfaces';
-import { useSignal, useSignals } from "@preact/signals-react/runtime";
 import { useProfileStore } from "../../../store";
 
 const identity_file: LayoutRow_I[] = [
@@ -62,8 +61,7 @@ const profesional_file: LayoutRow_I[] = [
 
 export const CredentialsPage: FC = () => {
 
-    useSignals();
-    const isMounted = useSignal(false);
+    const [isMounted, setisMounted] = useState(false)
 
     const {
         state: {
@@ -82,12 +80,11 @@ export const CredentialsPage: FC = () => {
     }
 
     const onSelect_profesional_file = (File: File) => {
-        // console.log('onSelect_profesional_file', File);
         emit_set_profesional_file(File)
     }
 
     useEffect(() => {
-        isMounted.value = true;
+        setisMounted(true);
     }, []);
 
     return (

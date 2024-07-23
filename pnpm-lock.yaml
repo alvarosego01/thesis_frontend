@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@preact/signals-react':
-        specifier: ^2.1.0
-        version: 2.1.0(react@18.3.1)
       '@react-hooks-library/core':
         specifier: ^0.6.2
         version: 0.6.2(react@18.3.1)
@@ -21,8 +18,8 @@ importers:
         specifier: ^0.5.7
         version: 0.5.7(tailwindcss@3.4.6)
       '@tesis-project/dev-globals':
-        specifier: ^1.0.744
-        version: 1.0.744(@formkit/tempo@0.1.2)(@mikro-orm/core@6.2.9)(@nestjs/common@10.3.10(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/mapped-types@2.0.5(@nestjs/common@10.3.10(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2))(@nestjs/platform-express@10.3.10(@nestjs/common@10.3.10(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/core@10.3.10))(@types/multer@1.4.11)(class-transformer@0.5.1)(class-validator@0.14.1)(multer@1.4.5-lts.1)
+        specifier: ^1.0.752
+        version: 1.0.752(@formkit/tempo@0.1.2)(@mikro-orm/core@6.2.9)(@nestjs/common@10.3.10(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/mapped-types@2.0.5(@nestjs/common@10.3.10(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2))(@nestjs/platform-express@10.3.10(@nestjs/common@10.3.10(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/core@10.3.10))(@types/multer@1.4.11)(class-transformer@0.5.1)(class-validator@0.14.1)(multer@1.4.5-lts.1)
       axios:
         specifier: ^1.7.2
         version: 1.7.2
@@ -397,7 +394,7 @@ packages:
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@eslint/eslintrc@3.1.0':
-    resolution: {integrity: sha512-4Bfj15dVJdoy3RfZmmo86RK1Fwzn6SstsvK9JS+BaVKqC6QQQQyXekNaC+g+LKNgkQ+2VhGAzm6hO40AhMR3zQ==}
+    resolution: {integrity: sha512-4Bfj15dVJdoy3RfZmmo86RK1Fwzn6SstsvK9JS+BaVKqC6QQQQyXekNaC+g+LKNgkQ+2VhGAzm6hO40AhMR3zQ==, tarball: https://registry.npmjs.org/@eslint/eslintrc/-/eslintrc-3.1.0.tgz}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@eslint/js@9.7.0':
@@ -533,14 +530,6 @@ packages:
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
-
-  '@preact/signals-core@1.7.0':
-    resolution: {integrity: sha512-bEZLgmJGSBVP5PUPDowhPW3bVdMmp9Tr5OEl+SQK+8Tv9T7UsIfyN905cfkmmeqw8z4xp8T6zrl4M1uj9+HAfg==}
-
-  '@preact/signals-react@2.1.0':
-    resolution: {integrity: sha512-jWq2ldDWXdbKpg+aMGuOZfj9tS5JkVlGJ5hGNzNe1Zfe7RLFfvldBEfNe6ZT7KZddecAxKhyoxSsEypgbfx/Gw==}
-    peerDependencies:
-      react: ^16.14.0 || 17.x || 18.x
 
   '@react-hooks-library/core@0.6.2':
     resolution: {integrity: sha512-Ca6ccj9mfUiQ0hbDJV0hzUaweZU7D0E5Xwtp3ba5oT6/yWj1tzoPe0y3AwGQyUSUKA5G6OADylU2fwEqZwrpNA==}
@@ -734,8 +723,8 @@ packages:
     peerDependencies:
       tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1'
 
-  '@tesis-project/dev-globals@1.0.744':
-    resolution: {integrity: sha512-SmVib+kM9Wo713Rw5fK38WVk+/Dl5Ao/vhz32EHNCl0Cgpu6UDC5g6bOT0FwZ4XIKNa9cv+uNLojoVBRWstx2A==, tarball: https://npm.pkg.github.com/download/@tesis-project/dev-globals/1.0.744/a48445ab49d992ead046ccce8a69dc3e6b78ab86}
+  '@tesis-project/dev-globals@1.0.752':
+    resolution: {integrity: sha512-9sShYsLg7gZ8vCMMHCkDtmSnjpGWgsP8zLKMcRB+1uhOJNxziOUGCVFT8m0w0GAvIuRMs6o8fVOD4JNRcOEzBQ==, tarball: https://npm.pkg.github.com/download/@tesis-project/dev-globals/1.0.752/78cd88a59f1d0d3c39b7bf89197a7548c4dd9b11}
     peerDependencies:
       '@formkit/tempo': ^0.1.2
       '@mikro-orm/core': ^6.2.9
@@ -1266,8 +1255,8 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
   eslint-visitor-keys@4.0.0:
-    resolution: {integrity: sha512-OtIRv/2GyiF6o/d8K7MYKKbXrOUBIK6SfkIRM4Z0dY3w+LiQ0vy3F57m0Z71bjbyeiWFiHJ8brqnmE6H6/jEuw==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    resolution: {integrity: sha512-OtIRv/2GyiF6o/d8K7MYKKbXrOUBIK6SfkIRM4Z0dY3w+LiQ0vy3F57m0Z71bjbyeiWFiHJ8brqnmE6H6/jEuw==, tarball: https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-4.0.0.tgz}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
   eslint@9.7.0:
     resolution: {integrity: sha512-FzJ9D/0nGiCGBf8UXO/IGLTgLVzIxze1zpfA8Ton2mjLovXdAPlYDv+MQDcqj3TmrhAGYfOpz9RfR+ent0AgAw==}
@@ -2843,14 +2832,6 @@ snapshots:
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
-  '@preact/signals-core@1.7.0': {}
-
-  '@preact/signals-react@2.1.0(react@18.3.1)':
-    dependencies:
-      '@preact/signals-core': 1.7.0
-      react: 18.3.1
-      use-sync-external-store: 1.2.2(react@18.3.1)
-
   '@react-hooks-library/core@0.6.2(react@18.3.1)':
     dependencies:
       '@react-hooks-library/shared': 0.6.2
@@ -2983,7 +2964,7 @@ snapshots:
       mini-svg-data-uri: 1.4.4
       tailwindcss: 3.4.6
 
-  '@tesis-project/dev-globals@1.0.744(@formkit/tempo@0.1.2)(@mikro-orm/core@6.2.9)(@nestjs/common@10.3.10(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/mapped-types@2.0.5(@nestjs/common@10.3.10(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2))(@nestjs/platform-express@10.3.10(@nestjs/common@10.3.10(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/core@10.3.10))(@types/multer@1.4.11)(class-transformer@0.5.1)(class-validator@0.14.1)(multer@1.4.5-lts.1)':
+  '@tesis-project/dev-globals@1.0.752(@formkit/tempo@0.1.2)(@mikro-orm/core@6.2.9)(@nestjs/common@10.3.10(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/mapped-types@2.0.5(@nestjs/common@10.3.10(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2))(@nestjs/platform-express@10.3.10(@nestjs/common@10.3.10(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/core@10.3.10))(@types/multer@1.4.11)(class-transformer@0.5.1)(class-validator@0.14.1)(multer@1.4.5-lts.1)':
     dependencies:
       '@formkit/tempo': 0.1.2
       '@mikro-orm/core': 6.2.9

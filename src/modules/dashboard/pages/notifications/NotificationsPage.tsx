@@ -1,26 +1,23 @@
-import { ComponentProps, FC } from "react"
+import { ComponentProps, FC, useEffect, useState } from "react"
 import { TabsCollapse } from "@components/index"
-import { Notification_I } from "@models/Notifications"
 import { ContentPage_Box_LY } from "@modules/dashboard/Layouts"
 import { NotifyContent, NotifyHeader } from "."
-import { SecondaryButton } from '../../../../core/components/buttons/SecondaryButton';
-import { useNotificationsStore } from "../../../../core/store/hooks/useNotificationsStore"
-
-
-
-
+import { useNotificationsStore } from "../../../../core/store/hooks/notifications/useNotificationsStore"
 
 const Page = () => {
+
+    const [isMounted, setisMounted] = useState(false);
 
     const {
         state: {
             notifications
         },
-        deleteNotification
+        emit_deleteNotification,
+        emit_getNotifications
     } = useNotificationsStore();
 
     const onDelete_Notify = (_id: string) => {
-        deleteNotification(_id);
+        emit_deleteNotification(_id);
     }
 
     const notifies_collapse = () => {
@@ -32,13 +29,13 @@ const Page = () => {
             const data_collapse: ComponentProps<typeof TabsCollapse> = {
                 tabs: [
                     {
-                        title: item.title,
+                        title: item.subject,
                         icon: {
                             type: "icon",
                             content: "bx bxs-megaphone"
                         },
-                        extra_header: <NotifyHeader date={item.date} onDelete={() => onDelete_Notify(item._id)} />,
-                        children: <NotifyContent notify={item} />
+                        extra_header: <NotifyHeader date={item.created_at!} onDelete={() => onDelete_Notify(item._id)} />,
+                        children: <NotifyContent {...item} />
                     }
                 ]
             }
@@ -51,21 +48,43 @@ const Page = () => {
 
     }
 
+    useEffect(() => {
+
+        if (isMounted === false) return;
+        emit_getNotifications();
+
+    }, [isMounted])
+
+    useEffect(() => {
+        setisMounted(true);
+    }, []);
+
     return (
         <div className="w-full space-y-4">
-            {notifies_collapse()}
+            {
+                (notifications.length > 0) ? (
+                    notifies_collapse()
+                ) : (
+                    <div className='flex flex-col items-center justify-center w-full space-y-2'>
+                        <i className='text-3xl bx bx-loader-alt bx-spin' ></i>
+                        <h1 className='w-full text-xl font-bold text-center'>
+                            Cargando...
+                        </h1>
+                    </div>
+                )
+            }
         </div>
     )
 
 }
 
 export const NotificationsPage: FC = () => {
+
     return (
         <ContentPage_Box_LY
             title="Notificaciones"
             children={Page()} />
     )
 }
-
 
 export default NotificationsPage

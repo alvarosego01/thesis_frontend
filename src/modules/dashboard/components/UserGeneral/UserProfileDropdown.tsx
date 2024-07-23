@@ -4,7 +4,6 @@ import { useState, useRef, useEffect, FC } from 'react';
 import { ListDoActions, List_I } from '@components/index';
 import { getAssetPath, Transition } from '@utils/index';
 import { useAuthStore, useProfileStore, useUserStore } from '@store/index';
-import { useSignal, useSignals } from '@preact/signals-react/runtime';
 
 interface DropdownProfileProps {
     align: 'right' | 'left'; // Asumiendo que align solo puede ser 'right' o 'left'
@@ -66,9 +65,8 @@ const ListDoActions_data: List_I[] = [
 
 export const UserProfileDropdown: FC<DropdownProfileProps> = ({ align }) => {
 
-    useSignals();
-    const avatar = useSignal(getAssetPath('/images/user_anon.png'));
-    const isMounted = useSignal(false);
+    const [avatar, setAvatar] = useState(getAssetPath('/images/user_anon.png'));
+    const [isMounted, setIsMounted] = useState(false);
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -123,16 +121,16 @@ export const UserProfileDropdown: FC<DropdownProfileProps> = ({ align }) => {
 
     useEffect(() => {
 
-        if (isMounted.value === false) return;
+        if (isMounted === false) return;
 
         if (profile_pic?.src) {
-            avatar.value = profile_pic?.src;
+            setAvatar(profile_pic?.src);
         }
 
     }, [profile_pic?.src])
 
     useEffect(() => {
-        isMounted.value = true;
+        setIsMounted(true);
     }, []);
 
     return (
@@ -144,7 +142,7 @@ export const UserProfileDropdown: FC<DropdownProfileProps> = ({ align }) => {
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 aria-expanded={dropdownOpen}
             >
-                <img className="w-8 h-8 rounded-full" src={avatar.value} width="32" height="32" alt="User" />
+                <img className="w-8 h-8 rounded-full" src={avatar} width="32" height="32" alt="User" />
                 <div className="flex items-center truncate">
                     <span className="ml-2 text-sm font-medium truncate dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">
                         {user.name} {user.last_name}

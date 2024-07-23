@@ -1,8 +1,7 @@
 
-import { FC, Suspense, lazy, useEffect } from "react";
+import { FC, Suspense, lazy, useEffect, useState } from "react";
 import { Navigate, RouteObject, useRoutes } from "react-router-dom";
 import { useAuthStore } from "../../core/store";
-import { useSignal, useSignals } from "@preact/signals-react/runtime";
 
 const Account = lazy(() => import('./pages/account/AccountPage'));
 const Role = lazy(() => import('./pages/byRole/ByRolePage'));
@@ -46,8 +45,7 @@ const dashboard_routesConfig: RouteObject[] = [
 
 export const Dashboard_routes: FC = () => {
 
-    useSignals()
-    const isMounted = useSignal(false);
+    const [isMounted, setisMounted] = useState(false)
 
     const {
         state: {
@@ -58,12 +56,16 @@ export const Dashboard_routes: FC = () => {
     } = useAuthStore();
 
     useEffect(() => {
-        if (isMounted.value === false) return;
+
+        if (isMounted === false) return;
         emit_checkAuthToken();
-    }, []);
+
+    }, [isMounted]);
 
     useEffect(() => {
-        isMounted.value = true;
+
+        setisMounted(true);
+
     }, []);
 
     const routes = useRoutes(dashboard_routesConfig);

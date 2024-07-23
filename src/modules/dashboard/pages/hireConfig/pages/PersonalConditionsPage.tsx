@@ -3,10 +3,9 @@ import { LayoutRow_I } from '../../../../../core/components/forms/interfaces';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { FormLayoutBuilder, PrimaryButton } from '../../../../../core/components';
 import { estadosVenezuela } from '../../../../../core/constants/Countries';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useHiringDataStore } from '../../../store/hooks/hiring_data/useHiringDataStore';
 
-import { useSignal, useSignals } from '@preact/signals-react/runtime';
 
 const formData: LayoutRow_I[] = [
     {
@@ -124,8 +123,6 @@ interface Init_valuesData_I {
 
 export const PersonalConditionsPage: FC = () => {
 
-    useSignals();
-
     const {
         state: {
             onLoading,
@@ -137,10 +134,9 @@ export const PersonalConditionsPage: FC = () => {
         emit_save_user_hiringData_personal
     } = useHiringDataStore();
 
-    const isMounted = useSignal(false);
+    const [isMounted, setisMounted] = useState(false)
 
-
-    const initValues = useSignal<Init_valuesData_I>({
+    let initValues: Init_valuesData_I = {
         address: personal?.address || '',
         city: personal?.city || '',
         phone: personal?.phone || '',
@@ -148,15 +144,15 @@ export const PersonalConditionsPage: FC = () => {
         rif: personal?.rif || '',
         social_reason: personal?.social_reason || '',
         state: personal?.state || '',
-    })
+    };
 
     useEffect(() => {
 
-        if(isMounted.value === false) return;
+        if(isMounted === false) return;
 
         if (personal) {
 
-            initValues.value = {
+            initValues = {
                 address: personal?.address || '',
                 city: personal?.city || '',
                 phone: personal?.phone || '',
@@ -166,12 +162,12 @@ export const PersonalConditionsPage: FC = () => {
                 state: personal?.state || '',
             };
             setValues({
-                ...initValues.value
+                ...initValues
             });
         }
     }, [personal]);
 
-    const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(formData, initValues.value);
+    const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(formData, initValues);
 
     const formik = useFormik({
         initialValues: initialValues,
@@ -193,7 +189,7 @@ export const PersonalConditionsPage: FC = () => {
     } = formik;
 
     useEffect(() => {
-        isMounted.value = true;
+        setisMounted(true);
     }, []);
 
     return (

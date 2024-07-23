@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { FileHideInput, FormLayoutBuilder, PrimaryButton } from "@components/index"
 import { LayoutRow_I } from "@components/forms/interfaces"
 import { useFormInitData } from "@hooks/index";
@@ -8,9 +8,6 @@ import { getAssetPath } from "@utils/index";
 import { estadosVenezuela } from "@core/constants/Countries";
 import { useProfileStore, useUserStore } from "@store/index";
 import { Gender_Enum } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
-import { signal, useSignal } from "@preact/signals-react";
-import { useSignals } from "@preact/signals-react/runtime";
-
 
 const userData: LayoutRow_I[] = [
     {
@@ -174,10 +171,10 @@ interface Init_valuesData_I {
 
 export const PersonalPage: FC = () => {
 
-    useSignals();
-      const isMounted = useSignal(false);
 
-    const avatar = useSignal(getAssetPath('/images/user_anon.png'));
+    const [isMounted, setisMounted] = useState(false)
+
+    const [avatar, setavatar] = useState(getAssetPath('/images/user_anon.png'));
 
     const {
         state: {
@@ -199,7 +196,7 @@ export const PersonalPage: FC = () => {
     } = useProfileStore();
 
 
-    let Init_Values = useSignal<Init_valuesData_I>({
+    let Init_Values: Init_valuesData_I = {
         name: user.name || '',
         gender: user.gender as Gender_Enum || Gender_Enum.NONE,
         lastname: user.last_name || '',
@@ -207,11 +204,11 @@ export const PersonalPage: FC = () => {
         state: user.direction?.state || '',
         direction: user.direction?.address || '',
         phone: user.phone || '',
-    })
+    }
 
-    const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(userData, Init_Values.value);
+    const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(userData, Init_Values);
 
-    const { initialValues: initial_image, validation_rules: validation_image } = useFormInitData<{profile_pic: File}>( userImage );
+    const { initialValues: initial_image, validation_rules: validation_image } = useFormInitData<{ profile_pic: File }>(userImage);
 
     const formik = useFormik({
         initialValues: initialValues,
@@ -250,11 +247,11 @@ export const PersonalPage: FC = () => {
         submitForm: submitForm_image,
     } = formik_image;
 
-    useEffect( () => {
+    useEffect(() => {
 
-        if(isMounted.value === false) return;
+        if (isMounted === false) return;
 
-        if(values_image?.profile_pic?.size > 0){
+        if (values_image?.profile_pic?.size > 0) {
             submitForm_image();
         }
 
@@ -262,16 +259,16 @@ export const PersonalPage: FC = () => {
 
     useEffect(() => {
 
-        if(isMounted.value === false) return;
+        if (isMounted === false) return;
 
-        if(profile_pic?.src) {
-            avatar.value = profile_pic?.src;
+        if (profile_pic?.src) {
+            setavatar(profile_pic?.src);
         }
 
-     }, [profile_pic?.src])
+    }, [profile_pic?.src, isMounted])
 
     useEffect(() => {
-        isMounted.value = true;
+        setisMounted(true);
     }, []);
 
     return (
@@ -288,7 +285,7 @@ export const PersonalPage: FC = () => {
                     <div className="flex items-center">
                         <div className="mr-4">
 
-                            <img className="object-cover object-center w-20 h-20 rounded-full" src={avatar.value} width="80" height="80" alt="User upload" />
+                            <img className="object-cover object-center w-20 h-20 rounded-full" src={avatar} width="80" height="80" alt="User upload" />
 
                         </div>
 

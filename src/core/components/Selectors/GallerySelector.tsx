@@ -1,8 +1,7 @@
 
-import { FC, useEffect, useRef } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { OutlineButton, PrimaryButton, SecondaryButton, TertiaryButton } from '..';
 import { NotFoundContent } from '../../../modules/dashboard/components';
-import { useSignal, useSignals } from '@preact/signals-react/runtime';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { useFormInitData } from '../../hooks';
 import { LayoutRow_I } from '../forms/interfaces';
@@ -44,8 +43,6 @@ interface GallerySelector_Props_I {
 
 export const GallerySelector: FC<GallerySelector_Props_I> = ({ ...props }) => {
 
-    useSignals();
-
     const {
         gallery,
         isLoading,
@@ -53,8 +50,9 @@ export const GallerySelector: FC<GallerySelector_Props_I> = ({ ...props }) => {
         onDelete
     } = props;
 
-    const isMounted = useSignal(false);
-    const onDeleteLoading = useSignal<string>('');
+    const [isMounted, setisMounted] = useState(false)
+    const [onDeleteLoading, setonDeleteLoading] = useState<string>('');
+
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const { initialValues: initial_image, validation_rules: validation_image } = useFormInitData<{ File: File }>(gallery_schema);
@@ -78,7 +76,7 @@ export const GallerySelector: FC<GallerySelector_Props_I> = ({ ...props }) => {
 
     useEffect(() => {
 
-        if (isMounted.value === false) return;
+        if (isMounted === false) return;
 
         if (values_image?.File?.size > 0) {
             submitForm();
@@ -112,19 +110,20 @@ export const GallerySelector: FC<GallerySelector_Props_I> = ({ ...props }) => {
     const prev_delete = (_id: string) => {
 
         // onDeleteLoading.value = true;
-        onDeleteLoading.value = _id;
+        setonDeleteLoading(_id);
         onDelete(_id);
 
     }
 
     const is_deleteProcess = (current_delete: string): boolean => {
 
-        return onDeleteLoading.value === current_delete;
+        return onDeleteLoading === current_delete;
+
 
     }
 
     useEffect(() => {
-        isMounted.value = true;
+        setisMounted(true);
     }, []);
 
     return (

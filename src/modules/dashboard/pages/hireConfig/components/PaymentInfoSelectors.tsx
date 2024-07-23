@@ -8,8 +8,6 @@ import { Banks_List, Payments_Type_List } from "@constants/Banks"
 import { LayoutRow_I, SelectValue_I } from "@components/forms/interfaces"
 import { Banks_Enum, Payment_Account_I, Payment_Type_Enum } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
 import { useHiringDataStore } from "../../../store/hooks/hiring_data/useHiringDataStore";
-import { useSignal, useSignals } from "@preact/signals-react/runtime";
-import { signal } from "@preact/signals-react";
 
 const formData: LayoutRow_I[] = [
     {
@@ -165,9 +163,7 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
     data
 }) => {
 
-    useSignals();
-    const isMounted = useSignal(false);
-    // const [isMounted, setisMounted] = useState(false)
+    const [isMounted, setisMounted] = useState(false)
 
    const {
         state: {
@@ -226,7 +222,7 @@ export const PaymentInfoSelectors: FC<PaymentInfoSelectors_Props_I> = ({
     } = formik;
 
     useEffect(() => {
-        isMounted.value = true;
+        setisMounted(true)
     }, []);
 
     return (

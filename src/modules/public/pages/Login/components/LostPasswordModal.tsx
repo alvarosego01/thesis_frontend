@@ -1,15 +1,12 @@
 
 
 
-import React, { FC, useEffect } from 'react'
-import { useAuthStore, useUiStore } from '../../../../../core/store';
-import { BlankModal, FormLayoutBuilder, InfoModal, PrimaryButton } from '../../../../../core/components';
+import { FC, useEffect, useState } from 'react'
+import { useRequestStore, useUiStore } from '../../../../../core/store';
+import { FormLayoutBuilder, InfoModal, PrimaryButton } from '../../../../../core/components';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { LayoutRow_I } from '../../../../../core/components/forms/interfaces';
 import { useFormInitData } from '../../../../../core/hooks';
-import { useSignal } from '@preact/signals-react';
-import { useSignals } from '@preact/signals-react/runtime';
-
 
 const formData: LayoutRow_I[] = [
     {
@@ -48,15 +45,14 @@ export const LostPasswordModal: FC<LostPasswordModal_Props_I> = ({
     status
 }) => {
 
-    useSignals();
-    const isMounted = useSignal(false);
+    const [isMounted, setisMounted] = useState(false)
 
     const {
         state: {
             onLoading
         },
         emit_LostPassword
-    } = useAuthStore()
+    } = useRequestStore()
 
     const { initialValues, validation_rules } = useFormInitData(formData);
 
@@ -86,7 +82,7 @@ export const LostPasswordModal: FC<LostPasswordModal_Props_I> = ({
 
     useEffect(() => {
 
-        if (isMounted.value === false) return;
+        if (isMounted === false) return;
 
         if (status) {
             formik.resetForm();
@@ -95,7 +91,7 @@ export const LostPasswordModal: FC<LostPasswordModal_Props_I> = ({
     }, [status])
 
     useEffect(() => {
-        isMounted.value = true;
+        setisMounted(true);
     }, []);
 
     return (

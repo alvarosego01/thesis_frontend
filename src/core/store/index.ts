@@ -15,5 +15,6 @@ export { useUiStore } from "./hooks/useUiStore";
 export { useAuthStore } from "./hooks/auth/useAuthStore";
 export { useProfileStore } from "../../modules/dashboard/store/hooks/profile/useProfileStore";
 export { useUserStore } from "../../modules/dashboard/store/hooks/user/useUserStore";
+export { useRequestStore } from "./hooks/requests/useRequestsStore";
 
 export { core_store } from "./store";

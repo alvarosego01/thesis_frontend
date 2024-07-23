@@ -1,3 +1,4 @@
+export { VerifyPage } from "./pages/Verify/VerifyPage";
 
 export { HomePage } from "./pages/HomePage";
 export { LoginPage } from "./pages/Login/LoginPage";

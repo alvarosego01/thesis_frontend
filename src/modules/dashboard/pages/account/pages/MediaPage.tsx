@@ -1,14 +1,12 @@
 
 
-import { FC, useEffect } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { GallerySelector, VideoGallerySelector } from '@components/index';
-import { useSignal, useSignals } from '@preact/signals-react/runtime';
 import { useProfileStore } from '../../../store';
 
 export const MediaPage: FC = () => {
 
-    useSignals();
-    const isMounted = useSignal(false);
+    const [isMounted, setisMounted] = useState(false)
 
     const {
         state: {
@@ -44,7 +42,7 @@ export const MediaPage: FC = () => {
     }
 
     useEffect(() => {
-        isMounted.value = true;
+        setisMounted(true);
     }, []);
 
     return (

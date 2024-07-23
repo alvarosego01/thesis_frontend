@@ -1,11 +1,6 @@
 
 
-import { FC, useEffect, useRef, useState } from 'react'
-import { useUiGlobals } from '../../hooks';
-import Backend_Api from '../../api/axiosBase';
-import { signal, useSignal } from '@preact/signals-react';
-import { useSignals } from '@preact/signals-react/runtime';
-
+import { FC, useState } from 'react'
 
 interface Props_I {
     _id: string

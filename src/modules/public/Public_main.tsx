@@ -10,14 +10,13 @@ import { Public_routes } from "./public.routes";
     return (
         <div className="flex h-full overflow-hidden">
 
-
             <div className="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto" >
 
                 {/* Header */}
                 <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
                 {/* Main content */}
-                <main className="grow">
+                <main className="min-h-[100vh] grow">
 
                     <Public_routes />
 

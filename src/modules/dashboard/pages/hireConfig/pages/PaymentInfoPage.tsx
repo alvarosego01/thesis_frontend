@@ -1,20 +1,16 @@
-import { FC, useEffect } from "react"
+import { FC, useEffect, useState } from "react"
 import { useUiStore } from "@store/index";
 import { PaymentInfo, PaymentInfoModal } from "../components";
 import { PrimaryButton } from "@components/index";
 import { NotFoundContent } from "../../../components";
 import { useHiringDataStore } from "../../../store/hooks/hiring_data/useHiringDataStore";
-import { useSignal } from '@preact/signals-react';
 import { Payment_Account_I } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
 import { ConfirmDeleteModal } from "../components/modals/ConfirmDeleteModal";
-import { useSignals } from "@preact/signals-react/runtime";
 
 export const PaymentInfoPage: FC = () => {
 
-    useSignals();
-    const isMounted = useSignal(false);
-
-    const aux_data = useSignal<Payment_Account_I[]>([]);
+    const [isMounted, setisMounted] = useState(false)
+    const [aux_data, setaux_data] = useState<Payment_Account_I[]>([])
 
     const {
         state: {
@@ -63,12 +59,18 @@ export const PaymentInfoPage: FC = () => {
 
     }
 
-    if (payment_accounts) {
-        aux_data.value = payment_accounts;
-    }
+    useEffect(() => {
+
+        if (isMounted === false) return;
+
+        if (payment_accounts) {
+            setaux_data(payment_accounts);
+        }
+
+    }, [payment_accounts, isMounted])
 
     useEffect(() => {
-        isMounted.value = true;
+        setisMounted(true);
     }, []);
 
     return (
@@ -80,21 +82,21 @@ export const PaymentInfoPage: FC = () => {
                     <h2 className="flex flex-row justify-between mb-5 text-2xl font-bold text-slate-800 dark:text-slate-100">
                         Información de pago y cuentas
                         {
-                            (aux_data.value.length > 0) && (
+                            (aux_data.length > 0) && (
                                 <PrimaryButton onClick={add_new} isLoading={onLoading} label="Añadir" icon="bx bx-plus" />
                             )
                         }
                     </h2>
 
                     {
-                        (aux_data.value.length === 0) ? (
+                        (aux_data.length === 0) ? (
                             <section>
                                 <NotFoundContent onClick={add_new} enableButton={true} title="Sin información de pago añadida" />
                             </section>
                         ) : (
                             <div className="grid grid-cols-12 gap-5 paymentInfo">
                                 {
-                                    aux_data.value.map((data, index) => {
+                                    aux_data.map((data, index) => {
                                         return (
                                             <div key={index} className="col-span-full sm:col-span-6 xl:col-span-4">
                                                 <PaymentInfo props={data} index={index} />
@@ -110,8 +112,8 @@ export const PaymentInfoPage: FC = () => {
 
             </div>
 
-            <PaymentInfoModal {...payment_accounts_modals.paymentInfo_handler_modal} />
-            <ConfirmDeleteModal data_modal={payment_accounts_modals.delete_PaymentInfo_modal} onAccept={(index) => onAccept_deleteModal(index)} onClose={onClose_deleteModal} />
+             <PaymentInfoModal {...payment_accounts_modals.paymentInfo_handler_modal} />
+             <ConfirmDeleteModal data_modal={payment_accounts_modals.delete_PaymentInfo_modal} onAccept={(index) => onAccept_deleteModal(index)} onClose={onClose_deleteModal} />
 
         </>
     )

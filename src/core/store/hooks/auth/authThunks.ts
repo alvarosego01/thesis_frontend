@@ -6,6 +6,7 @@ import Backend_Api from "../../../api/axiosBase";
 import { Auth_I, Session_Auth_I, User_Role_Enum } from '@tesis-project/dev-globals/dist/modules/auth/interfaces'
 import { handlerError } from "../../../api";
 
+import {Create_Request_Key_Dto} from '@tesis-project/dev-globals/dist/modules/auth/dto'
 
 export const start_login_authTH = (email: string, password: string): Promise<_Response_I<Session_Auth_I>> => {
     // return async (dispatch: Dispatch): Promise<_Response_I> => {
@@ -117,23 +118,4 @@ export const start_check_renew_Tk_authTH = (): Promise<_Response_I<Session_Auth_
     })
 
 }
-
-export const start_LostPassword_authTH = (email: string): Promise<_Response_I> => {
-    return new Promise(async (resolve, reject) => {
-        try {
-
-            const resp: _Response_I = await Backend_Api.post('auth/requests/pass_request', {
-                email
-            }).then(r => r);
-            resolve(resp);
-
-        } catch (error: any) {
-
-            let r: _Response_I = handlerError(error);
-            reject(r);
-
-        }
-    })
-}
-
 

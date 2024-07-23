@@ -1,15 +1,11 @@
 import { Navigate, Route, Routes } from "react-router-dom"
-import { HomePage, LoginPage, RegisterPage } from "."
+import { HomePage, LoginPage, RegisterPage, VerifyPage } from "."
 import { useAuthStore } from "../../core/store";
-import { FC, useEffect } from "react";
-import { useSignal } from "@preact/signals-react";
-import { useSignals } from "@preact/signals-react/runtime";
-
+import { FC, useEffect, useState } from "react";
 
 export const Public_routes: FC = () => {
 
-    useSignals()
-    const isMounted = useSignal(false);
+    const [isMounted, setisMounted] = useState(false)
 
     const {
         state: {
@@ -19,12 +15,12 @@ export const Public_routes: FC = () => {
     } = useAuthStore();
 
     useEffect(() => {
-        if (isMounted.value === false) return;
+        if (isMounted === false) return;
         emit_checkAuthToken();
-    }, [isMounted.value]);
+    }, [isMounted]);
 
     useEffect(() => {
-        isMounted.value = true;
+        setisMounted(true);
     }, []);
 
     return (
@@ -39,6 +35,7 @@ export const Public_routes: FC = () => {
             }
             <Route path='' index element={<HomePage />} />
             <Route path='home' element={<HomePage />} />
+            <Route path='verify/:key' element={<VerifyPage />} />
             <Route path="/*" element={<Navigate to="/" replace />} />
         </Routes>
     )

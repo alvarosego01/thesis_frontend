@@ -1,12 +1,9 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 
 import { Form, FormikProvider, useFormik } from "formik";
-import { useSignal } from "@preact/signals-react";
-import { useSignals } from "@preact/signals-react/runtime";
 import { LayoutRow_I } from "../forms/interfaces";
 import { useFormInitData } from "../../hooks";
 import { FileHideInput, OutlineButton } from "..";
-import { Navigate } from "react-router-dom";
 
 interface Props_I {
     onSelect: (file: File) => void;
@@ -28,8 +25,7 @@ export const DocumentSelector: FC<Props_I> = ({
     onSelect,
 }) => {
 
-    useSignals();
-    const isMounted = useSignal(false);
+    const [isMounted, setisMounted] = useState(false)
 
     const { initialValues: file_initial, validation_rules: file_validation } = useFormInitData(define_file);
 
@@ -52,7 +48,7 @@ export const DocumentSelector: FC<Props_I> = ({
 
     useEffect(() => {
 
-        if (isMounted.value === false) return;
+        if (isMounted === false) return;
 
         if (values_file?.File?.size > 0) {
             submitForm();
@@ -83,7 +79,7 @@ export const DocumentSelector: FC<Props_I> = ({
     }
 
     useEffect(() => {
-        isMounted.value = true;
+        setisMounted(true);
     }, []);
 
     return (

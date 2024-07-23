@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from "react";
-import { useNotificationsStore } from "../../../../core/store/hooks/useNotificationsStore";
+import { useNotificationsStore } from "../../../../core/store/hooks/notifications/useNotificationsStore";
 import { Transition } from "../../../../core/utils/Transition";
 import { Link } from "react-router-dom";
 
@@ -88,18 +88,20 @@ export const NotificationsView: FC<DropdownProfile_Props_I> = ({
                             notifications.length > 0 && (
                                 notifications.map((item, i) => (
                                     <li
-                                    key={item.title + i}
+                                    key={item.subject + i}
                                     className="border-b border-slate-200 dark:border-slate-700 last:border-0">
                                         <Link
                                             className="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/20"
                                             to="/dashboard/notifications"
                                             onClick={() => setDropdownOpen(!dropdownOpen)}
                                         >
-                                            <span className="block mb-2 text-sm">📣 <span className="font-medium leading-normal text-slate-800 dark:text-slate-100 mr-s_5">{item.title}</span>
-                                                {item.contain}
+                                            <span className="block mb-2 text-sm">📣 <span className="font-medium leading-normal text-slate-800 dark:text-slate-100 mr-s_5">
+                                                {/* {item.title} */}
+                                                </span>
+                                                {/* {item.contain} */}
                                             </span>
                                             <span className="block text-xs font-medium text-slate-400 dark:text-slate-500">
-                                                {item.date}
+                                                {/* {item.date} */}
                                             </span>
                                         </Link>
                                     </li>

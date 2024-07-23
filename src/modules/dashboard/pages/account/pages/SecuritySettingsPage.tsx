@@ -1,12 +1,10 @@
 import { Form, Formik } from "formik"
-import { FC, useState } from "react"
+import { FC, useEffect, useState } from "react"
 
 import { FeedbackModal, FormLayoutBuilder, SecondaryButton } from "../../../../../core/components"
 import { LayoutRow_I } from "../../../../../core/components/forms/interfaces"
 import { useFormInitData } from "../../../../../core/hooks"
-import { SignatureModal, SignatureSelector } from "../components"
-import { SignatureModel_I } from "../../../Interfaces"
-import { useUiStore } from "../../../../../core/store"
+import { useAuthStore, useRequestStore } from "../../../../../core/store"
 
 const data_email: LayoutRow_I[] = [
     {
@@ -33,7 +31,7 @@ const data_email: LayoutRow_I[] = [
     }
 
 ]
-
+/*
 const data_userame: LayoutRow_I[] = [
     {
         fields: [
@@ -58,40 +56,73 @@ const data_userame: LayoutRow_I[] = [
         grid_columns: 'grid-cols-1'
     }
 
-]
+] */
 
 export const SecuritySettingsPage: FC = () => {
 
-    const { initialValues: email_init, validation_rules: email_validations } = useFormInitData(data_email);
-    const { initialValues: username_init, validation_rules: username_validations } = useFormInitData(data_userame);
-
-    const [requestPass_Modal, setRequestPass_Modal] = useState(false)
-
-    const [signature] = useState<SignatureModel_I>({
-        signature: '',
-        updated_at: ''
-    })
+    const [isMounted, setisMounted] = useState(false)
 
     const {
         state: {
-            modals: {
-                dashboard: {
-                    signature_selector_modal
-                }
-            }
+            auth
         },
-        handle_signatureModal
-    } = useUiStore();
+    } = useAuthStore()
+
+    const {
+        state: {
+            onLoading: onLoading_Request
+        },
+        emit_LostPassword,
+        emit_changeEmailRequest
+    } = useRequestStore()
+
+    const { initialValues: email_init, validation_rules: email_validations } = useFormInitData(data_email);
+    // const { initialValues: username_init, validation_rules: username_validations } = useFormInitData(data_userame);
+
+    const [requestPass_Modal, setRequestPass_Modal] = useState(false)
+
+    // const [signature] = useState<SignatureModel_I>({
+    //     signature: '',
+    //     updated_at: ''
+    // })
+
+    // const {
+    //     state: {
+    //         modals: {
+    //             dashboard: {
+    //                 signature_selector_modal
+    //             }
+    //         }
+    //     },
+    //     handle_signatureModal
+    // } = useUiStore();
 
 
-    const signature_modal = () => {
-        // return
-        handle_signatureModal({
-            status: true,
-            text: ''
-        })
+    // const signature_modal = () => {
+    //     // return
+    //     handle_signatureModal({
+    //         status: true,
+    //         text: ''
+    //     })
+
+    // }
+
+    const changeEmail = (email: string) => {
+
+        emit_changeEmailRequest(email)
 
     }
+
+    const lostPassword = () => {
+
+        setRequestPass_Modal(false);
+        emit_LostPassword(auth.email);
+
+    }
+
+    useEffect(() => {
+        setisMounted(true);
+    }, []);
 
     return (
         <>
@@ -103,7 +134,7 @@ export const SecuritySettingsPage: FC = () => {
                         Seguridad de cuenta
                     </h2>
 
-                    <section>
+                    {/*      <section>
                         <h2 className="mb-1 text-xl font-bold leading-snug text-slate-800 dark:text-slate-100">
                             Nombre de usuario
                         </h2>
@@ -126,6 +157,7 @@ export const SecuritySettingsPage: FC = () => {
                             )}
                         </Formik>
                     </section>
+ */}
 
                     <section>
                         <h2 className="mb-1 text-xl font-bold leading-snug text-slate-800 dark:text-slate-100">
@@ -136,7 +168,11 @@ export const SecuritySettingsPage: FC = () => {
                         <Formik
                             initialValues={email_init}
                             onSubmit={(values) => {
-                                console.log('values', values)
+
+                                if(!values.email || values.email === '') return;
+
+                                changeEmail(values.email);
+
                             }}
                             validationSchema={email_validations}
                         >
@@ -144,7 +180,7 @@ export const SecuritySettingsPage: FC = () => {
                                 <Form noValidate>
                                     <div className="flex flex-row">
                                         <FormLayoutBuilder rows={data_email} />
-                                        <SecondaryButton className="mt-s_2.5 ml-s_10 h-fit" onClick={() => submitForm()} label="Cambiar" />
+                                        <SecondaryButton isLoading={onLoading_Request} className="mt-s_2.5 ml-s_10 h-fit" onClick={() => submitForm()} label="Cambiar" />
                                     </div>
                                 </Form>
                             )}
@@ -156,11 +192,11 @@ export const SecuritySettingsPage: FC = () => {
                         <h2 className="mb-1 text-xl font-bold leading-snug text-slate-800 dark:text-slate-100">Contraseña</h2>
                         <div className="text-sm">You can set a permanent password if you don't want to use temporary login codes.</div>
                         <div className="mt-5">
-                            <SecondaryButton onClick={() => setRequestPass_Modal(true)} label="Solicita nueva contraseña" />
+                            <SecondaryButton isLoading={onLoading_Request} onClick={() => setRequestPass_Modal(true)} label="Solicita nueva contraseña" />
                         </div>
                     </section>
 
-                {/*     <hr />
+                    {/*     <hr />
                     <section>
                         {
                             signature.signature && (
@@ -186,7 +222,7 @@ export const SecuritySettingsPage: FC = () => {
 
             </div>
 
-            <SignatureModal {...signature_selector_modal} />
+            {/* <SignatureModal {...signature_selector_modal} /> */}
 
             {
                 requestPass_Modal && (
@@ -196,10 +232,10 @@ export const SecuritySettingsPage: FC = () => {
                         title="Solicitar nueva contraseña"
                         text="¿Estás seguro de solicitar una nueva contraseña?"
                         onClose={() => setRequestPass_Modal(false)}
-                        onAccept={() => { }}
+                        onAccept={lostPassword}
                         status={requestPass_Modal}
                     />
-                 )
+                )
             }
 
         </>

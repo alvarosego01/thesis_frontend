@@ -1,10 +1,8 @@
-import { FC, useEffect, useRef } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 
 import { NotFoundContent } from "../../../modules/dashboard/components";
 import { TertiaryButton } from "../buttons/TertiaryButton";
 import { Media_I } from "@tesis-project/dev-globals/dist/modules/media/interfaces";
-import { useSignal } from "@preact/signals-react";
-import { useSignals } from "@preact/signals-react/runtime";
 import { useFormInitData } from "../../hooks";
 import { LayoutRow_I } from "../forms/interfaces";
 import { Form, FormikProvider, useFormik } from "formik";
@@ -45,8 +43,6 @@ interface Props_I {
 
 export const VideoGallerySelector: FC<Props_I> = ({ ...props }) => {
 
-    useSignals();
-
     const {
         gallery,
         isLoading,
@@ -54,8 +50,10 @@ export const VideoGallerySelector: FC<Props_I> = ({ ...props }) => {
         onDelete
     } = props;
 
-    const isMounted = useSignal(false);
-    const onDeleteLoading = useSignal<string>('');
+    // reemplazar signal por useState
+    const [isMounted, setisMounted] = useState(false)
+    const [onDeleteLoading, setonDeleteLoading] = useState<string>('');
+
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const { initialValues: initial, validation_rules: validation } = useFormInitData<{ File: File }>(gallery_schema);
@@ -79,7 +77,7 @@ export const VideoGallerySelector: FC<Props_I> = ({ ...props }) => {
 
     useEffect(() => {
 
-        if (isMounted.value === false) return;
+        if (isMounted === false) return;
 
         if (values?.File?.size > 0) {
             submitForm();
@@ -113,20 +111,19 @@ export const VideoGallerySelector: FC<Props_I> = ({ ...props }) => {
 
     const prev_delete = (_id: string) => {
 
-        // onDeleteLoading.value = true;
-        onDeleteLoading.value = _id;
+        setonDeleteLoading(_id);
         onDelete(_id);
 
     }
 
     const is_deleteProcess = (current_delete: string): boolean => {
 
-        return onDeleteLoading.value === current_delete;
+        return onDeleteLoading === current_delete;
 
     }
 
     useEffect(() => {
-        isMounted.value = true;
+        setisMounted(true);
     }, []);
 
 

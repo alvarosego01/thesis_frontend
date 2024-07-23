@@ -2,20 +2,18 @@
 import { FC } from "react";
 
 import { Notification_I } from "@models/Notifications";
+import { Notifications_I } from "@tesis-project/dev-globals/dist/modules/notifications/interfaces";
 
-interface NotifyContent_Props_I {
-    notify: Notification_I
-}
 
-export const NotifyContent: FC<NotifyContent_Props_I> = ({
-    notify
+export const NotifyContent: FC<Notifications_I> = ({
+    ...props
 }) => {
   return (
     <div className="NotifyContent">
         <hr />
         <p className="py-5 text-base">
             {
-                notify.contain
+                props.message
             }
         </p>
 
