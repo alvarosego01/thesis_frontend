@@ -7,13 +7,6 @@ interface SingerSkills_Model_I {
     // repertoire: SingerRepertoire_Model_I[];
 }
 
-interface SingerRepertoire_Model_I {
-    tone?: string;
-    title?: string;
-    role?: string;
-    composer?: string;
-}
-
 export const singerModel_Data: SingerSkills_Model_I = {
     voiceSpecialty: [
         {
@@ -194,13 +187,5 @@ export const singerModel_Data: SingerSkills_Model_I = {
             value: 'singer_voice_type_deep_bass'
         }
     ],
-    // repertoire: [
-    //     // {
-    //     // tone: string,
-    //     // title: string,
-    //     // role: string,
-    //     // composer: string,
-    //     // }
-    // ],
 
 }

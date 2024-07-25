@@ -114,8 +114,8 @@ export const useAuthStore = (): useHookStore_I => {
             emit_get_profile_data(data.user)
 
         } catch (error) {
-            localStorage.clear();
-            dispatch(onLogout_authSL());
+            // localStorage.clear();
+            // dispatch(onLogout_authSL());
         }
 
     }

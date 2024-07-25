@@ -1,3 +1,4 @@
+import { User_Role_Enum } from "@tesis-project/dev-globals/dist/modules/auth/interfaces";
 import { useAuthStore } from "../../../core/store";
 import { SidebarMenuLink_I } from "../Interfaces";
 
@@ -117,7 +118,7 @@ export const get_sidebarMenu = (): SidebarMenuLink_I[] => {
 
     ];
 
-    if (auth.role === 'ARTIST_ROLE') {
+    if (auth.role === User_Role_Enum.ARTIST_ROLE) {
 
         SidebarMenu_Data.splice(1, 0,
             {
@@ -135,7 +136,7 @@ export const get_sidebarMenu = (): SidebarMenuLink_I[] => {
 
     }
 
-    if(auth.role === 'CONTRATIST_ROLE'){
+    if(auth.role === User_Role_Enum.CONTRATIST_ROLE){
 
           SidebarMenu_Data.splice(1, 0,
             {

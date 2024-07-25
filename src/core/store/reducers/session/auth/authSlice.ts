@@ -12,7 +12,7 @@ export interface Slice_authState_I {
     onLoading: boolean;
     session_isChecked: boolean;
     status: Status_Session_Type;
-    auth: any;
+    auth: Session_Auth_I;
 }
 
 const initialState: Slice_authState_I = {
@@ -21,7 +21,7 @@ const initialState: Slice_authState_I = {
     // status: 'authenticated',
     onLoading: false,
     auth: {
-    } as any
+    } as Session_Auth_I
 }
 
 export const authSlice = createSlice({

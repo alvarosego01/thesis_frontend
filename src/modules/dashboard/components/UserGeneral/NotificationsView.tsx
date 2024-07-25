@@ -2,6 +2,7 @@ import { FC, useEffect, useRef, useState } from "react";
 import { useNotificationsStore } from "../../../../core/store/hooks/notifications/useNotificationsStore";
 import { Transition } from "../../../../core/utils/Transition";
 import { Link } from "react-router-dom";
+import { Transform_dateShort } from "../../../../core/pipes";
 
 interface DropdownProfile_Props_I {
     align: 'right' | 'left'; // Asumiendo que align solo puede ser 'right' o 'left'
@@ -96,12 +97,13 @@ export const NotificationsView: FC<DropdownProfile_Props_I> = ({
                                             onClick={() => setDropdownOpen(!dropdownOpen)}
                                         >
                                             <span className="block mb-2 text-sm">📣 <span className="font-medium leading-normal text-slate-800 dark:text-slate-100 mr-s_5">
-                                                {/* {item.title} */}
+                                                {item.subject}
                                                 </span>
-                                                {/* {item.contain} */}
+                                                {item.message}
                                             </span>
                                             <span className="block text-xs font-medium text-slate-400 dark:text-slate-500">
                                                 {/* {item.date} */}
+                                                   { Transform_dateShort(item.created_at!) }
                                             </span>
                                         </Link>
                                     </li>

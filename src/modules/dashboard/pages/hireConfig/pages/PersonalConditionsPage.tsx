@@ -17,17 +17,6 @@ const formData: LayoutRow_I[] = [
                     name: 'social_reason',
                     type: 'text',
                     parent_class: 'pcTab:!mb-s_15   '
-                    // validation_rules: [
-                    //     {
-                    //         type: "required",
-                    //         message: "El nombre es requerido"
-                    //     },
-                    //     {
-                    //         type: "minLength",
-                    //         value: 3,
-                    //         message: "El nombre debe tener al menos 3 caracteres"
-                    //     }
-                    // ]
                 }
             },
             {
@@ -73,14 +62,6 @@ const formData: LayoutRow_I[] = [
                     label: 'Dirección',
                     name: 'address',
                     type: 'text',
-                    // validation_rules: [
-                    //     {
-                    //         type: "minLength",
-                    //         value: 5,
-                    //         message: "La dirección debe tener al menos 3 caracteres"
-                    //     }
-                    // ]
-
                 }
             },
             {
@@ -89,13 +70,6 @@ const formData: LayoutRow_I[] = [
                     label: 'Ciudad',
                     name: 'city',
                     type: 'text',
-                    // validation_rules: [
-                    //     {
-                    //         type: "minLength",
-                    //         value: 5,
-                    //         message: "La ciudad debe tener al menos 3 caracteres"
-                    //     }
-                    // ]
                 }
             },
             {
@@ -108,8 +82,25 @@ const formData: LayoutRow_I[] = [
             }
         ],
         grid_columns: 'grid-cols-1 pcTab:grid-cols-3 lg:grid-cols-3'
+    },
+       {
+        fields: [
+            {
+                      typeField: 'textarea',
+                props: {
+                    label: 'Condiciones especificas',
+                    name: 'specific_conditions',
+                    placeholder: 'Condiciones basadas en requerimientos personales a contraer una relación contractual',
+                    type: 'text',
+
+                }
+            },
+        ],
+        grid_columns: 'grid-cols-1'
     }
+
 ]
+
 
 interface Init_valuesData_I {
     address?: string;
@@ -119,7 +110,13 @@ interface Init_valuesData_I {
     rif?: string;
     social_reason?: string;
     state?: string;
+    specific_conditions?: string;
+
 }
+
+// interface Init_valuesData_I_2 {
+//     specific_conditions?: string;
+// }
 
 export const PersonalConditionsPage: FC = () => {
 
@@ -144,11 +141,12 @@ export const PersonalConditionsPage: FC = () => {
         rif: personal?.rif || '',
         social_reason: personal?.social_reason || '',
         state: personal?.state || '',
+        specific_conditions: personal?.specific_conditions || '',
     };
 
     useEffect(() => {
 
-        if(isMounted === false) return;
+        if (isMounted === false) return;
 
         if (personal) {
 
@@ -160,14 +158,17 @@ export const PersonalConditionsPage: FC = () => {
                 rif: personal?.rif || '',
                 social_reason: personal?.social_reason || '',
                 state: personal?.state || '',
+                specific_conditions: personal?.specific_conditions || '',
             };
+
             setValues({
                 ...initValues
             });
-        }
-    }, [personal]);
 
-    const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(formData, initValues);
+        }
+    }, [personal, isMounted]);
+
+    const { initialValues: initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(formData, initValues);
 
     const formik = useFormik({
         initialValues: initialValues,
@@ -203,19 +204,12 @@ export const PersonalConditionsPage: FC = () => {
                 </h2>
 
                 <section>
-                    {/* <h2 className="mb-1 text-xl font-bold leading-snug text-slate-800 dark:text-slate-100">
-                        Datos de usuario
-                    </h2>
-                    <div className="text-sm mb-s_25">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed neque aut et cumque, labo
-                    </div> */}
 
                     <FormikProvider value={formik}>
                         <Form noValidate>
                             <FormLayoutBuilder rows={formData} />
                         </Form>
                     </FormikProvider>
-
 
                 </section>
 
