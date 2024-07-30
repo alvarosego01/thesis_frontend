@@ -8,8 +8,9 @@ interface useHookStore_I {
     state: Session_notificationsState_I;
     set_loading: (status: boolean) => void;
     emit_deleteNotification: (_id: string) => void;
-    restoreState: () => void;
+    emit_restoreState: () => void;
     emit_getNotifications: () => void;
+    emit_clear_notifications: () => void;
 }
 export const useNotificationsStore = (): useHookStore_I => {
 
@@ -19,6 +20,12 @@ export const useNotificationsStore = (): useHookStore_I => {
 
     const set_loading = (status: boolean) => {
         dispatch(onSetLoading(status));
+    }
+
+    const emit_clear_notifications = () => {
+
+        dispatch(on_restoreDefault())
+
     }
 
     const emit_deleteNotification = async (_id: string) => {
@@ -41,7 +48,7 @@ export const useNotificationsStore = (): useHookStore_I => {
 
     }
 
-    const restoreState = () => {
+    const emit_restoreState = () => {
         dispatch(on_restoreDefault())
     }
 
@@ -75,7 +82,8 @@ export const useNotificationsStore = (): useHookStore_I => {
         set_loading,
         emit_getNotifications,
         emit_deleteNotification,
-        restoreState,
+        emit_restoreState,
+        emit_clear_notifications,
     }
 
 }

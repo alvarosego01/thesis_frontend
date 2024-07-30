@@ -27,7 +27,7 @@ export const notificationsSlice = createSlice({
             state.notifications = state.notifications.filter(item => item._id !== payload);
         },
         on_restoreDefault: (state) => {
-            state = initialState;
+            state.notifications = initialState.notifications;
         },
     }
 });

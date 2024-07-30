@@ -2,10 +2,11 @@ import { useFormik, FormikProvider, Form } from "formik";
 
 import { FormLayoutBuilder, PrimaryButton } from "@components/index";
 import { LayoutRow_I, SelectValue_I } from "@components/forms/interfaces";
-import { useFormInitData } from "@hooks/index";
+import { useFormInitData, useUserMeta } from "@hooks/index";
 import { orchestraDirectorModel } from "@modules/dashboard/models/artistSkills/OrquestDirectorSkills";
-import { FC } from "react";
-
+import { FC, useEffect, useState } from "react";
+import { useUserMetaStore } from "../../../../../store/hooks/user_meta/useUserMetaStore";
+import { DO_Repertoire_Type, DO_Specialty_Type, Meta_Artist_I } from "@tesis-project/dev-globals/dist/modules/profile/interfaces";
 
 const formData: LayoutRow_I[] = [
     {
@@ -52,24 +53,54 @@ const formData: LayoutRow_I[] = [
 ]
 
 interface Init_valuesData_I {
-    repertoire: SelectValue_I[];
-    specialty: SelectValue_I[];
-    // repertoire
+    repertoire: SelectValue_I<DO_Repertoire_Type>[];
+    specialty: SelectValue_I<DO_Specialty_Type>[];
 }
 
 export const OrquestDirectorSkillSelectors: FC = () => {
 
-    const Init_Values: Init_valuesData_I = {
+
+    const {
+        state: {
+            user_meta: {
+                meta_artist
+            },
+            onLoading
+        },
+        emit_save_artistsMeta
+    } = useUserMetaStore();
+
+    const meta = meta_artist as Meta_Artist_I;
+
+    const {
+        meta_to_selectors,
+        selector_to_meta
+    } = useUserMeta();
+
+    const [isMounted, setisMounted] = useState(false);
+
+    let Init_Values: Init_valuesData_I = {
         repertoire: [],
-        specialty: [],
+        specialty: []
     }
 
-    const { initialValues, validation_rules } = useFormInitData<any>(formData, Init_Values);
+    const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(formData, Init_Values);
 
     const formik = useFormik({
         initialValues: initialValues,
         onSubmit: (values) => {
-            console.log('values', values);
+
+            const prev_submit = {
+                repertoire: selector_to_meta<DO_Repertoire_Type>(values.repertoire),
+                specialty: selector_to_meta<DO_Specialty_Type>(values.specialty),
+            }
+
+            emit_save_artistsMeta({
+                skills: {
+                    orquests_director: prev_submit
+                }
+            })
+
         },
         validationSchema: validation_rules
     });
@@ -79,6 +110,26 @@ export const OrquestDirectorSkillSelectors: FC = () => {
         errors,
         submitForm
     } = formik;
+
+    useEffect(() => {
+
+        if (isMounted === false) return;
+        if (meta?.skills?.orquests_director === undefined) return;
+
+        const orquest_director = meta.skills.orquests_director;
+
+        Init_Values = {
+            repertoire: meta_to_selectors<DO_Repertoire_Type>(orquest_director?.repertoire!, orchestraDirectorModel.repertoire) || [],
+            specialty: meta_to_selectors<DO_Specialty_Type>(orquest_director?.specialty!, orchestraDirectorModel.specialty) || [],
+        }
+
+        formik.setValues(Init_Values);
+
+    }, [meta?.skills?.orquests_director, isMounted])
+
+    useEffect(() => {
+        setisMounted(true);
+    }, []);
 
     return (
         <>
@@ -115,7 +166,7 @@ export const OrquestDirectorSkillSelectors: FC = () => {
                     </div>
                     <footer className="pt-6" >
                         <div className="flex flex-row justify-end">
-                            <PrimaryButton onClick={submitForm} label="Guardar" />
+                            <PrimaryButton onClick={submitForm} isLoading={onLoading} label="Guardar" />
                         </div>
                     </footer>
 

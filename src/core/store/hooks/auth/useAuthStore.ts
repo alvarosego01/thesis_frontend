@@ -11,6 +11,7 @@ import { useProfileStore, useUserStore } from "../../../../modules/dashboard/sto
 import { User_Role_Enum } from "@tesis-project/dev-globals/dist/modules/auth/interfaces";
 import { useNavigate } from "react-router-dom";
 import { useSession, useUiGlobals } from "@hooks/index";
+import { useNotificationsStore } from "../notifications/useNotificationsStore";
 
 interface useHookStore_I {
     state: Slice_authState_I;
@@ -40,6 +41,10 @@ export const useAuthStore = (): useHookStore_I => {
     const {
         emit_clear_all_data
     } = useSession();
+
+    const {
+        emit_getNotifications
+    } = useNotificationsStore();
 
     const state = useSelector<Reducers_I, Slice_authState_I>(({ global }) => global.session.auth, shallowEqual);
 
@@ -87,7 +92,8 @@ export const useAuthStore = (): useHookStore_I => {
             emit_swalToast({ type: 'success', message: 'Bienvenido' });
 
             emit_get_user(data.user);
-            emit_get_profile_data(data.user)
+            emit_get_profile_data(data.user);
+            emit_getNotifications();
 
 
         } catch (error) {
@@ -112,6 +118,7 @@ export const useAuthStore = (): useHookStore_I => {
             dispatch(onLogin_authSL(data));
             emit_get_user(data.user);
             emit_get_profile_data(data.user)
+            emit_getNotifications();
 
         } catch (error) {
             // localStorage.clear();

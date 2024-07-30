@@ -13,7 +13,7 @@ const Page = () => {
             notifications
         },
         emit_deleteNotification,
-        emit_getNotifications
+        // emit_getNotifications
     } = useNotificationsStore();
 
     const onDelete_Notify = (_id: string) => {
@@ -51,7 +51,7 @@ const Page = () => {
     useEffect(() => {
 
         if (isMounted === false) return;
-        emit_getNotifications();
+        // emit_getNotifications();
 
     }, [isMounted])
 

@@ -4,6 +4,7 @@ import { onRestoreDefault_userSlice, onSetLoading_userSlice, onSetUser_userSlice
 import { start_get_sessionUser_userTH, start_save_user_data } from "../../../../../core/store";
 import { User_I } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
 import { useUiGlobals } from "../../../../../core/hooks";
+import { onRestoreDefault_hiringDataSlice } from "../../reducers/hiring_data/hiringDataSlice";
 
 interface useHookStore_I {
     state: Slice_userState_I;
@@ -23,7 +24,8 @@ export const useUserStore = (): useHookStore_I => {
 
     const emit_clear_user = () => {
 
-        dispatch(onRestoreDefault_userSlice())
+        dispatch(onRestoreDefault_userSlice());
+        dispatch(onRestoreDefault_hiringDataSlice());
 
     }
 

@@ -1,19 +1,40 @@
+
+import {
+    Inst_electricalCategory_Type,
+    Inst_percusionCategory_Type,
+    Inst_stringCategory_Type,
+    Inst_windMetalCategory_Type,
+    Inst_windWoodCategory_Type,
+    Instrumentist_Position_Type,
+    Instrumentist_Specialty_Type
+} from "@tesis-project/dev-globals/dist/modules/profile/interfaces";
+
 import { Skill_Model_I } from "./interfaces"
 
-
+const categories_default = [
+    "instrument_wind",
+    "instrument_percussion",
+    "instrument_electrical",
+    "instrument_string",
+] as const;
+export type Inst_Categories_Type = typeof categories_default[number];
 
 interface Instrumentist_Model_I {
 
-    specialty: Skill_Model_I[];
-    position: Skill_Model_I[];
-    categories: Skill_Model_I[];
+    specialty: Skill_Model_I<Instrumentist_Specialty_Type>[];
+    position: Skill_Model_I<Instrumentist_Position_Type>[];
+    categories: Skill_Model_I<Inst_Categories_Type>[];
 
-    wind_metal: Skill_Model_I[];
-    wind_wood: Skill_Model_I[];
+    // Inst_WindCategory_Type
+// Inst_percusionCategory_Type
+// Inst_electricalCategory_Type
+// Inst_stringCategory_Type
 
-    percussion: Skill_Model_I[];
-    electrical: Skill_Model_I[];
-    string: Skill_Model_I[];
+    wind_metal: Skill_Model_I<Inst_windMetalCategory_Type>[];
+    wind_wood: Skill_Model_I<Inst_windWoodCategory_Type>[];
+    percussion: Skill_Model_I<Inst_percusionCategory_Type>[];
+    electrical: Skill_Model_I<Inst_electricalCategory_Type>[];
+    string: Skill_Model_I<Inst_stringCategory_Type>[];
 
 }
 

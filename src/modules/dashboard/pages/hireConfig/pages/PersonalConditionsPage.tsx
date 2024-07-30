@@ -83,14 +83,13 @@ const formData: LayoutRow_I[] = [
         ],
         grid_columns: 'grid-cols-1 pcTab:grid-cols-3 lg:grid-cols-3'
     },
-       {
+    {
         fields: [
             {
-                      typeField: 'textarea',
+                typeField: 'textarea',
                 props: {
                     label: 'Condiciones especificas',
                     name: 'specific_conditions',
-                    placeholder: 'Condiciones basadas en requerimientos personales a contraer una relación contractual',
                     type: 'text',
 
                 }
@@ -114,9 +113,6 @@ interface Init_valuesData_I {
 
 }
 
-// interface Init_valuesData_I_2 {
-//     specific_conditions?: string;
-// }
 
 export const PersonalConditionsPage: FC = () => {
 
@@ -166,7 +162,7 @@ export const PersonalConditionsPage: FC = () => {
             });
 
         }
-    }, [personal, isMounted]);
+    }, [personal]);
 
     const { initialValues: initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(formData, initValues);
 
@@ -203,11 +199,29 @@ export const PersonalConditionsPage: FC = () => {
                     Información de condiciones personales
                 </h2>
 
-                <section>
+                <section >
 
                     <FormikProvider value={formik}>
                         <Form noValidate>
-                            <FormLayoutBuilder rows={formData} />
+                            <FormLayoutBuilder rows={formData.slice(0, 2)} />
+                        </Form>
+                    </FormikProvider>
+
+                </section>
+            <hr />
+                <section>
+
+                    <h2 className="mb-1 text-xl font-bold leading-snug text-slate-800 dark:text-slate-100">
+                        Estatutos por defecto
+                    </h2>
+                    <div className="text-sm mb-s_25">
+                        Condiciones basadas en requerimientos personales a contraer una relación contractual
+                    </div>
+
+
+                    <FormikProvider value={formik}>
+                        <Form noValidate>
+                            <FormLayoutBuilder rows={formData.slice(2, 3)} />
                         </Form>
                     </FormikProvider>
 

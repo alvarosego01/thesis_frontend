@@ -1,10 +1,12 @@
-import { FC } from "react"
+import { FC, useEffect, useState } from "react"
 import { Form, FormikProvider, useFormik } from "formik";
 
-import { useFormInitData } from "@hooks/index";
+import { useFormInitData, useUserMeta } from "@hooks/index";
 import { LayoutRow_I, SelectValue_I } from "@components/forms/interfaces";
 import { FormLayoutBuilder, PrimaryButton } from "@components/index";
 import { singerModel_Data } from "@modules/dashboard/models/artistSkills/SingerSkills";
+import { Meta_Artist_I, Singer_voiceSpecialty_Type, Singer_voiceType_Type } from "@tesis-project/dev-globals/dist/modules/profile/interfaces";
+import { useUserMetaStore } from "../../../../../store/hooks/user_meta/useUserMetaStore";
 
 const formData: LayoutRow_I[] = [
     {
@@ -13,10 +15,10 @@ const formData: LayoutRow_I[] = [
                 typeField: 'select_special',
                 props: {
                     // label: '',
-                    name: 'voiceSpecialty',
+                    name: 'voice_specialty',
                     parent_class: 'lg:w-3/4',
                     isMulti: true,
-                    items: singerModel_Data.voiceSpecialty.map(item => ({ value: item.value, label: item.label })),
+                    items: singerModel_Data.voice_specialty.map(item => ({ value: item.value, label: item.label })),
                     value: [],
                     placeholder: 'Selecciona tu clasificación de voz',
                     // validation_rules: [
@@ -33,10 +35,10 @@ const formData: LayoutRow_I[] = [
                 typeField: 'select_special',
                 props: {
                     // label: '',
-                    name: 'voiceType',
+                    name: 'voice_type',
                     parent_class: 'lg:w-3/4',
                     isMulti: true,
-                    items: singerModel_Data.voiceType.map(item => ({ value: item.value, label: item.label })),
+                    items: singerModel_Data.voice_type.map(item => ({ value: item.value, label: item.label })),
                     value: [],
                     placeholder: 'Selecciona tu tipo de voz',
                     // validation_rules: [
@@ -51,31 +53,55 @@ const formData: LayoutRow_I[] = [
 ]
 
 
-interface SingerSkillSelectors_Props_I {
-    // title: string;
-}
-
 interface Init_valuesData_I {
-    voiceSpecialty: SelectValue_I[];
-    voiceType: SelectValue_I[];
+    voice_specialty: SelectValue_I<Singer_voiceSpecialty_Type>[];
+    voice_type: SelectValue_I<Singer_voiceType_Type>[];
     // repertoire
 }
 
+export const SingerSkillSelectors: FC = () => {
 
-export const SingerSkillSelectors: FC<SingerSkillSelectors_Props_I> = () => {
+    const {
+        state: {
+            user_meta: {
+                meta_artist
+            },
+            onLoading
+        },
+        emit_save_artistsMeta
+    } = useUserMetaStore();
 
+    const meta = meta_artist as Meta_Artist_I;
 
-    const Init_Values: Init_valuesData_I = {
-        voiceSpecialty: [],
-        voiceType: [],
+    const {
+        meta_to_selectors,
+        selector_to_meta
+    } = useUserMeta();
+
+    const [isMounted, setisMounted] = useState(false);
+
+    let Init_Values: Init_valuesData_I = {
+        voice_specialty: [],
+        voice_type: []
     }
 
-    const { initialValues, validation_rules } = useFormInitData<any>(formData, Init_Values);
+    const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(formData, Init_Values);
 
     const formik = useFormik({
         initialValues: initialValues,
         onSubmit: (values) => {
-            console.log('values', values);
+
+            const prev_submit = {
+                voice_specialty: selector_to_meta<Singer_voiceSpecialty_Type>(values.voice_specialty),
+                voice_type: selector_to_meta<Singer_voiceType_Type>(values.voice_type),
+            }
+
+            emit_save_artistsMeta({
+                skills: {
+                    singer: prev_submit
+                }
+            })
+
         },
         validationSchema: validation_rules
     });
@@ -86,7 +112,24 @@ export const SingerSkillSelectors: FC<SingerSkillSelectors_Props_I> = () => {
         submitForm
     } = formik;
 
-    // console.log('values select', values);
+    useEffect(() => {
+
+        if (isMounted === false) return;
+        if(meta?.skills?.singer === undefined) return;
+
+        const singer = meta.skills.singer;
+
+        Init_Values = {
+            voice_specialty: meta_to_selectors<Singer_voiceSpecialty_Type>(singer?.voice_specialty!, singerModel_Data.voice_specialty) || [],
+            voice_type: meta_to_selectors<Singer_voiceType_Type>(singer?.voice_type!, singerModel_Data.voice_type) || [],
+        }
+        formik.setValues(Init_Values);
+
+    }, [meta?.skills?.singer, isMounted])
+
+    useEffect(() => {
+        setisMounted(true);
+    }, []);
 
     return (
         <>
@@ -134,7 +177,7 @@ export const SingerSkillSelectors: FC<SingerSkillSelectors_Props_I> = () => {
                     </div>
                     <footer className="pt-6" >
                         <div className="flex flex-row justify-end">
-                            <PrimaryButton onClick={submitForm} label="Guardar" />
+                            <PrimaryButton isLoading={onLoading} onClick={submitForm} label="Guardar" />
                         </div>
                     </footer>
                 </Form>

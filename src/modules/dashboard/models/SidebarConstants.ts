@@ -1,7 +1,8 @@
+
+
 import { User_Role_Enum } from "@tesis-project/dev-globals/dist/modules/auth/interfaces";
 import { useAuthStore } from "../../../core/store";
 import { SidebarMenuLink_I } from "../Interfaces";
-
 
 
 export const get_sidebarMenu = (): SidebarMenuLink_I[] => {
@@ -63,19 +64,19 @@ export const get_sidebarMenu = (): SidebarMenuLink_I[] => {
                 content: '/dashboard/contracts'
             }
         },
-        {
-            title: 'Control de vacantes',
-            icon: {
-                type: 'icon',
-                content: "bx bx-briefcase-alt-2"
+        // {
+        //     title: 'Control de vacantes',
+        //     icon: {
+        //         type: 'icon',
+        //         content: "bx bx-briefcase-alt-2"
 
-            },
-            link: '/dashboard/xxx',
-            activeCondition: {
-                type: 'route',
-                content: '/dashboard/xxx'
-            }
-        },
+        //     },
+        //     link: '/dashboard/xxx',
+        //     activeCondition: {
+        //         type: 'route',
+        //         content: '/dashboard/xxx'
+        //     }
+        // },
 
         /*     {
                 title: 'Dashboard',
@@ -143,7 +144,7 @@ export const get_sidebarMenu = (): SidebarMenuLink_I[] => {
                 title: 'Instituto - Empresa',
                 icon: {
                     type: 'icon',
-                    content: "bx bxs-music"
+                    content: "bx bxs-buildings"
                 },
                 link: '/dashboard/role/company',
                 activeCondition: {

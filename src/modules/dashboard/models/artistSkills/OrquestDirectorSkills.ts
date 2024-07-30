@@ -1,8 +1,11 @@
+
+import { DO_Repertoire_Type, DO_Specialty_Type } from "@tesis-project/dev-globals/dist/modules/profile/interfaces";
 import { Skill_Model_I } from "./interfaces";
 
+
 interface Skills_Model_I {
-    repertoire: Skill_Model_I[];
-    specialty: Skill_Model_I[];
+    repertoire: Skill_Model_I<DO_Repertoire_Type>[];
+    specialty: Skill_Model_I<DO_Specialty_Type>[];
 }
 
 export const orchestraDirectorModel: Skills_Model_I = {

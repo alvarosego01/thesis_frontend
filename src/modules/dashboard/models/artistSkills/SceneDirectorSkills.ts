@@ -1,8 +1,9 @@
+import { SD_Repertoire_Type, SD_specialty_Type } from "@tesis-project/dev-globals/dist/modules/profile/interfaces";
 import { Skill_Model_I } from "./interfaces";
 
 interface Skills_Model_I {
-    repertoire: Skill_Model_I[];
-    specialty: Skill_Model_I[];
+    repertoire: Skill_Model_I<SD_Repertoire_Type>[];
+    specialty: Skill_Model_I<SD_specialty_Type>[];
 }
 
 export const sceneDirectorModel: Skills_Model_I = {

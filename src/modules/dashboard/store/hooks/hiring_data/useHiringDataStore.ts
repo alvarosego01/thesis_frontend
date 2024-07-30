@@ -90,7 +90,7 @@ export const useHiringDataStore = (): useHookStore_I => {
 
         try {
 
-            let payments_data: Payment_Account_I[] = [...state.hiring_data.payment_accounts!] || [];
+            let payments_data: Payment_Account_I[] = (state.hiring_data.payment_accounts) ? [...state.hiring_data.payment_accounts!] : [];
 
             payments_data = payments_data.map((item) => {
 
