@@ -1,6 +1,8 @@
+
+
 export { VerifyPage } from "./pages/Verify/VerifyPage";
 
-export { HomePage } from "./pages/HomePage";
+export { HomePage } from "./pages/Home/HomePage";
 export { LoginPage } from "./pages/Login/LoginPage";
 export { RegisterPage } from "./pages/RegisterPage";
 

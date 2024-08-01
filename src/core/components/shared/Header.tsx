@@ -1,6 +1,8 @@
+
 import { NotificationsView, UserProfileDropdown } from "../../../modules/dashboard/components";
 import { useAuthStore } from "../../store";
 import { FC } from "react";
+
 
 interface Header_I {
     sidebarOpen: boolean;
@@ -17,7 +19,7 @@ export const Header: FC<Header_I> = ({
 
     return (
         <header className="sticky top-0 bg-white dark:bg-[#182235] border-b border-slate-200 dark:border-slate-700 z-30">
-            <div className="px-4 sm:px-6 lg:px-8">
+            <nav className="px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16 -mb-px">
 
                     {/* Header: Left side */}
@@ -39,6 +41,7 @@ export const Header: FC<Header_I> = ({
                         </button>
 
                     </div>
+
                     {
                         state.status === 'authenticated' && (
                             <div className="flex items-center space-x-3">
@@ -57,9 +60,7 @@ export const Header: FC<Header_I> = ({
                             <SearchModal id="search-modal" searchId="search" modalOpen={searchModalOpen} setModalOpen={setSearchModalOpen} />
                             */}
                                 </div>
-                                {/* <Notifications align="right" />
-                        <Help align="right" />
-                        <ThemeToggle /> */}
+
                                 <NotificationsView align="right" />
                                 <hr className="w-px h-6 border-none bg-slate-200 dark:bg-slate-700" />
                                 <UserProfileDropdown align="right" />
@@ -68,7 +69,7 @@ export const Header: FC<Header_I> = ({
                     }
 
                 </div>
-            </div>
+            </nav>
         </header>
     );
 }
