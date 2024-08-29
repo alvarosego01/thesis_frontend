@@ -56,7 +56,6 @@ const formData: LayoutRow_I[] = [
 interface Init_valuesData_I {
     voice_specialty: SelectValue_I<Singer_voiceSpecialty_Type>[];
     voice_type: SelectValue_I<Singer_voiceType_Type>[];
-    // repertoire
 }
 
 export const SingerSkillSelectors: FC = () => {
@@ -123,6 +122,7 @@ export const SingerSkillSelectors: FC = () => {
             voice_specialty: meta_to_selectors<Singer_voiceSpecialty_Type>(singer?.voice_specialty!, singerModel_Data.voice_specialty) || [],
             voice_type: meta_to_selectors<Singer_voiceType_Type>(singer?.voice_type!, singerModel_Data.voice_type) || [],
         }
+
         formik.setValues(Init_Values);
 
     }, [meta?.skills?.singer, isMounted])

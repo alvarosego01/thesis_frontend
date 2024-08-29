@@ -3,8 +3,8 @@
 // Slices
 export { uiSlice } from "./reducers/ui/uiSlice";
 export { authSlice } from "./reducers/session/auth/authSlice";
-
 export { notificationsSlice } from "./reducers/session/notifications/notificationsSlice";
+export { navigationSlice } from "./reducers/navigation/navigationSlice";
 
 // thunks
 export * from "./hooks/auth/authThunks";

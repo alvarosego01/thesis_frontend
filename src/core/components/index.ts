@@ -6,8 +6,19 @@ export { DocumentSelector } from './selectors/DocumentSelector';
 
 export { SettingsSidebar } from './SettingsSidebar';
 
+// Shared
+export { Footer } from './shared/footer/Footer';
 export { Header } from './shared/Header';
+export { NavBarsItems } from './navs/navBarsItems/NavBarsItems';
+export { HeaderNavBar } from './shared/navBars/HeaderNavBar';
 
+
+// Users and profile things
+export { UserCard } from './users-profile/userList/UserCard';
+export { UserList } from './users-profile/userList/UserList';
+
+// Search field
+export { SearchBar } from './searchFields/SearchBar';
 
 
 // FORMS

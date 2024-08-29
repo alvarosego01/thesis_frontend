@@ -171,7 +171,6 @@ interface Init_valuesData_I {
 
 export const PersonalPage: FC = () => {
 
-
     const [isMounted, setisMounted] = useState(false)
 
     const [avatar, setavatar] = useState(getAssetPath('/images/user_anon.png'));
@@ -183,7 +182,6 @@ export const PersonalPage: FC = () => {
         },
         emit_save_user_data,
     } = useUserStore();
-
 
     const {
         state: {
@@ -230,6 +228,7 @@ export const PersonalPage: FC = () => {
 
     const {
         submitForm,
+        setValues
     } = formik;
 
     const formik_image = useFormik({
@@ -246,6 +245,25 @@ export const PersonalPage: FC = () => {
         values: values_image,
         submitForm: submitForm_image,
     } = formik_image;
+
+    useEffect(() => {
+        if (isMounted === false) return;
+
+        if (user) {
+            Init_Values = {
+                name: user.name || '',
+                gender: user.gender as Gender_Enum || Gender_Enum.NONE,
+                lastname: user.last_name || '',
+                city: user.direction?.city || '',
+                state: user.direction?.state || '',
+                direction: user.direction?.address || '',
+                phone: user.phone || '',
+            };
+            setValues({
+                ...Init_Values
+            })
+        }
+    }, [user]);
 
     useEffect(() => {
 

@@ -73,6 +73,7 @@ export const ListDoActions: FC<ListDoActions_Props_I> = ({
         if (action.type === 'link' && action.action) {
 
             navigate(action.action);
+
         } else {
 
             if (action.type === 'function' && onClick && action.action) {

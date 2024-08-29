@@ -36,7 +36,7 @@ export const SecondaryButton: FC<Button_I> = ({
     }
 
     return (
-        <button type="button" className={`${className} ${sizeButton()} dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-300 w-fit h-fit space-x-5`}
+        <button type="button" className={`${className} ${sizeButton()} !border-slate-200 hover:!border-slate-300 !text-slate-600 w-fit h-fit space-x-5`}
             onClick={_onclick}
             disabled={set_disabled()}
         >

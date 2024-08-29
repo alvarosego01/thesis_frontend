@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom"
-import { HomePage, LoginPage, RegisterPage, VerifyPage } from "."
+import { HomePage, LoginPage, RegisterPage, SearchUsersPage, VerifyPage } from "."
 import { useAuthStore } from "../../core/store";
 import { FC, useEffect, useState } from "react";
 
@@ -35,6 +35,7 @@ export const Public_routes: FC = () => {
             }
             <Route path='' index element={<HomePage />} />
             <Route path='home' element={<HomePage />} />
+            <Route path='search' element={<SearchUsersPage />} />
             <Route path='verify/:key' element={<VerifyPage />} />
             <Route path="/*" element={<Navigate to="/" replace />} />
         </Routes>

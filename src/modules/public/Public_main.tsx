@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Header } from "../../core/components"
+import { Footer, Header } from "../../core/components"
 import { Public_routes } from "./public.routes";
 
 
@@ -16,11 +16,14 @@ import { Public_routes } from "./public.routes";
                 <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
                 {/* Main content */}
-                <main className="min-h-[100vh] grow">
+                <main className="h-auto  min-h-auto grow">
 
                     <Public_routes />
 
                 </main>
+
+                <Footer />
+
             </div>
 
         </div>

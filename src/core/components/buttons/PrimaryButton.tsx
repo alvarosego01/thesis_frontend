@@ -39,7 +39,7 @@ export const PrimaryButton: FC<Button_I> = ({
     }
 
     return (
-        <button type="button" className={`${className} ${sizeButton()} text-white bg-indigo-500 hover:bg-indigo-600 w-fit h-fit ${state_style()}`}
+        <button type="button" className={`${className} ${sizeButton()} !text-white !bg-indigo-500 hover:!bg-indigo-600 w-fit h-fit ${state_style()}`}
             onClick={_onclick}
             disabled={set_disabled()}
         >
