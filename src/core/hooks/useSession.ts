@@ -10,9 +10,12 @@ import { useUserMetaStore } from '../../modules/dashboard/store/hooks/user_meta/
 interface useSession_I {
 
     emit_clear_all_data: () => void;
+    // emit_is_authenticated: () => boolean;
+
 }
 
 export const useSession = (): useSession_I => {
+
 
     const {
         emit_clear_user
@@ -41,7 +44,8 @@ export const useSession = (): useSession_I => {
 
     return {
 
-        emit_clear_all_data
+        emit_clear_all_data,
+
     }
 
 }

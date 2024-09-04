@@ -13,6 +13,10 @@ export { NavBarsItems } from './navs/navBarsItems/NavBarsItems';
 export { HeaderNavBar } from './shared/navBars/HeaderNavBar';
 
 
+// Job vacants
+export { JobCard } from './job-vacants/jobList/JobCard';
+export { JobList } from './job-vacants/jobList/JobList';
+
 // Users and profile things
 export { UserCard } from './users-profile/userList/UserCard';
 export { UserList } from './users-profile/userList/UserList';
@@ -28,6 +32,7 @@ export * from "./forms/SelectField";
 export * from "./forms/TextInputField";
 export * from "./forms/TextAreaField";
 export * from "./forms/FileHideInput";
+export * from "./forms/DatePicker";
 
 export { SelectSpecialField as SelectMultipleField } from './forms/SelectSpecialField';
 

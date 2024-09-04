@@ -4,8 +4,7 @@ import { FC, useEffect, useState } from "react"
 import { SearchBar, UserList } from "../../../../core/components"
 import { UserSearch_I } from "../../interfaces"
 import { useUrlParams } from "../../../../core/hooks";
-import { useUserMetaStore } from "../../store";
-
+import { useUserSearchStore } from "../../store";
 
 interface SearchParams_I {
     term?: string;
@@ -47,15 +46,29 @@ export const SearchUsersPage: FC = () => {
             onLoading,
             results
         },
-        emit_searchUsers_all
-    } = useUserMetaStore()
+        emit_searchUsers_all,
+        emit_searchUsers_byTerm,
+        emit_restore
+    } = useUserSearchStore()
 
     const [isMounted, setisMounted] = useState(false)
 
     const [filterType, setfilterType] = useState<UserSearch_I['value']>('all');
 
     const set_filter = (filter: UserSearch_I['value']) => {
+
         setfilterType(filter);
+
+        let aux_p = getParams() as SearchParams_I;
+        aux_p.type = filter;
+
+        if (aux_p.term) delete aux_p.term;
+
+        emit_searchUsers_all(filter);
+        setParams({ ...aux_p });
+
+
+
     }
 
     const set_activeFilter = (filter: UserSearch_I['value']): string => {
@@ -67,31 +80,54 @@ export const SearchUsersPage: FC = () => {
 
     const get_searchSubmit = (term: string) => {
 
-        console.log('term final', term);
-        const aux_p = getParams() as SearchParams_I;
-        aux_p.term = term;
+        let aux_p = getParams() as SearchParams_I;
+        if (term.length > 0) {
+
+            aux_p.term = term;
+            emit_searchUsers_byTerm(term);
+
+        } else {
+
+            delete aux_p.term;
+            emit_searchUsers_all('all');
+        }
+
+        if (aux_p.type) delete aux_p.type;
         setParams({ ...aux_p });
+
+    }
+
+    const search_initial = () => {
+
+        const aux_p = getParams() as SearchParams_I;
+
+        if (aux_p.type) return emit_searchUsers_all(aux_p.type || 'all');
+        if (aux_p.term) return emit_searchUsers_byTerm(aux_p.term);
+
+        emit_searchUsers_all('all');
 
     }
 
     useEffect(() => {
 
         if (isMounted === false) return;
-        const aux_p = getParams() as SearchParams_I;
-
-        emit_searchUsers_all(aux_p.type || 'all');
-
+        search_initial();
 
     }, [isMounted]);
 
     useEffect(() => {
-        setisMounted(true);
-    }, []);
 
+        setisMounted(true);
+
+        return () => {
+            emit_restore();
+        }
+
+    }, []);
 
     return (
 
-        <div className="w-full px-4 py-16 mx-auto sm:px-6 lg:px-8 max-w-9xl">
+        <div className="w-full px-4 py-16 mx-auto max-w-8xl">
 
             <div className="mb-5">
 
@@ -110,10 +146,8 @@ export const SearchUsersPage: FC = () => {
 
                     {
                         filtersByType.map((item, index) => (
-                            <li
-                                onClick={() => set_filter(item.value)}
-                                key={index} className="pb-3 mr-6 last:mr-0 first:pl-4 sm:first:pl-6 lg:first:pl-8 last:pr-4 sm:last:pr-6 lg:last:pr-8">
-                                <a className={`text-gray-400 whitespace-nowrap ${set_activeFilter(item.value)}`} href="#0">{item.name}</a>
+                            <li onClick={() => set_filter(item.value)} key={index} className="pb-3 mr-6 hover:cursor-pointer last:mr-0 first:pl-4 sm:first:pl-6 lg:first:pl-8 last:pr-4 sm:last:pr-6 lg:last:pr-8">
+                                <a className={`text-gray-400 whitespace-nowrap ${set_activeFilter(item.value)}`} >{item.name}</a>
                             </li>
                         ))
                     }
@@ -144,13 +178,11 @@ export const SearchUsersPage: FC = () => {
                         )
                     }
 
-
                 </div>
 
             </div>
 
         </div>
-
 
     )
 }

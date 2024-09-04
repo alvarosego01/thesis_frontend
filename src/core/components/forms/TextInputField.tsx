@@ -1,6 +1,7 @@
 import { FC, useEffect } from "react";
 import { TextInputField_Props_I } from "./interfaces";
 import { ErrorMessage, useField } from "formik";
+import { is_required } from "./Commons";
 
 
 export const TextInputField: FC<TextInputField_Props_I> = ({
@@ -12,7 +13,9 @@ export const TextInputField: FC<TextInputField_Props_I> = ({
 
     const [field, meta, helpers] = useField(props);
 
-    let isRequired = props.validation_rules?.some(rule => rule.type === "required") || false;
+    // let isRequired = props.validation_rules?.some(rule => rule.type === "required" ) || false;
+        const isRequired = props.validation_rules?.some(rule => (is_required(rule.type))) || false;
+
 
     const fieldState = (): string => {
 
@@ -22,7 +25,6 @@ export const TextInputField: FC<TextInputField_Props_I> = ({
 
         return '';
     }
-
 
     return (
         <>
@@ -36,7 +38,7 @@ export const TextInputField: FC<TextInputField_Props_I> = ({
                     )
                 }
                 <div className="relative">
-                    <input type="text" className={`w-full form-input ${fieldState()} ${props?.icon && 'pl-s_35'}`} {...field} {...props} required={isRequired} disabled={disabled} />
+                    <input type="text" className={`w-full form-input ${fieldState()} ${props?.icon && 'pl-s_35'}`} {...field} required={isRequired} disabled={disabled} {...props}  />
                     {
                         props?.icon && (
                             <div className="absolute inset-0 right-auto flex items-center pointer-events-none pl-s_10">

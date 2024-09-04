@@ -19,6 +19,10 @@ interface useHookStore_I {
     emit_checkAuthToken: () => void;
     emit_login: (email: string, password: string) => void;
     emit_register_user: (name: string, last_name: string, email: string, role: User_Role_Enum, password: string) => void;
+
+    emit_is_authenticated: () => boolean;
+    emit_is_role: (role: User_Role_Enum) => boolean;
+
 }
 
 export const useAuthStore = (): useHookStore_I => {
@@ -127,6 +131,30 @@ export const useAuthStore = (): useHookStore_I => {
 
     }
 
+    const emit_is_authenticated = () => {
+
+        return state.status === 'authenticated';
+
+    }
+
+    const emit_is_role = (role: User_Role_Enum) => {
+
+        if (emit_is_authenticated()) {
+
+            if (state.auth.role === role) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } else {
+
+            return false;
+
+        }
+
+    }
+
     return {
         //Params
         state,
@@ -135,6 +163,10 @@ export const useAuthStore = (): useHookStore_I => {
         emit_onLogout,
         emit_checkAuthToken,
         emit_login,
-        emit_register_user
+        emit_register_user,
+
+        emit_is_authenticated,
+        emit_is_role
+
     }
 }

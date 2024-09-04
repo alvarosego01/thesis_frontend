@@ -17,18 +17,19 @@ export const Header: FC<Header_I> = ({
 }) => {
 
     const {
-        state
+        state,
+        emit_is_authenticated
     } = useAuthStore();
 
     const {
         state: navigationState
     } = useNavigationStore()
 
-    const is_authenticated = () => {
+    // const is_authenticated = () => {
 
-        return state.status === 'authenticated';
+    //     return state.status === 'authenticated';
 
-    }
+    // }
 
     const is_dashboard = () => {
 
@@ -44,10 +45,12 @@ export const Header: FC<Header_I> = ({
     return (
 
         <header className="sticky top-0 bg-white dark:bg-[#182235] border-b border-slate-200 dark:border-slate-700 z-30">
-            <nav className="px-6 sm:px-8 lg:px-10">
+            <nav className={`px-6 sm:px-8 lg:px-10
+                ${!is_dashboard() ? 'max-w-9xl mx-auto sm:px-6 lg:px-8' : ''}
+            `}>
                 <div className="flex items-center justify-between h-16 -mb-px">
 
-                    <div className={`flex h-full  ${is_authenticated() ? 'w-10/12' : 'w-full'} `}>
+                    <div className={`flex h-full  ${emit_is_authenticated() ? 'w-10/12' : 'w-full'} `}>
 
                         {
                             (is_dashboard()) && (
@@ -67,12 +70,6 @@ export const Header: FC<Header_I> = ({
                             )
                         }
 
-                        {/*                            <div className="mr-4 shrink-0">
-                        <a className="block transition duration-150 ease-in-out" href="{{ home_url }}">
-                            <img className="h-16 md:h-s_50 lg:h-s_75 onLazyLoad"  alt="Header navbar logo" />
-                        </a>
-                    </div>
- */}
                         <HeaderNavBar />
 
                     </div>

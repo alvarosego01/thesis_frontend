@@ -58,7 +58,35 @@ export const get_Validation = (rule: ValidationRule_I, schema: any) => {
         if (!rule.conditional) return schema;
         const { key, is, then, otherwise } = rule.conditional;
         schema = schema.when(key, {
-            is: (value: any) => value === is,
+            is: (value: any) => {
+                return value === is
+                },
+            then: (schm: any) => schm.required(rule.message),
+            otherwise: (schm: any) => schm.notRequired(),
+        });
+    }
+    if (rule.type === 'conditional_select_single_required') {
+        if (!rule.conditional) return schema;
+        const { key, is, then, otherwise } = rule.conditional;
+        schema = schema.when(key, {
+            is: (value: SelectValue_I<any>) => {
+                console.log('first', value, is)
+                return value.value === is
+            },
+            then: (schm: any) => schm.required(rule.message),
+            otherwise: (schm: any) => schm.notRequired(),
+        });
+    }
+    if (rule.type === 'conditional_select_multi_required') {
+        if (!rule.conditional) return schema;
+        const { key, is, then, otherwise } = rule.conditional;
+        schema = schema.when(key, {
+            is: (value: SelectValue_I<any>[]) => {
+                if (Array.isArray(value)) {
+                    return value.some((item: SelectValue_I<any>) => item.value === is);
+                }
+                return false;
+            },
             then: (schm: any) => schm.required(rule.message),
             otherwise: (schm: any) => schm.notRequired(),
         });

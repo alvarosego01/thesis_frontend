@@ -4,6 +4,7 @@ export interface Modal_Base_I {
     status: boolean;
     title?: string;
     children?: React.ReactNode;
+    size?: "normal" | "big";
     onClose?: () => void;
 }
 

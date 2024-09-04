@@ -1,3 +1,4 @@
+
 import { FC } from "react"
 import { NavModel } from '../../../interfaces/navs.interfaces';
 
@@ -77,18 +78,6 @@ export const NavBarsItems: FC<Props_I> = ({
     return (
         <>
             <ul className="items-center h-16 px-1 my-auto space-x-2 menu menu-horizontal">
-
-                {/* <li><a>Item 1</a></li>
-            <li>
-                <details className='bg-transparent'>
-                    <summary>Parent</summary>
-                    <ul className="p-1">
-                        <li><a>Submenu 1</a></li>
-                        <li><a>Submenu 2</a></li>
-                    </ul>
-                </details>
-            </li>
-            <li><a>Item 3</a></li> */}
 
                 {
                     show_items(navs)

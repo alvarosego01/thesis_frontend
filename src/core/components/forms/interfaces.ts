@@ -9,6 +9,8 @@ const type_array_default = [
     "select_multi_required",
     "notRequired",
     "conditional_required",
+    "conditional_select_multi_required",
+    "conditional_select_single_required",
     "minLength",
     "maxLength",
     "email",
@@ -98,6 +100,19 @@ export interface TextInputField_Props_I {
     [x: string]: any,
 }
 
+export interface DatePicker_Field_Props_I {
+    label: string;
+    name: string;
+    range: boolean;
+    disabled?: boolean;
+        placeholder?: string;
+    value?: string;
+    align?: string;
+    validation_rules?: ValidationRule_I[];
+    parent_class?: string;
+    [x: string]: any,
+}
+
 
 export interface FileHideInput_Props_I {
     // ref: React.RefObject<HTMLInputElement>;
@@ -127,7 +142,7 @@ export interface TextAreaField_Props_I {
 
 export interface LayoutRow_I {
     fields: {
-        typeField: 'checkbox' | 'text' | 'select' | 'select_special' | 'textarea' | 'file';
+        typeField: 'checkbox' | 'text' | 'select' | 'select_special' | 'textarea' | 'file' | 'date_picker';
         props: any;
     }[];
     grid_columns?: string

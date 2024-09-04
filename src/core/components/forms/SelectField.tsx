@@ -1,13 +1,15 @@
 import { ErrorMessage, useField } from "formik";
 import { SelectField_Props_I } from "./interfaces";
+import { is_required } from "./Commons";
 
 
 export const SelectField = ({ label, className, ...props }: SelectField_Props_I) => {
 
     // extraer context de formik
-    const [field, meta] = useField(props);
+    const [field, meta, helpers] = useField(props);
 
-    const isRequired = props.validation_rules?.some(rule => rule.type === "required");
+    // const isRequired = props.validation_rules?.some(rule => rule.type === "required");
+            const isRequired = props.validation_rules?.some(rule => (is_required(rule.type))) || false;
 
     const fieldState = (): string => {
 

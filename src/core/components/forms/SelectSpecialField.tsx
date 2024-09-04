@@ -5,6 +5,7 @@ import makeAnimated from 'react-select/animated';
 
 import Select, { components, GroupBase, NoticeProps } from 'react-select'
 import { SelectSpecialField_Props_I, SelectValue_I } from './interfaces';
+import { is_required } from './Commons';
 
 
 interface SelectOption {
@@ -38,7 +39,9 @@ export const SelectSpecialField: FC<SelectSpecialField_Props_I> = ({
     const [field, meta, helpers] = useField(props);
     const options = [...items];
 
-    const isRequired = props.validation_rules?.some(rule => rule.type === "required");
+    // const isRequired = props.validation_rules?.some(rule => (is_required(rule.type)));
+
+            const isRequired = props.validation_rules?.some(rule => (is_required(rule.type))) || false;
 
     const fieldState = (): string => {
 
@@ -50,7 +53,15 @@ export const SelectSpecialField: FC<SelectSpecialField_Props_I> = ({
 
     const [values, setValues] = useState<SelectValue_I[]>([...value] || [])
 
-    const onChange = (value_change: SelectValue_I | SelectValue_I[]) => {
+    const onChange = (value_change: any) => {
+
+        if (Array.isArray(value_change) && value_change.length === 0) {
+            helpers.setValue([] as const);
+            setValues([] as const);
+            helpers.setTouched(true);
+            return;
+        }
+
         setValues(Array.isArray(value_change) ? value_change : [value_change]);
         helpers.setValue(value_change);
         helpers.setTouched(true);

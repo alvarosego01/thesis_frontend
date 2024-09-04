@@ -8,6 +8,7 @@ import { useAuthStore } from '../../../store'
 import { NavBarsItems } from '../..'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useNavigationStore } from '../../../store/hooks/useNavigationStore'
+import { useSession } from '../../../hooks'
 
 const NavLeft: NavModel[] = [
     {
@@ -31,7 +32,7 @@ const NavLeft: NavModel[] = [
         type: 'regular',
         action: {
             type: 'link',
-            action: '/vacancies'
+            action: '/vacants'
         }
     }
 ];
@@ -59,8 +60,13 @@ const NavRight: NavModel[] = [
 export const HeaderNavBar: FC = () => {
 
     const {
-        state
+        state,
+        emit_is_authenticated
     } = useAuthStore();
+
+    // const {
+    //     emit_is_authenticated
+    // } = useSession();
 
     const {
         state: navigationState
@@ -68,11 +74,11 @@ export const HeaderNavBar: FC = () => {
 
     const navigate = useNavigate();
 
-    const is_authenticated = () => {
+    // const is_authenticated = () => {
 
-        return state.status === 'authenticated';
+    //     return state.status === 'authenticated';
 
-    }
+    // }
 
     const is_dashboard = () => {
 
@@ -163,7 +169,7 @@ export const HeaderNavBar: FC = () => {
             <div className="items-center hidden w-full h-full lg:flex lg:justify-between">
                 <NavBarsItems navs={NavLeft} onClick={(action) => get_action(action)} />
                 {
-                    !is_authenticated() && (
+                    !emit_is_authenticated() && (
                         <NavBarsItems navs={NavRight} onClick={(action) => get_action(action)} />
                     )
                 }

@@ -6,6 +6,7 @@ import { Modal_Base_I } from "./interfaces";
 export const BlankModal: FC<Modal_Base_I> = ({
     status,
     children,
+    size = 'normal',
     onClose
 }) => {
 
@@ -30,13 +31,23 @@ export const BlankModal: FC<Modal_Base_I> = ({
         }, 200);
     }
 
+    const set_size_parent = (): string => {
+
+        let aux_size: string = 'modal-box'
+
+        if(size === 'big') aux_size = 'modal-box max-w-[95%] pcTab:max-w-4xl lg:max-w-6xl w-full';
+
+        return aux_size
+
+    }
+
     return (
         <dialog
             ref={modalRef}
             id={id} className="modal">
-            <div className="p-0 overflow-visible bg-transparent rounded-rd_5 modal-box">
+            <div className={`p-0 overflow-visible bg-transparent rounded-rd_5 ${set_size_parent()}`}>
 
-                <div className="w-full max-w-lg max-h-full overflow-visible bg-white rounded shadow-lg p-s_25 dark:bg-slate-800">
+                <div className={`w-full children-content max-full max-h-full overflow-visible bg-white rounded shadow-lg p-s_25 dark:bg-slate-800 `}>
                     {
                         children
                     }

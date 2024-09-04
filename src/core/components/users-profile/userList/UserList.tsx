@@ -16,7 +16,8 @@ export const UserList: FC<Props_I> = ({
             {
                 (users.length > 0) && users.map((user, index) => (
                     <UserCard key={index} user={user} />
-                ))}
+                ))
+            }
         </div>
     )
 }

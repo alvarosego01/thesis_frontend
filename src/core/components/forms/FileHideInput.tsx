@@ -2,6 +2,7 @@ import { FC, useEffect, useRef, useState } from "react";
 import { FileHideInput_Props_I } from "./interfaces";
 import { ErrorMessage, useField } from "formik";
 import { PrimaryButton } from "../buttons/PrimaryButton";
+import { is_required } from "./Commons";
 
 
 export const FileHideInput: FC<FileHideInput_Props_I> = ({
@@ -15,7 +16,8 @@ export const FileHideInput: FC<FileHideInput_Props_I> = ({
 
     const [field, meta, helpers] = useField(props);
 
-    const isRequired = props.validation_rules?.some(rule => rule.type === "required") || false;
+    // const isRequired = props.validation_rules?.some(rule => rule.type === "required") || false;
+            const isRequired = props.validation_rules?.some(rule => (is_required(rule.type))) || false;
 
     const handleFileChange = (event: any) => {
 

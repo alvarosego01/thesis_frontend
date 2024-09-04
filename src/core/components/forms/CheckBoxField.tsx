@@ -1,5 +1,6 @@
 import { ErrorMessage, useField } from "formik";
 import { CheckBoxField_Props_I } from "./interfaces";
+import { is_required } from "./Commons";
 
 
 
@@ -7,7 +8,8 @@ export const CheckBoxField = ({ label, className, ...props }: CheckBoxField_Prop
 
     const [field] = useField(props);
 
-    const isRequired = props.validation_rules?.some(rule => rule.type === "required");
+    // const isRequired = props.validation_rules?.some(rule => rule.type === "required");
+     const isRequired = props.validation_rules?.some(rule => (is_required(rule.type))) || false;
 
     return (
         <div className={`  mb-s_10 lg:mb-0`} >

@@ -42,7 +42,7 @@ export const SearchBar: FC<Props_I> = ({
             <label htmlFor="app-search" className="sr-only">Search</label>
             <input
                 id="app-search"
-                className="w-full py-3 bg-white form-input pl-9 dark:bg-gray-800"
+                className="w-full py-3 bg-white form-input px-9 dark:bg-gray-800"
                 type="search"
                 value={searchTerm}
                 onChange={handleChange}
@@ -53,6 +53,16 @@ export const SearchBar: FC<Props_I> = ({
                     <path d="M15.707 14.293L13.314 11.9a8.019 8.019 0 01-1.414 1.414l2.393 2.393a.997.997 0 001.414 0 .999.999 0 000-1.414z" />
                 </svg>
             </button>
+
+            {
+                (isLoading) && (
+                    <div className='absolute top-0 bottom-0 flex items-center justify-center right-4'>
+                        <svg className="w-4 h-4 fill-current animate-spin shrink-0" viewBox="0 0 16 16">
+                            <path d="M8 16a7.928 7.928 0 01-3.428-.77l.857-1.807A6.006 6.006 0 0014 8c0-3.309-2.691-6-6-6a6.006 6.006 0 00-5.422 8.572l-1.806.859A7.929 7.929 0 010 8c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z" />
+                        </svg>
+                    </div>
+                )
+            }
         </form>
     );
 };

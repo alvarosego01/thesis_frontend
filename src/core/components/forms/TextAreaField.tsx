@@ -1,6 +1,7 @@
 
 
 
+import { is_required } from './Commons';
 import { TextAreaField_Props_I } from './interfaces';
 
 import { ErrorMessage, useField } from 'formik';
@@ -9,7 +10,9 @@ export const TextAreaField = ({ label, parent_class: parent_className, ...props 
 
     const [field, meta] = useField(props);
 
-    const isRequired = props.validation_rules?.some(rule => rule.type === "required") || false;
+    // const isRequired = props.validation_rules?.some(rule => rule.type === "required") || false;
+        const isRequired = props.validation_rules?.some(rule => (is_required(rule.type))) || false;
+
 
         const fieldState = (): string => {
 

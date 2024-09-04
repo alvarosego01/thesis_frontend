@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { SignatureModal_Props_I } from '@modules/dashboard/pages/account/components/modals/SignatureModal';
 import { ConfirmDeleteModal_Props_I, PaymentInfoModal_Props_I } from '@modules/dashboard/pages/hireConfig/components';
+import { NewVacantModal_Modal_Props_I } from '../../../../modules/public/pages/JobVacants/components/modals/NewVacantModal/NewVacantModal';
 
 
 export interface uiState_I {
@@ -22,6 +23,9 @@ export interface uiState_I {
                 lostPassword_modal: {
                     status: boolean;
                 }
+            },
+            vacants: {
+                vacant_modal: NewVacantModal_Modal_Props_I;
             }
 
         }
@@ -53,6 +57,12 @@ const initialState: uiState_I = {
             login: {
                 lostPassword_modal: {
                     status: false
+                }
+            },
+            vacants: {
+                vacant_modal: {
+                    status: true,
+                    vacant_id: ''
                 }
             }
         }
@@ -88,6 +98,13 @@ export const uiSlice = createSlice({
                 index
             }
         },
+         on_Handler_vacantsModal: (state, {payload}: PayloadAction<NewVacantModal_Modal_Props_I>) => {
+            const { status, vacant_id } = payload;
+            state.modals.public.vacants.vacant_modal = {
+                status,
+                vacant_id
+            }
+        },
         on_restoreDefault: (state) => {
             state = initialState;
         },
@@ -99,6 +116,7 @@ export const {
     on_Handler_PaymentInfoModal,
     on_Handler_delete_PaymentInfoModal,
     on_Handler_Login_LostPasswordModal,
+    on_Handler_vacantsModal,
     on_restoreDefault
 
 } = uiSlice.actions;

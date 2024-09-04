@@ -1,6 +1,6 @@
 
 import { FC } from "react";
-import { CheckBoxField, FileHideInput, SelectField, TextAreaField, TextInputField } from "..";
+import { CheckBoxField, DatePicker, FileHideInput, SelectField, TextAreaField, TextInputField } from "..";
 import { LayoutRow_I, SelectField_Props_I } from "./interfaces"
 import { SelectSpecialField } from "./SelectSpecialField";
 
@@ -24,6 +24,8 @@ export const FormLayoutBuilder: FC<FormLayoutBuilder_Props_I> = ({ rows }) => {
                                     switch (field.typeField) {
                                         // case 'file':
                                         //     return <FileHideInput key={j} {...field.props} />
+                                        case 'date_picker':
+                                                return <DatePicker key={j} {...field.props} />
                                         case 'text':
                                             return <TextInputField key={j} {...field.props} />
                                         case 'select_special':

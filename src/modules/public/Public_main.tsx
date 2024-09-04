@@ -16,7 +16,7 @@ import { Public_routes } from "./public.routes";
                 <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
                 {/* Main content */}
-                <main className="h-auto  min-h-auto grow">
+                <main className="h-auto min-h-auto grow">
 
                     <Public_routes />
 
