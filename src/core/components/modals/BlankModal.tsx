@@ -35,7 +35,7 @@ export const BlankModal: FC<Modal_Base_I> = ({
 
         let aux_size: string = 'modal-box'
 
-        if(size === 'big') aux_size = 'modal-box max-w-[95%] pcTab:max-w-4xl lg:max-w-6xl w-full';
+        if(size === 'big') aux_size = 'modal-box max-w-[95%] pcTab:max-w-4xl lg:max-w-5xl w-full';
 
         return aux_size
 

@@ -8,8 +8,47 @@ import { NewVacant_step2 } from "./NewVacant_step2";
 import { StepCounter } from "./StepCounter";
 import { NewVacant_step3 } from "./NewVacant_step3";
 import { NewVacant_step4 } from "./NewVacant_step4";
-import { Vacant_Values_I, Vacant_Values_Step1_I, Vacant_Values_Step2_I, Vacant_Values_Step3_I } from "./interfaces";
+import { Vacant_Values_I, Vacant_Values_Step1_I, Vacant_Values_Step2_I, Vacant_Values_Step3_I, Vacant_Values_Step4_I } from "./interfaces";
+import { Currency_Enum } from "@tesis-project/dev-globals/dist/core/interfaces";
+import { Vacant_Housing_Enum, Vacant_I, Vacant_Transport_Enum } from "@tesis-project/dev-globals/dist/modules/business/vacants/interfaces";
 
+
+const vacant_data_default: Partial<Vacant_I> = {
+        title: '',
+        desc: '',
+        operation: {
+            end_at: '' as any,
+            start_at: '' as any
+        },
+        role_desc: '',
+        role_type: [] as any,
+        transport_service: {
+            enable: false,
+            desc: '',
+            type: Vacant_Transport_Enum.LAND
+        },
+        housing_service: {
+            enable: false,
+            desc: '',
+            type: Vacant_Housing_Enum.HOTEL
+        },
+        vacant_costs: {
+            enable: false,
+            desc: '',
+            currency: Currency_Enum.USD,
+            total: 0
+        },
+        vacant_payment: {
+            currency: Currency_Enum.USD,
+            total: 0
+        },
+        direction: {
+            city: '',
+            state: '',
+            address: ''
+        },
+        specific_conditions: '',
+}
 
 export interface NewVacantModal_Modal_Props_I {
     status: boolean;
@@ -25,7 +64,12 @@ export const NewVacantModal: FC<NewVacantModal_Modal_Props_I> = ({
         emit_handle_vacantModal
     } = useUiStore();
 
-    const [stepCounter, setstepCounter] = useState(3)
+    const [stepCounter, setstepCounter] = useState(0);
+    const [totalSteps, setTotalSteps] = useState(3);
+
+    const [VacantData, setVacantData] = useState<Partial<Vacant_I>>({
+        ...vacant_data_default
+    })
 
     const [isMounted, setisMounted] = useState(false);
 
@@ -45,13 +89,41 @@ export const NewVacantModal: FC<NewVacantModal_Modal_Props_I> = ({
         housing_type: [],
         costs_desc: '',
         costs_currency: [],
-        costs_mount: 0
+        costs_mount: 0,
+
+        payment_amount: 0,
+        vacant_date: '',
+        payment_currency: [],
+        specific_conditions: ''
 
     })
 
-    const set_next = (values: any) => {
+    const set_data = () => {
+        // return
+        const aux_valuesModal = valuesModal;
+        const aux_step_1: Vacant_Values_Step1_I = {...aux_valuesModal} as Vacant_Values_Step1_I;
+        const aux_step_2: Vacant_Values_Step2_I = {...aux_valuesModal} as Vacant_Values_Step2_I;
+        const aux_step_3: Vacant_Values_Step3_I = {...aux_valuesModal} as Vacant_Values_Step3_I;
+        const aux_step_4: Vacant_Values_Step4_I = {...aux_valuesModal} as Vacant_Values_Step4_I;
 
-        console.log('sale', values);
+        setVacantData((x) => ({
+            ...x,
+            title: aux_step_1.title,
+            desc: aux_step_1.desc,
+            direction: {
+                city: aux_step_1.city,
+                state: aux_step_1.state,
+                address: aux_step_1.direction
+            },
+            })
+        );
+
+        console.log('VacantData', VacantData);
+
+
+    }
+
+    const set_next = (values: any) => {
 
         switch (stepCounter) {
             case 0:
@@ -69,13 +141,18 @@ export const NewVacantModal: FC<NewVacantModal_Modal_Props_I> = ({
                 setvaluesModal((x) => ({ ...x!, ..._values_3 }));
                 break;
 
-
+            case 3:
+                const _values_4: Vacant_Values_Step4_I = values as Vacant_Values_Step4_I;
+                setvaluesModal((x) => ({ ...x!, ..._values_4 }));
+                break;
 
         }
 
-        // setstepCounter((x) => x = x + 1);
+        set_data();
 
-        console.log('fuera', valuesModal);
+        if(stepCounter < totalSteps) return setstepCounter((x) => x = x + 1);
+
+
 
     }
 
@@ -126,31 +203,31 @@ export const NewVacantModal: FC<NewVacantModal_Modal_Props_I> = ({
 
                             </div>
 
-                            <StepCounter total={4} step={stepCounter} />
+                            <StepCounter total={totalSteps + 1} step={stepCounter} />
 
                             <div
 
-                                className={`w-10/12 mx-auto ${set_step_visible(0)}`}>
+                                className={`w-11/12 mx-auto ${set_step_visible(0)}`}>
                                 <NewVacant_step1
                                     emit_next={(v) => { set_next(v) }}
                                 />
                             </div>
 
 
-                            <div className={`w-10/12 mx-auto ${set_step_visible(1)}`}>
+                            <div className={`w-11/12 mx-auto ${set_step_visible(1)}`}>
                                 <NewVacant_step2
                                     emit_next={(v) => { set_next(v) }}
                                     emit_back={set_back}
                                 />
                             </div>
 
-                            <div className={`w-10/12 mx-auto ${set_step_visible(2)}`}>
+                            <div className={`w-11/12 mx-auto ${set_step_visible(2)}`}>
                                 <NewVacant_step3
                                     emit_next={(v) => { set_next(v) }}
                                     emit_back={set_back}
                                 />
                             </div>
-                            <div className={`w-10/12 mx-auto ${set_step_visible(3)}`}>
+                            <div className={`w-11/12 mx-auto ${set_step_visible(3)}`}>
                                 <NewVacant_step4
                                     emit_next={(v) => { set_next(v) }}
                                     emit_back={set_back}

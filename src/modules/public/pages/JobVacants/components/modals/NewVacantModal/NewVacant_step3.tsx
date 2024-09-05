@@ -261,10 +261,6 @@ export const NewVacant_step3: FC<Props_I> = ({
                 </h3>
             </div>
 
-            <pre>
-                {serviceSelected}
-            </pre>
-
             <div className="w-full pb-5 mb-5 border-b border-gray-200">
 
                 <div className="w-full mb-4">
@@ -280,21 +276,30 @@ export const NewVacant_step3: FC<Props_I> = ({
                                         <div className={`grid mt-4 gap-4 grid-cols-${(serviceSelected.length > 1) ? '2' : '1'}`}>
                                             {
                                                 serviceSelected.includes(ServicesIncludes_Enum.TRANSPORT) && (
-                                                    <div>
+                                                    <div className="space-y-2">
+                                                        <span className="text-base font-bold">
+                                                            Servicio de transporte
+                                                        </span>
                                                         <FormLayoutBuilder rows={transport_service_form} />
                                                     </div>
                                                 )
                                             }
                                             {
                                                 serviceSelected.includes(ServicesIncludes_Enum.HOUSING) && (
-                                                    <div>
+                                                 <div className="space-y-2">
+                                                        <span className="text-base font-bold">
+                                                            Servicio de hospedaje
+                                                        </span>
                                                         <FormLayoutBuilder rows={housing_service_form} />
                                                     </div>
                                                 )
                                             }
                                             {
                                                 serviceSelected.includes(ServicesIncludes_Enum.COSTS) && (
-                                                    <div>
+                                                <div className="space-y-2">
+                                                        <span className="text-base font-bold">
+                                                            Costos viaticos
+                                                        </span>
                                                         <FormLayoutBuilder rows={costs_service_form} />
                                                     </div>
                                                 )

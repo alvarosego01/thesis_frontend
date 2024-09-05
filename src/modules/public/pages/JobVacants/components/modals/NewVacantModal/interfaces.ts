@@ -40,11 +40,19 @@ export interface Vacant_Values_Step3_I {
 
 
 }
+export interface Vacant_Values_Step4_I {
 
-export interface Vacant_Values_I extends Vacant_Values_Step1_I, Vacant_Values_Step2_I, Vacant_Values_Step3_I {}
+    payment_amount: number
+    vacant_date: string;
+    payment_currency: typeof currency;
+    specific_conditions?: string;
+
+}
+
+export interface Vacant_Values_I extends Vacant_Values_Step1_I, Vacant_Values_Step2_I, Vacant_Values_Step3_I, Vacant_Values_Step4_I { }
 
 // let x: Vacant_Values_I = {
-    //
+//
 // }
 
 

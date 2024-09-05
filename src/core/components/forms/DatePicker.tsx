@@ -7,6 +7,8 @@ import { DatePicker_Field_Props_I } from './interfaces';
 
 import { ErrorMessage, useField } from "formik";
 import { is_required } from './Commons';
+import { Spanish } from 'flatpickr/dist/l10n/es';
+
 
 export const DatePicker: FC<DatePicker_Field_Props_I> = ({
     label,
@@ -19,59 +21,58 @@ export const DatePicker: FC<DatePicker_Field_Props_I> = ({
 
     const mode: string = range ? 'range' : 'single';
 
+    console.log('props.validation_rules', props.validation_rules);
+
     const isRequired = props.validation_rules?.some(rule => (is_required(rule.type))) || false;
+
+        // const dateFormat = range ? 'd M, Y' : 'd M, Y to d M, Y'; // Ajusta según necesites
+
 
     const options: any = {
         mode: mode,
         static: true,
+        locale: Spanish,
         monthSelectorType: 'static',
         dateFormat: 'M j, Y',
         defaultDate: [new Date().setDate(new Date().getDate() - 6), new Date()],
         prevArrow: '<svg class="fill-current" width="7" height="11" viewBox="0 0 7 11"><path d="M5.4 10.8l1.4-1.4-4-4 4-4L5.4 0 0 5.4z" /></svg>',
         nextArrow: '<svg class="fill-current" width="7" height="11" viewBox="0 0 7 11"><path d="M1.4 10.8L0 9.4l4-4-4-4L1.4 0l5.4 5.4z" /></svg>',
         onReady: (selectedDates: any, dateStr: string, instance: any) => {
-            instance.element.value = dateStr.replace('-', '-');
-            const customClass = (align) ? align : '';
+            const customClass = align ? align : '';
             instance.calendarContainer.classList.add(`flatpickr-${customClass}`);
         },
         onChange: (selectedDates: any, dateStr: string, instance: any) => {
-            instance.element.value = dateStr.replace('-', '-');
+            helpers.setValue(dateStr); // Updates Formik's state with the new date
         },
     }
 
     const [field, meta, helpers] = useField(props);
 
     const fieldState = (): string => {
-
-        return '';
         if (meta.error && meta.touched) return 'border-rose-300';
         if (meta.touched) return 'border-emerald-300';
         return '';
-
     }
 
     return (
         <>
-            {meta.value}
             <div className={`${parent_class || ''} mb-s_10 lg:mb-0`} >
-                {
-                    label && (
-                        <label className="block mb-1 text-sm font-medium" htmlFor={props.id || props.name}>     {label}
-                            {isRequired && <span className="text-rose-500">*</span>}
-                        </label>
-                    )
-                }
+                {label && (
+                    <label className="block mb-1 text-sm font-medium" htmlFor={props.id || props.name}>
+                        {label}
+                        {isRequired && <span className="text-rose-500">*</span>}
+                    </label>
+                )}
                 <div className="relative">
                     <Flatpickr
                         className={`pl-9 dark:bg-gray-800 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100 font-medium
                      w-full form-input ${fieldState()} ${props?.icon && 'pl-s_35'}
                      `}
                         options={options}
-                        required={isRequired}
-                        {...field}
-                        disabled={disabled} {...props}
+                        {...field} // Bind formik field to Flatpickr
+                        disabled={disabled}
+                        {...props}
                     />
-                    {/* {...field} required={isRequired} disabled={disabled} {...props} */}
                     <div className="absolute inset-0 right-auto flex items-center pointer-events-none">
                         <svg className="ml-3 text-gray-400 fill-current dark:text-gray-500" width="16" height="16" viewBox="0 0 16 16">
                             <path d="M5 4a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2H5Z" />

@@ -5,6 +5,7 @@ import { useFormInitData } from "../../../../../../../core/hooks";
 import { FormLayoutBuilder, PrimaryButton, SecondaryButton } from "../../../../../../../core/components";
 import { Artist_Enum } from "@tesis-project/dev-globals/dist/modules/profile/interfaces";
 import { Currency_Enum } from "@tesis-project/dev-globals/dist/core/interfaces";
+import { Vacant_Values_Step4_I } from "./interfaces";
 
 const currency: SelectValue_I<Currency_Enum>[] = [
     {
@@ -69,13 +70,12 @@ const formData: LayoutRow_I[] = [
                     name: 'vacant_date',
                     placeholder: 'Selecciona aquí',
                     range: true,
-                    // type: '',
-                    // validation_rules: [
-                    //     {
-                    //         type: "required",
-                    //         message: "Es requerido"
-                    //     }
-                    // ]
+                    validation_rules: [
+                        {
+                            type: "required",
+                            message: "La fecha es requerida"
+                        }
+                    ]
                 }
             },
         ]
@@ -89,6 +89,13 @@ const formData: LayoutRow_I[] = [
                     label: 'Condiciones especificas adicionales',
                     name: 'specific_conditions',
                     type: 'text',
+                          validation_rules: [
+                        {
+                            type: "minLength",
+                            value: 50,
+                            message: "La descripción debe tener al menos 50 caracteres"
+                        }
+                    ]
                 }
             },
         ],
@@ -97,21 +104,11 @@ const formData: LayoutRow_I[] = [
 
 ];
 
-interface Init_valuesData_I {
-
-    title: string;
-    desc: string;
-
-    direction?: string;
-    city?: string;
-    state?: string;
-
-}
 
 
 interface Props_I {
 
-    emit_next: (x: Init_valuesData_I) => void;
+    emit_next: (x: Vacant_Values_Step4_I) => void;
     emit_back: () => void;
     isLoading?: boolean;
 
@@ -126,29 +123,25 @@ export const NewVacant_step4: FC<Props_I> = ({
 
     const [isMounted, setisMounted] = useState(false);
 
-    const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(formData);
+    const { initialValues, validation_rules } = useFormInitData<Vacant_Values_Step4_I>(formData);
 
     const formik = useFormik({
         initialValues: initialValues,
         onSubmit: (values) => {
-            console.log('values', values);
-            // emit_next(values);
+            // console.log('values', values);
+            emit_next(values);
         },
         validationSchema: validation_rules
     });
+
+
+
 
     const {
         submitForm,
         setValues,
         values
     } = formik;
-
-    useEffect(() => {
-
-        console.log('values', values);
-
-     }, [values]);
-
 
     return (
         <>

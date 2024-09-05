@@ -65,6 +65,10 @@ const formData: LayoutRow_I[] = [
                     type: 'text',
                     validation_rules: [
                         {
+                            type: "required",
+                            message: "La dirección es requerida"
+                        },
+                        {
                             type: "minLength",
                             value: 5,
                             message: "La dirección debe tener al menos 3 caracteres"
@@ -80,6 +84,10 @@ const formData: LayoutRow_I[] = [
                     name: 'city',
                     type: 'text',
                     validation_rules: [
+                          {
+                            type: "required",
+                            message: "La ciudad es requerida"
+                        },
                         {
                             type: "minLength",
                             value: 5,
@@ -93,7 +101,16 @@ const formData: LayoutRow_I[] = [
                 props: {
                     label: 'Estado',
                     name: 'state',
-                    items: estadosVenezuela.map((estado) => ({ value: estado, label: estado }))
+                     type: 'select',
+                    isMulti: false,
+                    items: estadosVenezuela.map((estado) => ({ value: estado, label: estado })),
+                    placeholder: 'Selecciona el estado',
+                    validation_rules: [
+                        {
+                            type: "required",
+                            message: "El estado es requerido"
+                        },
+                    ]
                 }
             }
         ],
