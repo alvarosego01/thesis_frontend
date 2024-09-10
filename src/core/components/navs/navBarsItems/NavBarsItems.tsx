@@ -78,10 +78,7 @@ export const NavBarsItems: FC<Props_I> = ({
     return (
         <>
             <ul className="items-center h-16 px-1 my-auto space-x-2 menu menu-horizontal">
-
-                {
-                    show_items(navs)
-                }
+                { show_items(navs) }
             </ul>
         </>
     )

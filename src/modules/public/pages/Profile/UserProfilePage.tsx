@@ -412,9 +412,7 @@ export const UserProfilePage: FC = () => {
 
                             </div>
 
-                            {/* Sidebar */}
                             <aside className="space-y-3 xl:min-w-56 xl:w-56">
-
                                 {
                                     (meta?.meta_artist) && (
                                         <div className="space-y-1 text-sm">
@@ -440,19 +438,18 @@ export const UserProfilePage: FC = () => {
                                     <h3 className="font-medium text-gray-800 dark:text-gray-100">Email</h3>
                                     <div>{auth.email}</div>
                                 </div>
-                                {/* <div className="space-y-1 text-sm">
-                                    <h3 className="font-medium text-gray-800 dark:text-gray-100">Birthdate</h3>
-                                    <div>4 April, 1987</div>
-                                </div> */}
                                 {
                                     (auth.created_at) && (
                                         <div className="space-y-1 text-sm">
                                             <h3 className="font-medium text-gray-800 dark:text-gray-100">Usuario desde</h3>
-                                            <div>{Transform_dateShort(auth.created_at)}</div>
+                                            <div>
+                                                {Transform_dateShort(auth.created_at)}
+                                            </div>
                                         </div>
                                     )
                                 }
                             </aside>
+
                         </div>
                     </div>
                 </div>

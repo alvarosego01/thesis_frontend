@@ -1,7 +1,7 @@
 
 
 import { Form, FormikProvider, useFormik } from "formik"
-import { FC, useState } from 'react';
+import { FC, useState } from "react";
 import { LayoutRow_I } from "../../../../../../../core/components/forms/interfaces";
 import { useFormInitData } from "../../../../../../../core/hooks";
 import { FormLayoutBuilder, PrimaryButton } from "../../../../../../../core/components";
@@ -9,15 +9,41 @@ import { estadosVenezuela } from "../../../../../../../core/constants/Countries"
 import { Vacant_Values_Step1_I } from "./interfaces";
 
 
+const vacant_pic: LayoutRow_I[] = [
+    {
+        fields: [
+            {
+                typeField: 'file_wIcon',
+                props: {
+                    label: 'Seleccionar imágen',
+                    name: 'vacant_pic',
+                    type: 'file',
+                    side: 'vertical',
+                    accept: 'image/png, image/jpeg, image/jpg',
+                    validation_rules: [
+                        {
+                            type: "fileSize_5m",
+                            message: "El archivo debe ser menor a 5MB"
+                        },
+                        {
+                            type: "fileFormat_image",
+                            message: "El archivo debe ser una imagen"
+                        }
+                    ]
+                }
+            }
+        ],
+    }
+];
 const formData: LayoutRow_I[] = [
     {
         fields: [
             {
-                typeField: 'text',
+                typeField: "text",
                 props: {
-                    label: 'Titulo',
-                    name: 'title',
-                    type: 'text',
+                    label: "Titulo",
+                    name: "title",
+                    type: "text",
                     validation_rules: [
                         {
                             type: "required",
@@ -32,11 +58,11 @@ const formData: LayoutRow_I[] = [
                 }
             },
             {
-                typeField: 'textarea',
+                typeField: "textarea",
                 props: {
-                    label: 'Descripción',
-                    name: 'desc',
-                    type: 'text',
+                    label: "Descripción",
+                    name: "desc",
+                    type: "text",
                     validation_rules: [
                         {
                             type: "required",
@@ -52,17 +78,17 @@ const formData: LayoutRow_I[] = [
             },
 
         ],
-        grid_columns: 'grid-cols-1 grid-cols-1 gap-y-3'
+        grid_columns: "grid-cols-1 grid-cols-1 gap-y-3"
     },
 
     {
         fields: [
             {
-                typeField: 'text',
+                typeField: "text",
                 props: {
-                    label: 'Dirección',
-                    name: 'direction',
-                    type: 'text',
+                    label: "Dirección",
+                    name: "direction",
+                    type: "text",
                     validation_rules: [
                         {
                             type: "required",
@@ -78,13 +104,13 @@ const formData: LayoutRow_I[] = [
                 }
             },
             {
-                typeField: 'text',
+                typeField: "text",
                 props: {
-                    label: 'Ciudad',
-                    name: 'city',
-                    type: 'text',
+                    label: "Ciudad",
+                    name: "city",
+                    type: "text",
                     validation_rules: [
-                          {
+                        {
                             type: "required",
                             message: "La ciudad es requerida"
                         },
@@ -97,14 +123,14 @@ const formData: LayoutRow_I[] = [
                 }
             },
             {
-                typeField: 'select',
+                typeField: "select",
                 props: {
-                    label: 'Estado',
-                    name: 'state',
-                     type: 'select',
+                    label: "Estado",
+                    name: "state",
+                    type: "select",
                     isMulti: false,
                     items: estadosVenezuela.map((estado) => ({ value: estado, label: estado })),
-                    placeholder: 'Selecciona el estado',
+                    placeholder: "Selecciona el estado",
                     validation_rules: [
                         {
                             type: "required",
@@ -114,7 +140,7 @@ const formData: LayoutRow_I[] = [
                 }
             }
         ],
-        grid_columns: 'grid-cols-1 pcTab:grid-cols-3 lg:grid-cols-3'
+        grid_columns: "grid-cols-1 pcTab:grid-cols-3 lg:grid-cols-3"
     },
 
 ];
@@ -135,13 +161,15 @@ export const NewVacant_step1: FC<Props_I> = ({
 
     const [isMounted, setisMounted] = useState(false);
 
-    const { initialValues, validation_rules } = useFormInitData<Vacant_Values_Step1_I>(formData);
+    const { initialValues, validation_rules } = useFormInitData<Vacant_Values_Step1_I>([
+        ...formData,
+        ...vacant_pic
+    ]);
 
     const formik = useFormik({
         initialValues: initialValues,
         onSubmit: (values) => {
-
-        emit_next(values);
+            emit_next(values);
 
         },
         validationSchema: validation_rules
@@ -162,18 +190,22 @@ export const NewVacant_step1: FC<Props_I> = ({
                 </h3>
             </div>
 
-            <div className="w-full pb-5 mb-5 border-b border-gray-200">
 
-                <FormikProvider value={formik}>
-                    <Form noValidate>
+            <FormikProvider value={formik}>
+                <Form noValidate>
 
-                        <FormLayoutBuilder rows={formData} />
+                    <div className="grid w-full grid-cols-3 gap-4 pb-5 mb-5 border-b border-gray-200">
+                        <div className="col-span-2 " >
+                            <FormLayoutBuilder rows={formData} />
+                        </div>
+                        <div className="flex items-center justify-center col-span-1 ml-4 border-l border-gray-200" >
+                            <FormLayoutBuilder rows={vacant_pic} />
+                        </div>
 
-                    </Form>
+                    </div>
+                </Form>
+            </FormikProvider>
 
-                </FormikProvider>
-
-            </div>
 
             <div className="flex flex-col w-full pb-0 mx-auto ">
                 <div className="flex self-end">

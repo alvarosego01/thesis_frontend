@@ -27,6 +27,14 @@ export const get_Validation = (rule: ValidationRule_I, schema: any) => {
         );
     }
 
+    if (rule.type === 'isArray_required') {
+        // schema = schema.required(rule.message);
+        schema = schema.test(
+            'isArray',
+            rule.message,
+            (array: any) => Array.isArray(array) && array.length > 0
+        );
+    }
     if (rule.type === 'required') {
         schema = schema.required(rule.message);
     }

@@ -21,12 +21,9 @@ export const DatePicker: FC<DatePicker_Field_Props_I> = ({
 
     const mode: string = range ? 'range' : 'single';
 
-    console.log('props.validation_rules', props.validation_rules);
+    let _val: string = '';
 
     const isRequired = props.validation_rules?.some(rule => (is_required(rule.type))) || false;
-
-        // const dateFormat = range ? 'd M, Y' : 'd M, Y to d M, Y'; // Ajusta según necesites
-
 
     const options: any = {
         mode: mode,
@@ -37,12 +34,14 @@ export const DatePicker: FC<DatePicker_Field_Props_I> = ({
         defaultDate: [new Date().setDate(new Date().getDate() - 6), new Date()],
         prevArrow: '<svg class="fill-current" width="7" height="11" viewBox="0 0 7 11"><path d="M5.4 10.8l1.4-1.4-4-4 4-4L5.4 0 0 5.4z" /></svg>',
         nextArrow: '<svg class="fill-current" width="7" height="11" viewBox="0 0 7 11"><path d="M1.4 10.8L0 9.4l4-4-4-4L1.4 0l5.4 5.4z" /></svg>',
-        onReady: (selectedDates: any, dateStr: string, instance: any) => {
+        onReady: (selectedDates: Date[], dateStr: string, instance: any) => {
             const customClass = align ? align : '';
             instance.calendarContainer.classList.add(`flatpickr-${customClass}`);
         },
         onChange: (selectedDates: any, dateStr: string, instance: any) => {
-            helpers.setValue(dateStr); // Updates Formik's state with the new date
+            const aux_selectedDates: string = selectedDates.map((date: any) => date as string).join(',');
+            helpers.setValue(aux_selectedDates);
+            _val = dateStr;
         },
     }
 
@@ -69,8 +68,9 @@ export const DatePicker: FC<DatePicker_Field_Props_I> = ({
                      w-full form-input ${fieldState()} ${props?.icon && 'pl-s_35'}
                      `}
                         options={options}
-                        {...field} // Bind formik field to Flatpickr
+                        {...field}
                         disabled={disabled}
+                        value={_val}
                         {...props}
                     />
                     <div className="absolute inset-0 right-auto flex items-center pointer-events-none">

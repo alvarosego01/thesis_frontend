@@ -1,43 +1,31 @@
 
 import { Form, FormikProvider, useFormik } from "formik"
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from "react";
 import { LayoutRow_I, SelectValue_I } from "../../../../../../../core/components/forms/interfaces";
 import { useFormInitData } from "../../../../../../../core/hooks";
 import { FormLayoutBuilder, PrimaryButton, SecondaryButton } from "../../../../../../../core/components";
-import { Vacant_Housing_Enum, Vacant_Transport_Enum } from "@tesis-project/dev-globals/dist/modules/business/vacants/interfaces";
-import { Currency_Enum } from "@tesis-project/dev-globals/dist/core/interfaces";
-import { control_service, currency, housing_service, ServicesIncludes_Enum, transport_service, Vacant_Values_Step3_I } from './interfaces';
+import { control_service, currency, housing_service, ServicesIncludes_Enum, transport_service, Vacant_Values_Step3_I } from "./interfaces";
 
 
-/*
- {
-                            type: "conditional_required",
-                            message: "El teléfono es requerido",
-                            conditional: {
-                                key: 'type.value',
-                                is: Payment_Type_Enum.MOBILE_PAYMENT,
-                            }
-                        },
- */
 const transport_service_form: LayoutRow_I[] = [
     {
         fields: [
             {
-                typeField: 'select_special',
+                typeField: "select_special",
                 props: {
-                    label: 'Tipo de transporte',
-                    name: 'transport_type',
-                    isMulti: true,
-                    type: 'select',
+                    label: "Tipo de transporte",
+                    name: "transport_type",
+                    isMulti: false,
+                    type: "select",
                     items: transport_service.map(item => ({ value: item.value, label: item.label })),
                     value: [],
-                    placeholder: 'Selecciona aquí',
+                    placeholder: "Selecciona aquí",
                     validation_rules: [
                         {
                             type: "conditional_select_multi_required",
                             message: "Definir el tipo de transporte es requerido",
                             conditional: {
-                                key: 'control_service',
+                                key: "control_service",
                                 is: ServicesIncludes_Enum.TRANSPORT,
                             }
                         },
@@ -45,11 +33,11 @@ const transport_service_form: LayoutRow_I[] = [
                 }
             },
             {
-                typeField: 'textarea',
+                typeField: "textarea",
                 props: {
-                    label: 'Detalles de transporte',
-                    name: 'transport_desc',
-                    type: 'text',
+                    label: "Detalles de transporte",
+                    name: "transport_desc",
+                    type: "text",
                     validation_rules: [
                         {
                             type: "minLength",
@@ -61,7 +49,7 @@ const transport_service_form: LayoutRow_I[] = [
             },
 
         ],
-        grid_columns: 'grid-cols-1 gap-y-3'
+        grid_columns: "grid-cols-1 gap-y-3"
     }
 ];
 
@@ -69,21 +57,21 @@ const housing_service_form: LayoutRow_I[] = [
     {
         fields: [
             {
-                typeField: 'select_special',
+                typeField: "select_special",
                 props: {
-                    label: 'Tipo de hospedaje',
-                    name: 'housing_type',
+                    label: "Tipo de hospedaje",
+                    name: "housing_type",
                     isMulti: false,
-                    type: 'select',
+                    type: "select",
                     items: housing_service.map(item => ({ value: item.value, label: item.label })),
                     value: [],
-                    placeholder: 'Selecciona aquí',
+                    placeholder: "Selecciona aquí",
                     validation_rules: [
                         {
                             type: "conditional_select_multi_required",
                             message: "Definir el tipo de transporte es requerido",
                             conditional: {
-                                key: 'control_service',
+                                key: "control_service",
                                 is: ServicesIncludes_Enum.HOUSING,
                             }
                         },
@@ -91,11 +79,11 @@ const housing_service_form: LayoutRow_I[] = [
                 }
             },
             {
-                typeField: 'textarea',
+                typeField: "textarea",
                 props: {
-                    label: 'Detalles de hospedaje',
-                    name: 'housing_desc',
-                    type: 'text',
+                    label: "Detalles de hospedaje",
+                    name: "housing_desc",
+                    type: "text",
                     validation_rules: [
                         {
                             type: "minLength",
@@ -106,7 +94,7 @@ const housing_service_form: LayoutRow_I[] = [
                 }
             },
         ],
-        grid_columns: 'grid-cols-1 gap-y-3'
+        grid_columns: "grid-cols-1 gap-y-3"
     }
 ];
 
@@ -114,17 +102,17 @@ const costs_service_form: LayoutRow_I[] = [
     {
         fields: [
             {
-                typeField: 'text',
+                typeField: "text",
                 props: {
-                    label: 'Monto',
-                    name: 'costs_mount',
-                    type: 'number',
+                    label: "Monto",
+                    name: "costs_mount",
+                    type: "number",
                     validation_rules: [
                          {
                             type: "conditional_select_multi_required",
                               message: "Es requerido",
                             conditional: {
-                                key: 'control_service',
+                                key: "control_service",
                                 is: ServicesIncludes_Enum.COSTS,
                             }
                         },
@@ -132,21 +120,21 @@ const costs_service_form: LayoutRow_I[] = [
                 }
             },
             {
-                typeField: 'select',
+                typeField: "select",
                 props: {
-                    label: 'Moneda',
-                    name: 'costs_currency',
+                    label: "Moneda",
+                    name: "costs_currency",
                     isMulti: false,
-                    type: 'select',
+                    type: "select",
                     items: currency.map(item => ({ value: item.value, label: item.label })),
                     value: [],
-                    placeholder: 'Selecciona aquí',
+                    placeholder: "Selecciona aquí",
                     validation_rules: [
                           {
                             type: "conditional_select_multi_required",
                               message: "Es requerido",
                             conditional: {
-                                key: 'control_service',
+                                key: "control_service",
                                 is: ServicesIncludes_Enum.COSTS,
                             }
                         },
@@ -154,12 +142,12 @@ const costs_service_form: LayoutRow_I[] = [
                 }
             },
             {
-                typeField: 'textarea',
+                typeField: "textarea",
                 props: {
-                    label: 'Detalles de viaticos',
-                    name: 'costs_desc',
-                    type: 'text',
-                    parent_class: 'col-span-2',
+                    label: "Detalles de viaticos",
+                    name: "costs_desc",
+                    type: "text",
+                    parent_class: "col-span-2",
                     validation_rules: [
                         {
                             type: "minLength",
@@ -170,7 +158,7 @@ const costs_service_form: LayoutRow_I[] = [
                 }
             },
         ],
-        grid_columns: 'grid-cols-2 gap-y-3'
+        grid_columns: "grid-cols-2 gap-y-3"
     },
 
 ];
@@ -180,19 +168,19 @@ const formData: LayoutRow_I[] = [
     {
         fields: [
             {
-                typeField: 'select_special',
+                typeField: "select_special",
                 props: {
-                    label: 'Servicios incluidos',
-                    name: 'control_service',
+                    label: "Servicios incluidos",
+                    name: "control_service",
                     isMulti: true,
                     items: control_service.map(item => ({ value: item.value, label: item.label })),
                     value: [],
-                    placeholder: 'Selecciona aquí',
+                    placeholder: "Selecciona aquí",
                 }
             },
 
         ],
-        grid_columns: 'grid-cols-1 space-y-4'
+        grid_columns: "grid-cols-1 space-y-4"
     },
     ...transport_service_form,
     ...housing_service_form,
@@ -273,7 +261,7 @@ export const NewVacant_step3: FC<Props_I> = ({
                                 (serviceSelected.length > 0) && (
                                     <>
 
-                                        <div className={`grid mt-4 gap-4 grid-cols-${(serviceSelected.length > 1) ? '2' : '1'}`}>
+                                        <div className={`grid mt-4 gap-4 grid-cols-${(serviceSelected.length > 1) ? "2" : "1"}`}>
                                             {
                                                 serviceSelected.includes(ServicesIncludes_Enum.TRANSPORT) && (
                                                     <div className="space-y-2">

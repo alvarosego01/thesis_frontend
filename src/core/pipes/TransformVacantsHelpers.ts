@@ -1,59 +1,8 @@
-import { Artist_Enum } from "@tesis-project/dev-globals/dist/modules/profile/interfaces";
-import { SelectValue_I } from "../../../../../../../core/components/forms/interfaces";
 import { Currency_Enum } from "@tesis-project/dev-globals/dist/core/interfaces";
-import { Vacant_Transport_Enum, Vacant_Housing_Enum, Vacant_Budget_Costs_I, Vacant_Housing_I, Vacant_Transport_I } from "@tesis-project/dev-globals/dist/modules/business/vacants/interfaces";
-import { Media_I } from "@tesis-project/dev-globals/dist/modules/media/interfaces";
+import { Vacant_Transport_Enum, Vacant_Housing_Enum } from "@tesis-project/dev-globals/dist/modules/business/vacants/interfaces";
+import { SelectValue_I } from "../components/forms/interfaces";
 
-
-export interface Vacant_Values_Step1_I {
-
-    vacant_pic?: Media_I;
-    title: string;
-    desc: string;
-
-    direction: string;
-    city: string;
-    state: string;
-
-
-}
-
-export interface Vacant_Values_Step2_I {
-
-    role_desc: string;
-    role_type: SelectValue_I<Artist_Enum>[];
-
-}
-
-export interface Vacant_Values_Step3_I {
-
-
-    control_service: typeof control_service,
-
-    transport_desc?: string;
-    transport_type: SelectValue_I<Vacant_Transport_Enum>;
-
-    housing_desc?: string;
-    housing_type: SelectValue_I<Vacant_Housing_Enum>;
-
-    costs_desc?: string;
-    costs_currency: SelectValue_I<Currency_Enum>
-    costs_mount: number;
-
-
-}
-export interface Vacant_Values_Step4_I {
-
-    payment_amount: number
-    vacant_date: string;
-    payment_currency: SelectValue_I<Currency_Enum>;
-    specific_conditions?: string;
-
-}
-
-export interface Vacant_Values_I extends Vacant_Values_Step1_I, Vacant_Values_Step2_I, Vacant_Values_Step3_I, Vacant_Values_Step4_I { }
-
-
+/*
 export enum ServicesIncludes_Enum {
     TRANSPORT = "TRANSPORT",
     HOUSING = "HOUSING",
@@ -122,3 +71,25 @@ export const housing_service: SelectValue_I<Vacant_Housing_Enum>[] = [
     },
 
 ];
+ */
+
+export const TransformVacantsHelpers_P = (text: string): string => {
+
+    // Services
+    if(text === Vacant_Transport_Enum.LAND) return "Terrestre";
+    if(text === Vacant_Transport_Enum.AIR) return "Aereo";
+
+    if(text === Vacant_Housing_Enum.APARTMENT) return "Apartamento";
+    if(text === Vacant_Housing_Enum.HOTEL) return "Hotel";
+    if(text === Vacant_Housing_Enum.HOUSE) return "Casa";
+    if(text === Vacant_Housing_Enum.ROOM) return "Habitación";
+    if(text === Vacant_Housing_Enum.SHARED) return "Compartido";
+
+    if(text === Currency_Enum.USD) return "USD";
+    if(text === Currency_Enum.BS) return "Bs";
+
+
+    return text;
+
+
+}

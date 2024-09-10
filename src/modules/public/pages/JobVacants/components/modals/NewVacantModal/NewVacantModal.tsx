@@ -8,106 +8,152 @@ import { NewVacant_step2 } from "./NewVacant_step2";
 import { StepCounter } from "./StepCounter";
 import { NewVacant_step3 } from "./NewVacant_step3";
 import { NewVacant_step4 } from "./NewVacant_step4";
-import { Vacant_Values_I, Vacant_Values_Step1_I, Vacant_Values_Step2_I, Vacant_Values_Step3_I, Vacant_Values_Step4_I } from "./interfaces";
+import { ServicesIncludes_Enum, Vacant_Values_I, Vacant_Values_Step1_I, Vacant_Values_Step2_I, Vacant_Values_Step3_I, Vacant_Values_Step4_I } from "./interfaces";
 import { Currency_Enum } from "@tesis-project/dev-globals/dist/core/interfaces";
 import { Vacant_Housing_Enum, Vacant_I, Vacant_Transport_Enum } from "@tesis-project/dev-globals/dist/modules/business/vacants/interfaces";
+import { useVacantPageStore } from "../../../../../store";
+import { Media_I } from "@tesis-project/dev-globals/dist/modules/media/interfaces";
 
 
 const vacant_data_default: Partial<Vacant_I> = {
-        title: '',
+    title: '',
+    desc: '',
+    operation: {
+        end_at: '' as any,
+        start_at: '' as any
+    },
+    role_desc: '',
+    role_type: [] as any,
+    transport_service: {
+        enable: false,
         desc: '',
-        operation: {
-            end_at: '' as any,
-            start_at: '' as any
-        },
-        role_desc: '',
-        role_type: [] as any,
-        transport_service: {
-            enable: false,
-            desc: '',
-            type: Vacant_Transport_Enum.LAND
-        },
-        housing_service: {
-            enable: false,
-            desc: '',
-            type: Vacant_Housing_Enum.HOTEL
-        },
-        vacant_costs: {
-            enable: false,
-            desc: '',
-            currency: Currency_Enum.USD,
-            total: 0
-        },
-        vacant_payment: {
-            currency: Currency_Enum.USD,
-            total: 0
-        },
-        direction: {
-            city: '',
-            state: '',
-            address: ''
-        },
-        specific_conditions: '',
+        type: Vacant_Transport_Enum.LAND
+    },
+    housing_service: {
+        enable: false,
+        desc: '',
+        type: Vacant_Housing_Enum.HOTEL
+    },
+    vacant_costs: {
+        enable: false,
+        desc: '',
+        currency: Currency_Enum.USD,
+        total: 0
+    },
+    vacant_payment: {
+        currency: Currency_Enum.USD,
+        total: 0
+    },
+    direction: {
+        city: '',
+        state: '',
+        address: ''
+    },
+    specific_conditions: '',
 }
 
-export interface NewVacantModal_Modal_Props_I {
+export interface NewVacant_Modal_Props_I {
     status: boolean;
     vacant_id?: string;
+    isLoading?: boolean;
+
+    emit_createVacant?: (data: Vacant_I) => void;
 }
 
-export const NewVacantModal: FC<NewVacantModal_Modal_Props_I> = ({
+
+
+let VacantData: Partial<Vacant_I> = structuredClone(vacant_data_default);
+let valuesModal: Partial<Vacant_Values_I> = {
+    vacant_pic: null as any,
+    title: '',
+    desc: '',
+    state: '',
+    city: '',
+    direction: '',
+    role_desc: '',
+    role_type: [],
+
+    control_service: [],
+    transport_desc: '',
+    transport_type: {
+        value: Vacant_Transport_Enum.LAND,
+        label: 'Terrestre'
+    },
+    housing_desc: '',
+    housing_type: {
+        value: Vacant_Housing_Enum.HOTEL,
+        label: 'Hotel'
+    },
+    costs_desc: '',
+    costs_currency: {
+        value: Currency_Enum.USD,
+        label: 'USD'
+    },
+    costs_mount: 0,
+
+    payment_amount: 0,
+    vacant_date: '',
+    payment_currency: {
+        label: 'USD',
+        value: Currency_Enum.USD
+    },
+    specific_conditions: ''
+
+}
+
+export const NewVacantModal: FC<NewVacant_Modal_Props_I> = ({
     status = false,
-    vacant_id = ''
+    vacant_id = '',
+    isLoading = false,
+    emit_createVacant
 }) => {
 
     const {
         emit_handle_vacantModal
     } = useUiStore();
 
+    const [isMounted, setisMounted] = useState(false);
+
     const [stepCounter, setstepCounter] = useState(0);
     const [totalSteps, setTotalSteps] = useState(3);
 
-    const [VacantData, setVacantData] = useState<Partial<Vacant_I>>({
-        ...vacant_data_default
-    })
 
-    const [isMounted, setisMounted] = useState(false);
-
-    const [valuesModal, setvaluesModal] = useState<Vacant_Values_I>({
-        title: '',
-        desc: '',
-        state: '',
-        city: '',
-        direction: '',
-        role_desc: '',
-        role_type: [],
-
-        control_service: [],
-        transport_desc: '',
-        transport_type: [],
-        housing_desc: '',
-        housing_type: [],
-        costs_desc: '',
-        costs_currency: [],
-        costs_mount: 0,
-
-        payment_amount: 0,
-        vacant_date: '',
-        payment_currency: [],
-        specific_conditions: ''
-
-    })
 
     const set_data = () => {
-        // return
-        const aux_valuesModal = valuesModal;
-        const aux_step_1: Vacant_Values_Step1_I = {...aux_valuesModal} as Vacant_Values_Step1_I;
-        const aux_step_2: Vacant_Values_Step2_I = {...aux_valuesModal} as Vacant_Values_Step2_I;
-        const aux_step_3: Vacant_Values_Step3_I = {...aux_valuesModal} as Vacant_Values_Step3_I;
-        const aux_step_4: Vacant_Values_Step4_I = {...aux_valuesModal} as Vacant_Values_Step4_I;
 
-        setVacantData((x) => ({
-            ...x,
+        const aux_valuesModal = structuredClone(valuesModal);
+        const aux_step_1: Vacant_Values_Step1_I = { ...aux_valuesModal } as Vacant_Values_Step1_I;
+        const aux_step_2: Vacant_Values_Step2_I = { ...aux_valuesModal } as Vacant_Values_Step2_I;
+        const aux_step_3: Vacant_Values_Step3_I = { ...aux_valuesModal } as Vacant_Values_Step3_I;
+        const aux_step_4: Vacant_Values_Step4_I = { ...aux_valuesModal } as Vacant_Values_Step4_I;
+
+        let aux_services: ServicesIncludes_Enum[] = [];
+        if (aux_step_3.control_service.length > 0) aux_services = aux_step_3.control_service.map(r => r.value);
+
+        let operation_date: Vacant_I['operation'] = {
+            start_at: new Date(),
+            end_at: new Date(),
+        }
+
+        if(aux_step_4.vacant_date) {
+
+            if(aux_step_4.vacant_date.includes(',')) {
+                const aux_dates = aux_step_4.vacant_date.split(',');
+                operation_date = {
+                    start_at: new Date(aux_dates[0]),
+                    end_at: new Date(aux_dates[1])
+                }
+            } else {
+                operation_date = {
+                    start_at: new Date(aux_step_4.vacant_date),
+                    end_at: new Date(aux_step_4.vacant_date)
+                }
+            }
+
+        }
+
+        VacantData = {
+            vacant_pic: aux_step_1?.vacant_pic || null as any,
             title: aux_step_1.title,
             desc: aux_step_1.desc,
             direction: {
@@ -115,44 +161,84 @@ export const NewVacantModal: FC<NewVacantModal_Modal_Props_I> = ({
                 state: aux_step_1.state,
                 address: aux_step_1.direction
             },
-            })
-        );
 
-        console.log('VacantData', VacantData);
+            role_desc: aux_step_2.role_desc,
+            role_type: aux_step_2.role_type.map(r => r.value),
 
+            transport_service: {
+                enable: aux_services.includes(ServicesIncludes_Enum.TRANSPORT),
+                desc: aux_step_3.transport_desc,
+                type: aux_step_3.transport_type.value || Vacant_Transport_Enum.LAND
+            },
+            housing_service: {
+                enable: aux_services.includes(ServicesIncludes_Enum.HOUSING),
+                desc: aux_step_3.housing_desc,
+                type: aux_step_3.housing_type.value || Vacant_Housing_Enum.HOTEL
+            },
+            vacant_costs: {
+                enable: aux_services.includes(ServicesIncludes_Enum.COSTS),
+                desc: aux_step_3.costs_desc,
+                currency: aux_step_3.costs_currency.value || Currency_Enum.USD,
+                total: aux_step_3.costs_mount || 0
+            },
+
+            vacant_payment: {
+                currency: aux_step_4.payment_currency.value || Currency_Enum.USD,
+                total: aux_step_4.payment_amount
+            },
+            specific_conditions: aux_step_4.specific_conditions,
+            operation: operation_date
+
+        }
 
     }
 
     const set_next = (values: any) => {
 
-        switch (stepCounter) {
+        switch (stepCounter)
+         {
             case 0:
-                const _values_1: Vacant_Values_Step1_I = values as Vacant_Values_Step1_I;
-                setvaluesModal((x) => ({ ...x!, ..._values_1 }));
+                valuesModal.title = values.title;
+                    valuesModal.desc = values.desc;
+                    valuesModal.city = values.city;
+                    valuesModal.state = values.state;
+                    valuesModal.direction = values.direction;
+                    valuesModal.vacant_pic = values.vacant_pic;
                 break;
-
             case 1:
-                const _values_2: Vacant_Values_Step2_I = values as Vacant_Values_Step2_I;
-                setvaluesModal((x) => ({ ...x!, ..._values_2 }));
+                valuesModal.role_desc = values.role_desc,
+                    valuesModal.role_type = [...values.role_type]
                 break;
-
             case 2:
-                const _values_3: Vacant_Values_Step3_I = values as Vacant_Values_Step3_I;
-                setvaluesModal((x) => ({ ...x!, ..._values_3 }));
+                valuesModal.control_service = [...values.control_service],
+                    valuesModal.transport_desc = values.transport_desc,
+                    valuesModal.transport_type = values.transport_type,
+                    valuesModal.housing_desc = values.housing_desc,
+                    valuesModal.housing_type = values.housing_type,
+                    valuesModal.costs_desc = values.costs_desc,
+                    valuesModal.costs_currency = values.costs_currency,
+                    valuesModal.costs_mount = values.costs_mount
                 break;
-
             case 3:
-                const _values_4: Vacant_Values_Step4_I = values as Vacant_Values_Step4_I;
-                setvaluesModal((x) => ({ ...x!, ..._values_4 }));
+                    valuesModal.payment_amount = values.payment_amount;
+                    valuesModal.vacant_date = values.vacant_date;
+                    valuesModal.payment_currency = values.payment_currency;
+                    valuesModal.specific_conditions = values.specific_conditions;
                 break;
 
         }
 
         set_data();
 
-        if(stepCounter < totalSteps) return setstepCounter((x) => x = x + 1);
+        if (stepCounter < totalSteps) return setstepCounter((x) => x = x + 1);
 
+        emit_data();
 
+    }
+
+    const emit_data = () => {
+
+        emit_createVacant && emit_createVacant(VacantData as Vacant_I);
 
     }
 
@@ -176,6 +262,14 @@ export const NewVacantModal: FC<NewVacantModal_Modal_Props_I> = ({
             vacant_id: ''
         })
     };
+
+    useEffect(() => {
+
+        if (isMounted === false) return;
+
+        status && setstepCounter(0);
+
+    }, [status]);
 
     useEffect(() => {
         setisMounted(true);
@@ -231,6 +325,7 @@ export const NewVacantModal: FC<NewVacantModal_Modal_Props_I> = ({
                                 <NewVacant_step4
                                     emit_next={(v) => { set_next(v) }}
                                     emit_back={set_back}
+                                    isLoading={isLoading}
                                 />
                             </div>
 

@@ -1,9 +1,12 @@
 
-import { FC } from "react"
+import { FC, useEffect, useState } from "react"
 import { JobList, PrimaryButton } from "../../../../core/components"
 import { useAuthStore, useUiStore } from "../../../../core/store"
 import { User_Role_Enum } from "@tesis-project/dev-globals/dist/modules/auth/interfaces";
 import { NewVacantModal } from "./components";
+import { useVacantPageStore } from "../../store";
+import { Vacant_I } from "@tesis-project/dev-globals/dist/modules/business/vacants/interfaces";
+import { Artist_Enum } from "@tesis-project/dev-globals/dist/modules/profile/interfaces";
 
 
 export const JobVacantsPage: FC = () => {
@@ -25,6 +28,23 @@ export const JobVacantsPage: FC = () => {
         emit_is_role
     } = useAuthStore();
 
+    const [isMounted, setisMounted] = useState(false)
+
+    const {
+        state: {
+            onLoading,
+            vacants
+        },
+        emit_createVacant,
+        emit_getPublicVacants_vacantPage
+    } = useVacantPageStore()
+
+    const create_vacant = (vacant: Vacant_I) => {
+
+        emit_createVacant(vacant);
+
+    }
+
     const open_addVacant_Modal = () => {
 
         emit_handle_vacantModal({
@@ -33,6 +53,17 @@ export const JobVacantsPage: FC = () => {
         })
 
     }
+
+    useEffect(() => {
+        if (isMounted === false) return;
+
+        emit_getPublicVacants_vacantPage(Artist_Enum.ALL)
+
+    }, [isMounted])
+
+    useEffect(() => {
+        setisMounted(true);
+    }, []);
 
     return (
         <>
@@ -50,7 +81,7 @@ export const JobVacantsPage: FC = () => {
 
                         {
                             (emit_is_role(User_Role_Enum.CONTRATIST_ROLE)) && (
-                                <PrimaryButton onClick={open_addVacant_Modal} label="Añadir vacante" />
+                                <PrimaryButton onClick={open_addVacant_Modal} isLoading={onLoading} label="Añadir vacante" />
                             )
                         }
 
@@ -58,11 +89,17 @@ export const JobVacantsPage: FC = () => {
 
                 </div>
 
-                <div className="mb-4 text-sm italic text-gray-500 dark:text-gray-400">289 Meetups</div>
+                {
+                    (vacants.length > 0) && (
+                <div className="mb-4 text-sm italic text-gray-500 dark:text-gray-400">
+                    {vacants.length} vacantes
+                </div>
+                    )
+                }
 
                 <div className="w-full">
 
-                    <JobList />
+                    <JobList vacants={vacants} />
 
                 </div>
 
@@ -72,7 +109,7 @@ export const JobVacantsPage: FC = () => {
             </div> */}
             </div>
 
-            <NewVacantModal {...vacant_modal} />
+            <NewVacantModal {...vacant_modal} isLoading={onLoading} emit_createVacant={(v) => create_vacant(v)} />
 
         </>
 

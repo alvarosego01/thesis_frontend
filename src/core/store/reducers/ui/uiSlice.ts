@@ -4,7 +4,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { SignatureModal_Props_I } from '@modules/dashboard/pages/account/components/modals/SignatureModal';
 import { ConfirmDeleteModal_Props_I, PaymentInfoModal_Props_I } from '@modules/dashboard/pages/hireConfig/components';
-import { NewVacantModal_Modal_Props_I } from '../../../../modules/public/pages/JobVacants/components/modals/NewVacantModal/NewVacantModal';
+import { NewVacant_Modal_Props_I } from '../../../../modules/public/pages/JobVacants/components/modals/NewVacantModal/NewVacantModal';
+import { PostulationVacant_Modal_Props_I } from '../../../../modules/public/pages/Vacant/components/NewPostulatrionModal';
 
 
 export interface uiState_I {
@@ -25,7 +26,8 @@ export interface uiState_I {
                 }
             },
             vacants: {
-                vacant_modal: NewVacantModal_Modal_Props_I;
+                vacant_modal: NewVacant_Modal_Props_I;
+                vacant_postulation: PostulationVacant_Modal_Props_I
             }
 
         }
@@ -61,7 +63,11 @@ const initialState: uiState_I = {
             },
             vacants: {
                 vacant_modal: {
-                    status: true,
+                    status: false,
+                    vacant_id: ''
+                },
+                vacant_postulation: {
+                    status: false,
                     vacant_id: ''
                 }
             }
@@ -98,12 +104,21 @@ export const uiSlice = createSlice({
                 index
             }
         },
-         on_Handler_vacantsModal: (state, {payload}: PayloadAction<NewVacantModal_Modal_Props_I>) => {
+         on_Handler_vacantsModal: (state, {payload}: PayloadAction<NewVacant_Modal_Props_I>) => {
             const { status, vacant_id } = payload;
             state.modals.public.vacants.vacant_modal = {
                 status,
                 vacant_id
             }
+        },
+        on_Handler_postulationVacantModal: (state, {payload}: PayloadAction<PostulationVacant_Modal_Props_I>) => {
+            const { status, vacant_id } = payload;
+
+            state.modals.public.vacants.vacant_postulation = {
+                status,
+                vacant_id
+            }
+
         },
         on_restoreDefault: (state) => {
             state = initialState;
@@ -117,6 +132,7 @@ export const {
     on_Handler_delete_PaymentInfoModal,
     on_Handler_Login_LostPasswordModal,
     on_Handler_vacantsModal,
+    on_Handler_postulationVacantModal,
     on_restoreDefault
 
 } = uiSlice.actions;

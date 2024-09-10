@@ -3,6 +3,7 @@ import { FC } from "react";
 import { CheckBoxField, DatePicker, FileHideInput, SelectField, TextAreaField, TextInputField } from "..";
 import { LayoutRow_I, SelectField_Props_I } from "./interfaces"
 import { SelectSpecialField } from "./SelectSpecialField";
+import { FileWithIconField } from "./FileWithIconField";
 
 
 interface FormLayoutBuilder_Props_I {
@@ -22,8 +23,10 @@ export const FormLayoutBuilder: FC<FormLayoutBuilder_Props_I> = ({ rows }) => {
                                 {row.fields.map((field, j) => {
 
                                     switch (field.typeField) {
-                                        // case 'file':
-                                        //     return <FileHideInput key={j} {...field.props} />
+                                        case 'file':
+                                            return <FileHideInput key={j} {...field.props} />
+                                        case 'file_wIcon':
+                                            return <FileWithIconField key={j} {...field.props} />
                                         case 'date_picker':
                                                 return <DatePicker key={j} {...field.props} />
                                         case 'text':

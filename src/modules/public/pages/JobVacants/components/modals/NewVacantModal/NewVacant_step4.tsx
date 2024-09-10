@@ -1,5 +1,5 @@
 import { Form, FormikProvider, useFormik } from "formik"
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from "react";
 import { LayoutRow_I, SelectValue_I } from "../../../../../../../core/components/forms/interfaces";
 import { useFormInitData } from "../../../../../../../core/hooks";
 import { FormLayoutBuilder, PrimaryButton, SecondaryButton } from "../../../../../../../core/components";
@@ -9,11 +9,11 @@ import { Vacant_Values_Step4_I } from "./interfaces";
 
 const currency: SelectValue_I<Currency_Enum>[] = [
     {
-        label: 'USD',
+        label: "USD",
         value: Currency_Enum.USD
     },
     {
-        label: 'Bs',
+        label: "Bs",
         value: Currency_Enum.BS
     },
 ]
@@ -22,11 +22,11 @@ const costs_service_form: LayoutRow_I[] = [
     {
         fields: [
             {
-                typeField: 'text',
+                typeField: "text",
                 props: {
-                    label: 'Monto',
-                    name: 'payment_amount',
-                    type: 'number',
+                    label: "Monto",
+                    name: "payment_amount",
+                    type: "number",
                     validation_rules: [
                         {
                             type: "required",
@@ -37,12 +37,12 @@ const costs_service_form: LayoutRow_I[] = [
             },
 
          {
-                typeField: 'select',
+                typeField: "select",
                 props: {
-                    label: 'Moneda',
-                    name: 'payment_currency',
+                    label: "Moneda",
+                    name: "payment_currency",
                    items: currency.map(item => ({ value: item.value, label: item.label })),
-                       placeholder: 'Selecciona aquí',
+                       placeholder: "Selecciona aquí",
                     validation_rules: [
                         {
                             type: "required",
@@ -53,7 +53,7 @@ const costs_service_form: LayoutRow_I[] = [
             },
 
         ],
-        grid_columns: 'grid-cols-2 gap-y-3 w-8/12 mr-auto ml-0'
+        grid_columns: "grid-cols-2 gap-y-3 w-8/12 mr-auto ml-0"
     },
 
 ];
@@ -64,11 +64,11 @@ const formData: LayoutRow_I[] = [
     {
         fields: [
             {
-                typeField: 'date_picker',
+                typeField: "date_picker",
                 props: {
-                    label: 'Fecha(as) de vacante',
-                    name: 'vacant_date',
-                    placeholder: 'Selecciona aquí',
+                    label: "Fecha(as) de vacante",
+                    name: "vacant_date",
+                    placeholder: "Selecciona aquí",
                     range: true,
                     validation_rules: [
                         {
@@ -84,11 +84,11 @@ const formData: LayoutRow_I[] = [
     {
         fields: [
             {
-                typeField: 'textarea',
+                typeField: "textarea",
                 props: {
-                    label: 'Condiciones especificas adicionales',
-                    name: 'specific_conditions',
-                    type: 'text',
+                    label: "Condiciones especificas adicionales",
+                    name: "specific_conditions",
+                    type: "text",
                           validation_rules: [
                         {
                             type: "minLength",
@@ -99,7 +99,7 @@ const formData: LayoutRow_I[] = [
                 }
             },
         ],
-        grid_columns: 'grid-cols-1 '
+        grid_columns: "grid-cols-1 "
     },
 
 ];
@@ -128,14 +128,12 @@ export const NewVacant_step4: FC<Props_I> = ({
     const formik = useFormik({
         initialValues: initialValues,
         onSubmit: (values) => {
-            // console.log('values', values);
+
             emit_next(values);
+            // console.log("prueba, values", values);
         },
         validationSchema: validation_rules
     });
-
-
-
 
     const {
         submitForm,

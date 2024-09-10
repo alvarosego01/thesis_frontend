@@ -1,5 +1,5 @@
 import { Form, FormikProvider, useFormik } from "formik"
-import { FC, useState } from 'react';
+import { FC, useState } from "react";
 import { LayoutRow_I } from "../../../../../../../core/components/forms/interfaces";
 import { useFormInitData } from "../../../../../../../core/hooks";
 import { FormLayoutBuilder, PrimaryButton, SecondaryButton } from "../../../../../../../core/components";
@@ -8,19 +8,19 @@ import { Vacant_Values_Step2_I } from "./interfaces";
 
 const role_type: { value: Artist_Enum, label: string }[] = [
     {
-        label: 'Cantante',
+        label: "Cantante",
         value: Artist_Enum.SINGER
     },
     {
-        label: 'Instrumentista',
+        label: "Instrumentista",
         value: Artist_Enum.INSTRUMENTIST
     },
     {
-        label: 'Director de orquesta',
+        label: "Director de orquesta",
         value: Artist_Enum.ORQUESTA_DIRECTOR
     },
     {
-        label: 'Director de escena',
+        label: "Director de escena",
         value: Artist_Enum.SCENE_DIRECTOR
     },
 ];
@@ -30,15 +30,15 @@ const formData: LayoutRow_I[] = [
     {
         fields: [
             {
-                typeField: 'select_special',
+                typeField: "select_special",
                 props: {
-                    label: 'Rol de interés',
-                    name: 'role_type',
+                    label: "Rol de interés",
+                    name: "role_type",
                     isMulti: true,
-                    type: 'select',
+                    type: "select",
                     items: role_type.map(item => ({ value: item.value, label: item.label })),
                     value: [],
-                    placeholder: 'Selecciona aquí',
+                    placeholder: "Selecciona aquí",
                     validation_rules: [
                         {
                             type: "select_multi_required",
@@ -48,11 +48,11 @@ const formData: LayoutRow_I[] = [
                 }
             },
             {
-                typeField: 'textarea',
+                typeField: "textarea",
                 props: {
-                    label: 'Descripción de rol',
-                    name: 'role_desc',
-                    type: 'text',
+                    label: "Descripción de rol",
+                    name: "role_desc",
+                    type: "text",
                     validation_rules: [
                         {
                             type: "required",
@@ -69,7 +69,7 @@ const formData: LayoutRow_I[] = [
 
 
         ],
-        grid_columns: 'grid-cols-1 gap-y-3'
+        grid_columns: "grid-cols-1 gap-y-3"
     },
 ];
 

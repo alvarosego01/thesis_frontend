@@ -1,3 +1,4 @@
+export { VacantPage } from "./pages/Vacant/VacantPage";
 
 
 
@@ -13,5 +14,4 @@ export { SearchUsersPage } from "./pages/SearchUsers/SearchUsersPage";
 
 export { Public_main } from "./Public_main";
 export { Public_routes } from "./public.routes";
-
 

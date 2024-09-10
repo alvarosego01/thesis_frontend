@@ -8,6 +8,8 @@ import { useFormInitData } from "@hooks/index";
 
 import { LayoutRow_I } from "@components/forms/interfaces";
 import { useProfileStore } from "../../../store";
+import { useAuthStore } from "../../../../../core/store";
+import { User_Role_Enum } from "@tesis-project/dev-globals/dist/modules/auth/interfaces";
 
 const data_artistName: LayoutRow_I[] = [
     {
@@ -20,10 +22,10 @@ const data_artistName: LayoutRow_I[] = [
                     type: 'text',
                     parent_class: 'w-full pcTab:w-1/2',
                     validation_rules: [
-                        {
-                            type: "required",
-                            message: "El nombre artistico es requerido"
-                        },
+                        // {
+                        //     type: "required",
+                        //     message: "El nombre artistico es requerido"
+                        // },
                         {
                             type: "minLength",
                             value: 3,
@@ -192,6 +194,10 @@ export const ProfessionalPage: FC = () => {
         emit_update_user_profile,
     } = useProfileStore();
 
+    const {
+        emit_is_role
+    } = useAuthStore();
+
     const [isMounted, setisMounted] = useState(false)
 
     let initValues: Init_valuesData_I = {
@@ -266,11 +272,18 @@ export const ProfessionalPage: FC = () => {
             <FormikProvider value={formik}>
                 <Form noValidate>
                     <div className="p-5 space-y-5">
+
+                        {
+                            (emit_is_role(User_Role_Enum.ARTIST_ROLE)) && (
+                                <>
                         <h2 className="mb-5 text-2xl font-bold text-slate-800 dark:text-slate-100 ">
                             Perfil profesional
                         </h2>
-
                         <FormLayoutBuilder rows={data_artistName} />
+                                </>
+                            )
+                        }
+
 
                         <section>
                             <h2 className="mb-1 text-xl font-bold leading-snug text-slate-800 dark:text-slate-100">
