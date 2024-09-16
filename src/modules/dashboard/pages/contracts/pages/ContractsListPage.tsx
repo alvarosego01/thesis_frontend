@@ -21,15 +21,11 @@ export const ContractsListPage: FC = () => {
                  title="Lista de contratos"
                  children={
                     <>
-                         <SidebarSelector />
+                         {/* <SidebarSelector /> */}
                           <ContractListMain />
                     </>
                  }
-                 button={{
-                     text: 'Crear nuevo',
-                     icon: 'bx bx-plus',
-                     onClick: _onClick,
-                 }}
+
              />
 
 

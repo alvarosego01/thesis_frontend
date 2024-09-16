@@ -37,7 +37,8 @@ export const Public_routes: FC = () => {
             <Route path='' index element={<HomePage />} />
             <Route path='home' element={<HomePage />} />
             <Route path='search' element={<SearchUsersPage />} />
-            <Route path='vacants' element={<JobVacantsPage />} />
+            <Route path='vacants/:type' element={<JobVacantsPage />} />
+            {/* <Route path='' element={<JobVacantsPage />} /> */}
             <Route path='user/:id' element={<UserProfilePage />} />
             <Route path='vacant/:id' element={<VacantPage />} />
             <Route path='verify/:key' element={<VerifyPage />} />

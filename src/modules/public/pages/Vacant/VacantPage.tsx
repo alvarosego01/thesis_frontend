@@ -7,7 +7,7 @@ import { SecondaryButton } from '../../../../core/components';
 import { useVacantPageStore } from '../../store';
 import { Transform_dateShort, transformType_Artists_P } from '../../../../core/pipes';
 import { Vacant_I } from '@tesis-project/dev-globals/dist/modules/business/vacants/interfaces';
-import { SidebarDetails, VacantsServices } from './components';
+import { EvaluatePostulationModal, PostulationsVacant, SidebarDetails, VacantsServices } from './components';
 import { MetaRole_I, Profile_I } from '@tesis-project/dev-globals/dist/modules/profile/interfaces';
 import { User_HiringData_I, User_I } from '@tesis-project/dev-globals/dist/modules/user/interfaces';
 import { useAuthStore, useUiStore } from '../../../../core/store';
@@ -37,7 +37,8 @@ export const VacantPage: FC = () => {
             modals: {
                 public: {
                     vacants: {
-                        vacant_postulation
+                        vacant_postulation,
+                        vacant_evaluatePostulation
                     }
                 }
             }
@@ -169,8 +170,6 @@ export const VacantPage: FC = () => {
             vacant_id: vacant._id
         });
 
-        console.log('open');
-
     }
 
     const is_notSameOwner = () => {
@@ -194,13 +193,13 @@ export const VacantPage: FC = () => {
     return (
 
         <>
-            <div className="w-full px-0 py-16">
+            <div className="w-full px-6 py-16">
                 {/* Page content */}
                 <div className="flex flex-col max-w-6xl mx-auto lg:flex-row lg:gap-x-8 xl:gap-x-16 ">
                     {/* Content */}
                     <div>
                         <div className="mb-6">
-                            <Link className="px-3 text-gray-800 bg-white border-gray-200 bttn-sm dark:bg-gray-800 dark:border-gray-700/60 hover:border-gray-300 dark:hover:border-gray-600 dark:text-gray-300" to="/vacants">
+                            <Link className="px-3 text-gray-800 bg-white border-gray-200 bttn-sm dark:bg-gray-800 dark:border-gray-700/60 hover:border-gray-300 dark:hover:border-gray-600 dark:text-gray-300" to="/vacants/public">
                                 <svg className="mr-2 text-gray-400 fill-current dark:text-gray-500" width="7" height="12" viewBox="0 0 7 12">
                                     <path d="M5.4.6 6.8 2l-4 4 4 4-1.4 1.4L0 6z" />
                                 </svg>
@@ -219,7 +218,7 @@ export const VacantPage: FC = () => {
                         </header>
 
                         {/* Company information (mobile) */}
-                        <div className="lg:hidden">
+                        <div className="mb-6 lg:hidden">
                             <SidebarDetails
                                 vacant={vacant}
                                 ownerData={ownerData}
@@ -328,43 +327,7 @@ export const VacantPage: FC = () => {
 
                     {/* Sidebar */}
                     <div className="hidden space-y-4 lg:block">
-
-                        {/* <div className="overflow-hidden bg-white shadow-sm dark:bg-gray-800 rounded-xl lg:w-72 xl:w-80">
-                        {
-                            (vacant.vacant_pic?._id) && (
-                                <>
-                                    <img src={vacant.vacant_pic.src} className='object-cover object-top w-full mb-4 h-s_200 bg-slate-200' alt="" />
-                                </>
-                            )
-                        }
-                        <div className="p-5 py-0 mb-4 text-center">
-                            <div className="inline-flex mb-1">
-                                <i className='text-6xl bx bxs-institution' ></i>
-                            </div>
-
-                            <div className="mb-1 text-lg font-bold text-gray-800 dark:text-gray-100">
-                                {ownerData.owner}
-                            </div>
-                            <div className="text-sm italic text-gray-500 dark:text-gray-400">
-                                {ownerData.subtitle}
-                            </div>
-                        </div>
-                        <div className="flex flex-col items-center justify-center p-5 pt-0 space-y-2">
-                            {
-                                (emit_is_authenticated() && is_notSameOwner() && !emit_isAlreadyPostulated(user)) ? (
-                                    <PrimaryButton className={'w-full'} label='Postularse' isLoading={onLoading} onClick={open_modalPostulaion} />
-                                ) : (
-                                    <>
-                                        <div className="w-full p-3 text-sm font-medium text-center text-gray-800 bg-gray-200 rounded-lg dark:bg-gray-700 dark:text-gray-100">
-                                            Ya te has postulado
-                                        </div>
-                                    </>
-                                )
-                            }
-                            <SecondaryButton className={'w-full'} label='Perfil de contratista' isLoading={onLoading} onClick={profileOwner} />
-                        </div>
-                    </div> */}
-
+                        {emit_isAlreadyPostulated(user)}
                         <SidebarDetails
                             vacant={vacant}
                             ownerData={ownerData}
@@ -378,11 +341,26 @@ export const VacantPage: FC = () => {
 
                     </div>
 
+                    {/* Postulations List */}
                 </div>
+
+                {
+                    (vacant.postulations && vacant.postulations.length > 0) && (
+                        <PostulationsVacant
+                            postulations={vacant.postulations}
+                            onLoading={onLoading}
+                            is_authenticated={emit_is_authenticated()}
+                            is_notSameOwner={is_notSameOwner()}
+                            is_alreadyPostulated={emit_isAlreadyPostulated(user)}
+
+                        />
+                    )
+                }
 
             </div>
 
             <NewPostulatrionModal {...vacant_postulation} isLoading={onLoading} />
+            <EvaluatePostulationModal {...vacant_evaluatePostulation} isLoading={onLoading} />
 
         </>
 

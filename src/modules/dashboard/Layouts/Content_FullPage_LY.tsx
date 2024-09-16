@@ -22,7 +22,7 @@ export const Content_FullPage_LY: FC<Props_I> = ({
             <div className="w-full px-4 py-8 mx-auto sm:px-6 lg:px-8 max-w-9xl">
 
                 {/* Page header */}
-                <div className="mb-5 sm:flex sm:justify-between sm:items-center">
+                <div className="pb-5 mb-5 border-b border-gray-200 sm:flex sm:justify-between sm:items-center">
 
                     {/* Left: Title */}
                     <div className="mb-4 sm:mb-0">
@@ -33,9 +33,7 @@ export const Content_FullPage_LY: FC<Props_I> = ({
 
                     {
                         button && (
-
                             <PrimaryButton label={button.text} icon={button.icon} onClick={button.onClick} />
-
                         )
                     }
 

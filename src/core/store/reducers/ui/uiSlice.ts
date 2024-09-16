@@ -6,6 +6,7 @@ import { SignatureModal_Props_I } from '@modules/dashboard/pages/account/compone
 import { ConfirmDeleteModal_Props_I, PaymentInfoModal_Props_I } from '@modules/dashboard/pages/hireConfig/components';
 import { NewVacant_Modal_Props_I } from '../../../../modules/public/pages/JobVacants/components/modals/NewVacantModal/NewVacantModal';
 import { PostulationVacant_Modal_Props_I } from '../../../../modules/public/pages/Vacant/components/NewPostulatrionModal';
+import { EvaluatePostulation_Modal_Props_I } from '../../../../modules/public/pages/Vacant/components/EvaluatePostulationModal';
 
 
 export interface uiState_I {
@@ -28,6 +29,7 @@ export interface uiState_I {
             vacants: {
                 vacant_modal: NewVacant_Modal_Props_I;
                 vacant_postulation: PostulationVacant_Modal_Props_I
+                vacant_evaluatePostulation: EvaluatePostulation_Modal_Props_I
             }
 
         }
@@ -69,6 +71,11 @@ const initialState: uiState_I = {
                 vacant_postulation: {
                     status: false,
                     vacant_id: ''
+                },
+                vacant_evaluatePostulation: {
+                    status: false,
+                    vacant_id: '',
+                    postulation_id: ''
                 }
             }
         }
@@ -79,17 +86,17 @@ export const uiSlice = createSlice({
     name: "ui",
     initialState,
     reducers: {
-        on_Handler_Login_LostPasswordModal: (state, {payload}: PayloadAction<boolean>) => {
+        on_Handler_Login_LostPasswordModal: (state, { payload }: PayloadAction<boolean>) => {
             state.modals.public.login.lostPassword_modal.status = payload;
         },
-        on_Handler_SignatureSelectorModal: (state, {payload}: PayloadAction<SignatureModal_Props_I>) => {
+        on_Handler_SignatureSelectorModal: (state, { payload }: PayloadAction<SignatureModal_Props_I>) => {
             const { status, text } = payload;
             state.modals.dashboard.signature_selector_modal = {
                 status,
                 text
             }
         },
-        on_Handler_PaymentInfoModal: (state, {payload}: PayloadAction<PaymentInfoModal_Props_I>) => {
+        on_Handler_PaymentInfoModal: (state, { payload }: PayloadAction<PaymentInfoModal_Props_I>) => {
             const { status, data, type } = payload;
             state.modals.dashboard.hiring_data.payment_accounts.paymentInfo_handler_modal = {
                 status,
@@ -97,26 +104,37 @@ export const uiSlice = createSlice({
                 type
             }
         },
-        on_Handler_delete_PaymentInfoModal: (state, {payload}: PayloadAction<ConfirmDeleteModal_Props_I>) => {
+        on_Handler_delete_PaymentInfoModal: (state, { payload }: PayloadAction<ConfirmDeleteModal_Props_I>) => {
             const { status, index } = payload;
             state.modals.dashboard.hiring_data.payment_accounts.delete_PaymentInfo_modal = {
                 status,
                 index
             }
         },
-         on_Handler_vacantsModal: (state, {payload}: PayloadAction<NewVacant_Modal_Props_I>) => {
+        on_Handler_vacantsModal: (state, { payload }: PayloadAction<NewVacant_Modal_Props_I>) => {
             const { status, vacant_id } = payload;
             state.modals.public.vacants.vacant_modal = {
                 status,
                 vacant_id
             }
         },
-        on_Handler_postulationVacantModal: (state, {payload}: PayloadAction<PostulationVacant_Modal_Props_I>) => {
+        on_Handler_postulationVacantModal: (state, { payload }: PayloadAction<PostulationVacant_Modal_Props_I>) => {
             const { status, vacant_id } = payload;
 
             state.modals.public.vacants.vacant_postulation = {
                 status,
                 vacant_id
+            }
+
+        },
+        on_handler_EvaluatePostulationModal: (state, { payload }: PayloadAction<EvaluatePostulation_Modal_Props_I>) => {
+
+            const { status, vacant_id, postulation_id } = payload;
+
+            state.modals.public.vacants.vacant_evaluatePostulation = {
+                status,
+                vacant_id,
+                postulation_id
             }
 
         },
@@ -132,6 +150,7 @@ export const {
     on_Handler_delete_PaymentInfoModal,
     on_Handler_Login_LostPasswordModal,
     on_Handler_vacantsModal,
+    on_handler_EvaluatePostulationModal,
     on_Handler_postulationVacantModal,
     on_restoreDefault
 

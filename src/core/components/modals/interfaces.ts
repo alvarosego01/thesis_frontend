@@ -14,5 +14,6 @@ export interface Modal_Feedback_I extends Modal_Base_I {
     type?: 'info' | 'warning' | 'danger' | 'success';
     labelAccept?: string;
     labelCancel?: string;
+    isLoading?: boolean;
     onAccept?: () => void;
 }

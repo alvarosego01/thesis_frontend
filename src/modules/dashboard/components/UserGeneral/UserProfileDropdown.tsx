@@ -43,11 +43,11 @@ const ListDoActions_data: List_I[] = [
         }
     },
     {
-        title: 'Control de vacantes',
+        title: 'Mis vacantes',
         type: 'secondary',
         action: {
             type: 'link',
-            action: '/dashboard/xxx'
+               action: '/vacants/own',
         }
     },
     {

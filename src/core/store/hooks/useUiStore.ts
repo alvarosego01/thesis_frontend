@@ -2,13 +2,14 @@
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 import { Reducers_I } from "../store";
-import { on_Handler_delete_PaymentInfoModal, on_Handler_Login_LostPasswordModal, on_Handler_PaymentInfoModal, on_Handler_SignatureSelectorModal, uiState_I, on_Handler_vacantsModal, on_Handler_postulationVacantModal } from "../reducers/ui/uiSlice";
+import { on_Handler_delete_PaymentInfoModal, on_Handler_Login_LostPasswordModal, on_Handler_PaymentInfoModal, on_Handler_SignatureSelectorModal, uiState_I, on_Handler_vacantsModal, on_Handler_postulationVacantModal, on_handler_EvaluatePostulationModal } from "../reducers/ui/uiSlice";
 
 import { SignatureModal_Props_I } from "@modules/dashboard/pages/account/components/modals/SignatureModal";
 import { PaymentInfoModal_Props_I } from "@modules/dashboard/pages/hireConfig/components/modals/PaymentInfoModal";
 import { ConfirmDeleteModal_Props_I } from "../../../modules/dashboard/pages/hireConfig/components";
 import { NewVacant_Modal_Props_I } from "../../../modules/public/pages/JobVacants/components/modals/NewVacantModal/NewVacantModal";
 import { PostulationVacant_Modal_Props_I } from '../../../modules/public/pages/Vacant/components/NewPostulatrionModal';
+import { EvaluatePostulation_Modal_Props_I } from '../../../modules/public/pages/Vacant/components/EvaluatePostulationModal';
 
 
 interface useHookStore_I {
@@ -19,6 +20,7 @@ interface useHookStore_I {
     emit_handle_login_lostPassword_Modal: (status: boolean) => void;
     emit_handle_vacantModal: (x: NewVacant_Modal_Props_I) => void;
     emit_handle_postulationVacantModal: (x: PostulationVacant_Modal_Props_I) => void;
+    emit_handleEvaluatePostulationModal: (x: EvaluatePostulation_Modal_Props_I) => void;
 }
 
 export const useUiStore = (): useHookStore_I => {
@@ -62,6 +64,12 @@ export const useUiStore = (): useHookStore_I => {
 
     }
 
+    const emit_handleEvaluatePostulationModal = ({ status, vacant_id, postulation_id }: EvaluatePostulation_Modal_Props_I)  => {
+
+        dispatch(on_handler_EvaluatePostulationModal({ status, vacant_id, postulation_id }));
+
+    }
+
     return {
         state,
 
@@ -71,6 +79,7 @@ export const useUiStore = (): useHookStore_I => {
         emit_handle_login_lostPassword_Modal,
         emit_handle_vacantModal,
         emit_handle_postulationVacantModal,
+        emit_handleEvaluatePostulationModal,
         handle_signatureModal,
     }
 

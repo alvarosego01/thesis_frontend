@@ -67,8 +67,6 @@ export const SearchUsersPage: FC = () => {
         emit_searchUsers_all(filter);
         setParams({ ...aux_p });
 
-
-
     }
 
     const set_activeFilter = (filter: UserSearch_I['value']): string => {

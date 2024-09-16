@@ -43,6 +43,7 @@ export * from "./buttons/SecondaryButton";
 export * from "./buttons/TertiaryButton";
 export * from "./buttons/OutlineButton";
 export * from "./buttons/Button_ListDoActions";
+export * from "./buttons/DangerButton";
 
 // Modals
 export { InfoModal } from './modals/InfoModal';

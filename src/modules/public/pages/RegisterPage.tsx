@@ -13,7 +13,7 @@ import { useAuthStore } from '../../../core/store';
 
 
 
-const AuthImage = getAssetPath('/images/auth-image.jpg');
+const AuthImage = getAssetPath('/images/register_login.jpg');
 const AuthDecoration = getAssetPath('/images/auth-decoration.png');
 
 const roles: { value: User_Role_Enum, label: string }[] = [

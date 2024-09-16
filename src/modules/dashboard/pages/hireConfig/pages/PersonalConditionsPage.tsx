@@ -22,7 +22,7 @@ const formData: LayoutRow_I[] = [
             {
                 typeField: 'text',
                 props: {
-                    label: 'RIF',
+                    label: 'Cédula o RIF',
                     name: 'rif',
                     type: 'text',
                     parent_class: 'pcTab:!mb-s_15   '

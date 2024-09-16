@@ -34,7 +34,7 @@ export const VacantsServices: FC<Props_I> = ({
         <div className="grid grid-cols-1 gap-4">
             {
                 (transport?.enable) && (
-                    <div className="w-8/12 p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-900 dark:border-gray-700/60">
+                    <div className="w-full p-4 bg-white border border-gray-200 rounded-lg shadow-sm pcTab:w-8/12 dark:bg-gray-900 dark:border-gray-700/60">
                         {/* Card header */}
                         <div className="flex items-center mb-2 truncate grow">
                             <div className="flex items-center justify-center w-8 h-8 mr-2 rounded-full bg-slate-100 shrink-0">
@@ -69,7 +69,7 @@ export const VacantsServices: FC<Props_I> = ({
             }
             {
                 (housing?.enable) && (
-                    <div className="w-8/12 p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-900 dark:border-gray-700/60">
+                    <div className="w-full p-4 bg-white border border-gray-200 rounded-lg shadow-sm pcTab:w-8/12 dark:bg-gray-900 dark:border-gray-700/60">
                         {/* Card header */}
                         <div className="flex items-center mb-2 truncate grow">
                             <div className="flex items-center justify-center w-8 h-8 mr-2 rounded-full bg-slate-100 shrink-0">
@@ -103,7 +103,7 @@ export const VacantsServices: FC<Props_I> = ({
             }
             {
                 (costs?.enable) && (
-                    <div className="w-8/12 p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-900 dark:border-gray-700/60">
+                    <div className="w-full p-4 bg-white border border-gray-200 rounded-lg shadow-sm pcTab:w-8/12 dark:bg-gray-900 dark:border-gray-700/60">
                         {/* Card header */}
                         <div className="flex items-center mb-2 truncate grow">
                             <div className="flex items-center justify-center w-8 h-8 mr-2 rounded-full bg-slate-100 shrink-0">

@@ -15,11 +15,13 @@ const UserImage04 = getAssetPath('images/avatar-04.jpg');
 const UserImage05 = getAssetPath('images/avatar-05.jpg');
 
 interface Props_I {
-    vacant: Vacant_I
+    vacant: Vacant_I,
+    className?: string
 }
 
 export const JobCard: FC<Props_I> = ({
-    vacant
+    vacant,
+    className = ''
 }) => {
 
     const [isMounted, setisMounted] = useState(false);
@@ -96,7 +98,7 @@ export const JobCard: FC<Props_I> = ({
 
 
     return (
-        <article className="flex overflow-hidden bg-white shadow-sm dark:bg-gray-800 rounded-xl">
+        <article className={`flex overflow-hidden JobCard bg-white shadow-sm dark:bg-gray-800 rounded-xl ${className}`}>
             {/* Image */}
 
             <Link className="relative block w-24 sm:w-56 xl:sidebar-expanded:w-40 2xl:sidebar-expanded:w-56 shrink-0" to={`/vacant/${vacant._id}`}>
@@ -169,7 +171,7 @@ export const JobCard: FC<Props_I> = ({
                                 <div className="flex -space-x-3 -ml-0.5">
                                     <i className='text-2xl bx bx-user-plus' ></i>
                                 </div>
-                                <div className="text-xs italic font-medium text-gray-400 dark:text-gray-500">+{vacant.postulations.length}</div>
+                                <div className="text-xs italic font-medium text-gray-400 dark:text-gray-500">{vacant.postulations.length}</div>
                             </div>
                         )
                     }

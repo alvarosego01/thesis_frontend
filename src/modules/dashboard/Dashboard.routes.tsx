@@ -32,6 +32,10 @@ const dashboard_routesConfig: RouteObject[] = [
         path: '/contracts/*',
         element: <Contracts />
     },
+    // {
+    //     path: '/vacants-control/*',
+    //     element: <VacantsControlPage />
+    // },
     {
         path: '/hiring-config/*',
         element: <LazyComponent Component={HiringConfig} />

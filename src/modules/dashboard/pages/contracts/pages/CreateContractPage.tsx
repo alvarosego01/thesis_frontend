@@ -5,7 +5,7 @@ import { getAssetPath } from '@utils/index';
 import { Link, useNavigate } from 'react-router-dom';
 import { PrimaryButton, OutlineButton } from '@components/index';
 
-const imagePage = getAssetPath('/images/auth-image.jpg');
+const imagePage = getAssetPath('/images/register_login.jpg');
 
 const decoration = getAssetPath('/images/auth-decoration.png');
 

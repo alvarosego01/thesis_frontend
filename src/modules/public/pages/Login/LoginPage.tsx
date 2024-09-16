@@ -10,7 +10,7 @@ import { useAuthStore, useUiStore } from '../../../../core/store';
 import { FC } from 'react';
 import { LostPasswordModal } from './components/LostPasswordModal';
 
-const AuthImage = getAssetPath('/images/auth-image.jpg');
+const AuthImage = getAssetPath('/images/register_login.jpg');
 
 const formData: LayoutRow_I[] = [
     {

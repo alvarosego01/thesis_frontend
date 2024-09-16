@@ -32,7 +32,7 @@ const NavLeft: NavModel[] = [
         type: 'regular',
         action: {
             type: 'link',
-            action: '/vacants'
+            action: '/vacants/public'
         }
     }
 ];

@@ -7,6 +7,7 @@ import { NewVacantModal } from "./components";
 import { useVacantPageStore } from "../../store";
 import { Vacant_I } from "@tesis-project/dev-globals/dist/modules/business/vacants/interfaces";
 import { Artist_Enum } from "@tesis-project/dev-globals/dist/modules/profile/interfaces";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 export const JobVacantsPage: FC = () => {
@@ -28,6 +29,20 @@ export const JobVacantsPage: FC = () => {
         emit_is_role
     } = useAuthStore();
 
+       const navigate = useNavigate();
+
+        const { type } = useParams();
+
+    useEffect(() => {
+
+        if(type === 'public' || type === 'own') {
+
+        }else {
+            navigate('/vacants/public')
+        }
+
+    }, [type])
+
     const [isMounted, setisMounted] = useState(false)
 
     const {
@@ -36,7 +51,8 @@ export const JobVacantsPage: FC = () => {
             vacants
         },
         emit_createVacant,
-        emit_getPublicVacants_vacantPage
+        emit_getPublicVacants_vacantPage,
+        emit_getOwnPublicVacants_vacantPage
     } = useVacantPageStore()
 
     const create_vacant = (vacant: Vacant_I) => {
@@ -57,9 +73,10 @@ export const JobVacantsPage: FC = () => {
     useEffect(() => {
         if (isMounted === false) return;
 
-        emit_getPublicVacants_vacantPage(Artist_Enum.ALL)
+        (type === 'public') && emit_getPublicVacants_vacantPage(Artist_Enum.ALL);
+        (type === 'own') && emit_getOwnPublicVacants_vacantPage();
 
-    }, [isMounted])
+    }, [isMounted, type])
 
     useEffect(() => {
         setisMounted(true);
@@ -73,7 +90,9 @@ export const JobVacantsPage: FC = () => {
 
                     <div className="mb-4 sm:mb-0">
                         <h1 className="text-2xl font-bold text-gray-800 md:text-3xl dark:text-gray-100">
-                            Vacantes laborales
+                            {
+                                (type === 'own') ? 'Mis vacantes' : 'Vacantes publicadas'
+                            }
                         </h1>
                     </div>
 

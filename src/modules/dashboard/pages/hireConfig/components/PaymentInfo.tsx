@@ -33,12 +33,14 @@ const Button_ListDoActions_items: List_I<optionAction_Type>[] = [
 
 interface Props_I {
     props: Payment_Account_I;
-    index: number
+    index: number;
+    options?: boolean;
 }
 
 export const PaymentInfo: FC<Props_I> = ({
     props,
-    index
+    index,
+    options = true
 }) => {
 
     const {
@@ -137,7 +139,11 @@ export const PaymentInfo: FC<Props_I> = ({
                                 </div>
                             </div>
                         </header>
-                        <Button_ListDoActions onClick={(action) =>  get_optionsAction(action) } options={Button_ListDoActions_items} />
+                        {
+                            (options) && (
+                                <Button_ListDoActions onClick={(action) =>  get_optionsAction(action) } options={Button_ListDoActions_items} />
+                            )
+                        }
 
                     </div>
                     <div className=" content">

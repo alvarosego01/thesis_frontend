@@ -8,3 +8,5 @@ export * from "./TransformDate";
 
 
 export * from "./TransformVacantsHelpers";
+
+export * from "./TransformBusiness";

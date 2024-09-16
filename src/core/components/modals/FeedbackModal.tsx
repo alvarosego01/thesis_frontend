@@ -13,6 +13,7 @@ export const FeedbackModal: FC<Modal_Feedback_I> = ({
     type = 'info',
     labelAccept = 'Aceptar',
     labelCancel = 'Cancelar',
+    isLoading = false,
     onAccept,
     onClose
     // children,
@@ -112,12 +113,12 @@ export const FeedbackModal: FC<Modal_Feedback_I> = ({
                                     {
                                         onClose && (
 
-                                            <SecondaryButton label={labelCancel} onClick={closeModal} />
+                                            <SecondaryButton isLoading={isLoading} label={labelCancel} onClick={closeModal} />
                                         )
                                     }
                                     {
                                         onAccept && (
-                                            <PrimaryButton label={labelAccept} onClick={onAccept} />
+                                            <PrimaryButton isLoading={isLoading} label={labelAccept} onClick={onAccept} />
                                         )
                                     }
 

@@ -86,7 +86,7 @@ export const NewPostulatrionModal: FC<PostulationVacant_Modal_Props_I> = ({
     const closeModal = () => {
         emit_handle_postulationVacantModal({
             status: false,
-            vacant_id: ''
+            vacant_id: '',
         })
     };
 

@@ -64,59 +64,6 @@ export const get_sidebarMenu = (): SidebarMenuLink_I[] => {
                 content: '/dashboard/contracts'
             }
         },
-        // {
-        //     title: 'Control de vacantes',
-        //     icon: {
-        //         type: 'icon',
-        //         content: "bx bx-briefcase-alt-2"
-
-        //     },
-        //     link: '/dashboard/xxx',
-        //     activeCondition: {
-        //         type: 'route',
-        //         content: '/dashboard/xxx'
-        //     }
-        // },
-
-        /*     {
-                title: 'Dashboard',
-                icon: {
-                    type: 'icon',
-                    content: "bx bxs-bell"
-                },
-                link: '/dashboard/dash',
-                activeCondition: {
-                    type: 'route',
-                    content: '/dashboard/dash'
-                },
-                subMenu: [
-                    {
-                        title: 'Ejem 1',
-                        link: '/dashboard/dash/ejem1',
-                        activeCondition: {
-                            type: 'route',
-                            content: '/dashboard/dash/ejem1'
-                        }
-                    },
-                    {
-                        title: 'Ejem 2',
-                        link: '/dashboard/dash/ejem2',
-                        activeCondition: {
-                            type: 'route',
-                            content: '/dashboard/dash/ejem2'
-                        }
-                    },
-                    {
-                        title: 'Ejem 3',
-                        link: '/dashboard/dash/ejem3',
-                        activeCondition: {
-                            type: 'route',
-                            content: '/dashboard/dash/ejem3'
-                        }
-                    }
-                ]
-            } */
-
     ];
 
     if (auth.role === User_Role_Enum.ARTIST_ROLE) {
@@ -137,9 +84,23 @@ export const get_sidebarMenu = (): SidebarMenuLink_I[] => {
 
     }
 
-    if(auth.role === User_Role_Enum.CONTRATIST_ROLE){
+    if (auth.role === User_Role_Enum.CONTRATIST_ROLE) {
 
-          SidebarMenu_Data.splice(1, 0,
+        SidebarMenu_Data.push({
+            title: 'Mis vacantes',
+            icon: {
+                type: 'icon',
+                content: "bx bx-briefcase-alt-2"
+
+            },
+            link: '/vacants/own',
+            activeCondition: {
+                type: 'route',
+                content: '/dashboard/xxx'
+            }
+        },)
+
+        SidebarMenu_Data.splice(1, 0,
             {
                 title: 'Instituto - Empresa',
                 icon: {

@@ -3,7 +3,7 @@ import { Vacant_I } from "@tesis-project/dev-globals/dist/modules/business/vacan
 import { User_I } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
 import { FC } from "react"
 
-import { PrimaryButton, SecondaryButton } from "../../../../../core/components";
+import { DangerButton, PrimaryButton, SecondaryButton } from "../../../../../core/components";
 import { Transform_dateShort, TransformVacantsHelpers_P } from "../../../../../core/pipes";
 
 interface Props_I {
@@ -46,10 +46,12 @@ export const SidebarDetails: FC<Props_I> = ({
                     )
                 }
                 <div className="p-5 py-0 mb-4 text-center">
-                    <div className="inline-flex mb-1">
+                    {/* <div className="inline-flex mb-1">
                         <i className='text-6xl bx bxs-institution' ></i>
-                    </div>
-
+                    </div> */}
+                    <small>
+                        Públicado por
+                    </small>
                     <div className="mb-1 text-lg font-bold text-gray-800 dark:text-gray-100">
                         {ownerData.owner}
                     </div>
@@ -58,18 +60,28 @@ export const SidebarDetails: FC<Props_I> = ({
                     </div>
                 </div>
                 <div className="flex flex-col items-center justify-center p-5 pt-0 space-y-2">
+
+                    {/* {is_authenticated}
+                    {is_notSameOwner}
+                    {is_alreadyPostulated} */}
+
                     {
-                        (is_authenticated && is_notSameOwner && !is_alreadyPostulated) ? (
-                            <PrimaryButton className={'w-full'} label='Postularse' isLoading={onLoading} onClick={open_modalPostulaion} />
-                        ) : (
-                            <>
-                                <div className="w-full p-3 text-sm font-medium text-center text-gray-800 bg-gray-200 rounded-lg dark:bg-gray-700 dark:text-gray-100">
-                                    Ya te has postulado
-                                </div>
-                            </>
+                        (is_authenticated) && (
+
+                            (!is_alreadyPostulated) ? (
+                                (is_notSameOwner) && (
+                                    <PrimaryButton className={'pcTab:w-full'} label='Postularse' isLoading={onLoading} onClick={open_modalPostulaion} />
+                                )
+                            ) : (
+                                <>
+                                    <div className="w-full p-3 text-sm font-medium text-center text-gray-800 bg-gray-200 rounded-lg dark:bg-gray-700 dark:text-gray-100">
+                                        Ya te has postulado
+                                    </div>
+                                </>
+                            )
                         )
                     }
-                    <SecondaryButton className={'w-full'} label='Ver perfil de contratista' isLoading={onLoading} onClick={profileOwner} />
+                    <SecondaryButton className={'pcTab:w-full'} label='Ver perfil de contratista' isLoading={onLoading} onClick={profileOwner} />
                 </div>
             </div>
 
@@ -135,9 +147,52 @@ export const SidebarDetails: FC<Props_I> = ({
                             </div>
                         )
                     }
+                    {
+                        (vacant.postulations && vacant.postulations.length > 0) && (
+
+                            <div className="space-y-2 text-sm">
+                                <h3 className="font-medium text-gray-800 dark:text-gray-100">
+                                    Postulaciones
+                                </h3>
+                                <div className="flex ">
+                                    <span className='block p-1 px-3 text-xs font-semibold rounded-full whitespace-nowrap bg-slate-100 text-slate-500'>
+                                        {vacant.postulations.length} artista(s) interesado(s)
+                                    </span>
+                                </div>
+                            </div>
+                        )
+                    }
 
                 </aside>
             </div>
+
+
+            {
+                (is_authenticated && !is_notSameOwner) && (
+
+
+                    <div className="overflow-hidden bg-white shadow-sm dark:bg-gray-800 rounded-xl lg:w-72 xl:w-80">
+
+                        <div className="w-full p-6 space-y-3">
+
+                            <h2 className="font-bold" >
+                                Opciones
+                            </h2>
+
+                            <div className="flex flex-col space-y-4 optionsSection">
+
+                                {/* <PrimaryButton className={'pcTab:w-full'}  label="Ver postulaciones" onClick={() => {}} /> */}
+                                <SecondaryButton className={'pcTab:w-full'} label="Editar vacante" onClick={() => { }} />
+                                <DangerButton className={'pcTab:w-full'} label="Eliminar vacante" onClick={() => { }} />
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                )
+            }
 
         </div>
 
