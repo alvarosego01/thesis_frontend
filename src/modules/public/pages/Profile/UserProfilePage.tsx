@@ -8,6 +8,7 @@ import { User_I } from "@tesis-project/dev-globals/dist/modules/user/interfaces"
 import { Auth_I } from "@tesis-project/dev-globals/dist/modules/auth/interfaces";
 import { TextLimit_P, Transform_dateShort } from "../../../../core/pipes";
 import { set_shortSkills } from "../../../../core/components/users-profile/userList/UserCard-meta";
+import { InfoTabs } from "./components/InfoTabs";
 
 const ProfileBg = getAssetPath('/images/profile-bg.jpg');
 const UserAvatar = getAssetPath('/images/user-128-01.jpg');
@@ -246,13 +247,10 @@ export const UserProfilePage: FC = () => {
                     className={`grow flex flex-col  transition-transform duration-300 ease-in-out `}
                 >
                     {/* Profile background */}
-                    <div className="relative h-56 bg-slate-200 dark:bg-gray-900">
-                        {/*
-                        <img className="object-cover w-full h-full" src={ProfileBg} width="979" height="220" alt="Profile background" />
-                         */}
+                    <div className="relative h-72 bg-slate-200 dark:bg-gray-900">
                         {
                             (set_coverPic() !== '') && (
-                                <img className="object-cover w-full h-full" src={set_coverPic()} width="979" height="220" alt="Profile background" />
+                                <img className="object-cover object-center w-full h-full" src={set_coverPic()}  alt="Profile background" />
                             )
                         }
 
@@ -353,6 +351,8 @@ export const UserProfilePage: FC = () => {
                             </div>
                         </header>
 
+                        <InfoTabs />
+
                         {/* Tabs */}
                         <div className="relative mb-6">
                             <div className="absolute bottom-0 w-full h-px bg-gray-200 dark:bg-gray-700/60" aria-hidden="true"></div>
@@ -372,12 +372,8 @@ export const UserProfilePage: FC = () => {
                             </ul>
                         </div>
 
-                        {/* Profile content */}
                         <div className="flex flex-col xl:flex-row xl:space-x-16">
-                            {/* Main content */}
                             <div className="flex-1 mb-8 space-y-5 xl:mb-0">
-                                {/* About Me */}
-
                                 {
                                     (profile.bio_short && profile.bio_short.length > 0) && (
 
@@ -394,7 +390,6 @@ export const UserProfilePage: FC = () => {
                                         </div>
                                     )
                                 }
-
                                 {/* Departments */}
                                 {/* <div>
                                     <h2 className="mb-2 font-semibold text-gray-800 dark:text-gray-100">
@@ -451,6 +446,8 @@ export const UserProfilePage: FC = () => {
                             </aside>
 
                         </div>
+
+
                     </div>
                 </div>
 
@@ -459,3 +456,5 @@ export const UserProfilePage: FC = () => {
 
     )
 }
+
+

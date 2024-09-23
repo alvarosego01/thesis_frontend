@@ -5,7 +5,7 @@ import { onLoading_identity_file, onLoading_onLoading_galleryImage, onLoading_on
 import { Reducers_I } from "../../../../../core/store/store";
 import { Profile_I } from "@tesis-project/dev-globals/dist/modules/profile/interfaces";
 import { useUiGlobals } from "../../../../../core/hooks";
-import { start_add_gallery_image, start_add_gallery_video, start_delete_gallery_image, start_delete_gallery_video, start_get_profile_data, start_set_credentials_identity_file, start_set_credentials_profesional_file, start_update_profile_pic, start_update_user_profile } from "./profileThunks";
+import { start_add_gallery_image, start_add_gallery_video, start_delete_gallery_image, start_delete_gallery_video, start_get_profile_data, start_set_credentials_identity_file, start_set_credentials_profesional_file, start_update_cover_pic, start_update_profile_pic, start_update_user_profile } from "./profileThunks";
 import { Slice_userState_I } from "../../reducers/user/userSlice";
 
 
@@ -15,6 +15,7 @@ interface useHookStore_I {
     emit_update_user_profile: (profile_id: string, profile: Partial<Profile_I>) => void;
     emit_get_profile_data: (_id: string) => void;
     emit_set_profile_pic: (file: File) => void;
+    emit_set_cover_pic: (file: File) => void;
     emit_set_identity_file: (file: File) => void;
     emit_set_profesional_file: (file: File) => void;
     emit_add_gallery_image: (file: File) => void;
@@ -207,6 +208,30 @@ export const useProfileStore = (): useHookStore_I => {
 
     }
 
+    const emit_set_cover_pic = async (file: File) => {
+
+
+        dispatch(onSetLoading_profileSlice(true))
+        try {
+
+            const { data } = await start_update_cover_pic(file);
+            if (!data) return;
+
+            emit_get_profile_data(state_user.user._id);
+
+            emit_swalToast({
+                message: 'Foto de portada actualizada',
+                type: 'success'
+            })
+
+        } catch (error) {
+            console.log('error', error)
+
+        }
+        dispatch(onSetLoading_profileSlice(false))
+
+    }
+
     const emit_update_user_profile = async (profile_id: string, profile: Partial<Profile_I>) => {
 
         dispatch(onSetLoading_profileSlice(true))
@@ -258,6 +283,7 @@ export const useProfileStore = (): useHookStore_I => {
         emit_set_identity_file,
         emit_set_profesional_file,
         emit_update_user_profile,
+        emit_set_cover_pic,
         emit_delete_gallery_image,
         emit_delete_gallery_video,
         emit_add_gallery_image,

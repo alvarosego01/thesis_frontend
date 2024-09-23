@@ -159,6 +159,32 @@ const userImage: LayoutRow_I[] = [
     }
 ]
 
+const coverImage: LayoutRow_I[] = [
+    {
+        fields: [
+            {
+                typeField: 'file',
+                props: {
+                    label: 'Cambiar foto de portada',
+                    name: 'cover_pic',
+                    type: 'file',
+                    accept: 'image/png, image/jpeg, image/jpg',
+                    validation_rules: [
+                        {
+                            type: "fileSize_5m",
+                            message: "El archivo debe ser menor a 5MB"
+                        },
+                        {
+                            type: "fileFormat_image",
+                            message: "El archivo debe ser una imagen"
+                        }
+                    ]
+                }
+            }
+        ],
+    }
+]
+
 interface Init_valuesData_I {
     name: string;
     lastname: string;
@@ -173,7 +199,8 @@ export const PersonalPage: FC = () => {
 
     const [isMounted, setisMounted] = useState(false)
 
-    const [avatar, setavatar] = useState(getAssetPath('/images/user_anon.png'));
+    const [avatar, setavatar] = useState<string>(getAssetPath('/images/user_anon.png'));
+    const [coverPic, setcoverPic] = useState<string>(getAssetPath('/images/user_anon.png'));
 
     const {
         state: {
@@ -187,10 +214,12 @@ export const PersonalPage: FC = () => {
         state: {
             onLoading: onLoading_profile,
             profile: {
-                profile_pic
+                profile_pic,
+                cover_pic
             }
         },
         emit_set_profile_pic,
+        emit_set_cover_pic,
     } = useProfileStore();
 
 
@@ -207,6 +236,7 @@ export const PersonalPage: FC = () => {
     const { initialValues, validation_rules } = useFormInitData<Init_valuesData_I>(userData, Init_Values);
 
     const { initialValues: initial_image, validation_rules: validation_image } = useFormInitData<{ profile_pic: File }>(userImage);
+    const { initialValues: initial_cover, validation_rules: validation_cover } = useFormInitData<{ cover_pic: File }>(coverImage);
 
     const formik = useFormik({
         initialValues: initialValues,
@@ -241,10 +271,27 @@ export const PersonalPage: FC = () => {
         validateOnChange: true
     });
 
+    const formik_cover = useFormik({
+        initialValues: initial_cover,
+        onSubmit: (values, helpers) => {
+            helpers.validateForm();
+            emit_set_cover_pic(values.cover_pic);
+        },
+        validationSchema: validation_cover,
+        validateOnChange: true
+    });
+
     const {
         values: values_image,
         submitForm: submitForm_image,
     } = formik_image;
+
+    const {
+        values: values_cover,
+        submitForm: submitForm_cover,
+    } = formik_cover;
+
+
 
     useEffect(() => {
         if (isMounted === false) return;
@@ -279,11 +326,24 @@ export const PersonalPage: FC = () => {
 
         if (isMounted === false) return;
 
+        if (values_cover?.cover_pic?.size > 0) {
+            submitForm_cover();
+        }
+
+    }, [values_cover]);
+
+    useEffect(() => {
+
+        if (isMounted === false) return;
+
         if (profile_pic?.src) {
             setavatar(profile_pic?.src);
         }
+        if (cover_pic?.src) {
+            setcoverPic(cover_pic?.src);
+        }
 
-    }, [profile_pic?.src, isMounted])
+    }, [profile_pic?.src, cover_pic?.src, isMounted])
 
     useEffect(() => {
         setisMounted(true);
@@ -299,17 +359,30 @@ export const PersonalPage: FC = () => {
                     Perfil personal
                 </h2>
 
-                <section>
-                    <div className="flex items-center">
-                        <div className="mr-4">
+                <section className="grid w-10/12 grid-cols-2 ">
+                    <div className="flex items-center gap-4">
 
+                        <div className="">
                             <img className="object-cover object-center w-20 h-20 rounded-full" src={avatar} width="80" height="80" alt="User upload" />
-
                         </div>
 
                         <FormikProvider value={formik_image}>
                             <Form noValidate>
                                 <FileHideInput {...userImage[0].fields[0].props} isLoading={onLoading_profile} />
+                            </Form>
+                        </FormikProvider>
+
+                    </div>
+
+                    <div className="flex items-center gap-4">
+
+                        <div className="">
+                            <img className="object-cover object-center h-20 rounded-lg w-100" src={coverPic}  alt="User upload" />
+                        </div>
+
+                        <FormikProvider value={formik_cover}>
+                            <Form noValidate>
+                                <FileHideInput {...coverImage[0].fields[0].props} isLoading={onLoading_profile} />
                             </Form>
                         </FormikProvider>
 

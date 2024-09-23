@@ -39,6 +39,41 @@ export const start_update_profile_pic = (profile_pic: File): Promise<_Response_I
     })
 }
 
+export const start_update_cover_pic = (profile_pic: File): Promise<_Response_I<Profile_I>> => {
+    return new Promise(async (resolve, reject) => {
+
+        try {
+
+            const formData = new FormData();
+            formData.append('file', profile_pic);
+
+            const resp: _Response_I<Profile_I> = await Backend_Api.post(`profile/profile_cover`, formData).then(r => r);
+            resolve(resp);
+
+        } catch (error: any) {
+
+            let r: _Response_I;
+            console.error('Axios error:', error.response?.data);
+
+            if (error instanceof AxiosError) {
+                r = {
+                    ...error.response?.data,
+                }
+            } else {
+                r = {
+                    ok: false,
+                    statusCode: 500,
+                    message: 'Unexpected error',
+                    err: error
+                }
+            }
+            reject(r);
+
+        }
+
+    })
+}
+
 
 export const start_delete_gallery_image = (_id: string): Promise<_Response_I<Profile_I>> => {
     return new Promise(async (resolve, reject) => {
