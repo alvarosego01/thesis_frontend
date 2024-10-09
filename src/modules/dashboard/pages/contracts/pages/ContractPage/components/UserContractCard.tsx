@@ -75,11 +75,16 @@ export const UserContractCard: FC<Props_I> = ({
                         </div>
                         {/* Bio */}
                         <div className="mt-2">
+                            {
+                                _user.profile.bio_shor && (
                             <div className="text-sm">
                                 {
                                     TextLimit_P(_user.profile.bio_short, 125)
                                 }
                             </div>
+
+                                )
+                            }
                         </div>
                     </div>
                     {/* Card footer */}

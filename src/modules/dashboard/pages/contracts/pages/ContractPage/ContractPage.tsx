@@ -104,6 +104,8 @@ export const ContractPage: FC = () => {
             aux_hiringData && sethiringData(aux_hiringData);
             aux_personal && setpersonalData(aux_personal);
 
+            console.log('aux_hiringData', aux_hiringData);
+
         }
 
     }, [contract, userContract, vacant, hiringData, isMounted]);
@@ -236,6 +238,11 @@ export const ContractPage: FC = () => {
                                 contract.status === Contract_Status_Enum.SINGS_PENDING && (
                                     <>
                                     <PrimaryButton onClick={get_document} isLoading={onLoading} label="Pre visualizar contrato" />
+                                    {
+                                        (emit_is_role(User_Role_Enum.ARTIST_ROLE)) && (
+                                            <SecondaryButton onClick={()=> {}} isLoading={onLoading} label="Rechazar contrato" />
+                                         )
+                                    }
                                     {
                                         (emit_is_role(User_Role_Enum.ARTIST_ROLE)) && (
                                             <PrimaryButton onClick={()=> {setacceptContract(true)}} isLoading={onLoading} label="Aceptar y firmar" />

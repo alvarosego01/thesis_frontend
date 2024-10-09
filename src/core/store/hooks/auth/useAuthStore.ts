@@ -50,6 +50,7 @@ export const useAuthStore = (): useHookStore_I => {
         emit_getNotifications
     } = useNotificationsStore();
 
+
     const state = useSelector<Reducers_I, Slice_authState_I>(({ global }) => global.session.auth, shallowEqual);
 
     const emit_onLogout = () => {
@@ -99,6 +100,7 @@ export const useAuthStore = (): useHookStore_I => {
             emit_get_profile_data(data.user);
             emit_getNotifications();
 
+            navigate('/dashboard/account/personal');
 
         } catch (error) {
 

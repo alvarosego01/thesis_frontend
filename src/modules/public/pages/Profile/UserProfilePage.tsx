@@ -4,28 +4,15 @@ import { getAssetPath } from "../../../../core/utils";
 import { useUserProfileStore } from "../../store";
 import { useParams } from "react-router-dom";
 import { Profile_I, MetaRole_I, Meta_Artist_I } from '@tesis-project/dev-globals/dist/modules/profile/interfaces';
-import { User_I } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
 import { Auth_I } from "@tesis-project/dev-globals/dist/modules/auth/interfaces";
-import { TextLimit_P, Transform_dateShort } from "../../../../core/pipes";
+import { Transform_dateShort } from "../../../../core/pipes";
 import { set_shortSkills } from "../../../../core/components/users-profile/userList/UserCard-meta";
-import { InfoTabs } from "./components/InfoTabs";
 
-const ProfileBg = getAssetPath('/images/profile-bg.jpg');
-const UserAvatar = getAssetPath('/images/user-128-01.jpg');
-const Icon02 = getAssetPath('/images/icon-02.svg');
-const Icon03 = getAssetPath('/images/icon-03.svg');
-const UserImage01 = getAssetPath('/images/avatar-01.jpg');
-const UserImage02 = getAssetPath('/images/avatar-02.jpg');
-const UserImage03 = getAssetPath('/images/avatar-03.jpg');
-const UserImage04 = getAssetPath('/images/avatar-04.jpg');
-const UserImage05 = getAssetPath('/images/avatar-05.jpg');
-const UserImage06 = getAssetPath('/images/avatar-06.jpg');
 
 export const UserProfilePage: FC = () => {
 
     const {
         state: {
-            onLoading,
             user
         },
         emit_getUser_userProfile,
@@ -199,12 +186,6 @@ export const UserProfilePage: FC = () => {
 
     }
 
-    const emit_contract = () => {
-        return
-    }
-    const emit_like = () => {
-        return
-    }
 
     useEffect(() => {
 
@@ -287,7 +268,7 @@ export const UserProfilePage: FC = () => {
                                         <i className='bx bx-heart'></i>
                                     </button>
  */}
-                                    <button
+                                    {/* <button
                                         onClick={emit_contract}
                                         className="text-gray-100 bg-gray-900 bttn-sm hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white">
                                         <svg className="fill-current shrink-0" width="11" height="8" viewBox="0 0 11 8">
@@ -296,7 +277,7 @@ export const UserProfilePage: FC = () => {
                                         <span className="ml-2">
                                             Contratar
                                         </span>
-                                    </button>
+                                    </button> */}
                                 </div>
                             </div>
                         </div>
@@ -351,7 +332,7 @@ export const UserProfilePage: FC = () => {
                             </div>
                         </header>
 
-                        <InfoTabs />
+                        {/* <InfoTabs /> */}
 
                         {/* Tabs */}
                         <div className="relative mb-6">
@@ -363,11 +344,18 @@ export const UserProfilePage: FC = () => {
                                         Información
                                     </a>
                                 </li>
-                                {/* <li className="mr-6 last:mr-0 first:pl-4 sm:first:pl-6 lg:first:pl-8 last:pr-4 sm:last:pr-6 lg:last:pr-8">
+
+                                <li className="mr-6 last:mr-0 first:pl-4 sm:first:pl-6 lg:first:pl-8 last:pr-4 sm:last:pr-6 lg:last:pr-8">
                                     <a className="block pb-3 text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 whitespace-nowrap" href="#0">
                                         Contenido audiovisual
                                     </a>
-                                </li> */}
+                                </li>
+
+                                <li className="mr-6 last:mr-0 first:pl-4 sm:first:pl-6 lg:first:pl-8 last:pr-4 sm:last:pr-6 lg:last:pr-8">
+                                    <a className="block pb-3 text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 whitespace-nowrap" href="#0">
+                                        Documentación y credenciales
+                                    </a>
+                                </li>
 
                             </ul>
                         </div>
